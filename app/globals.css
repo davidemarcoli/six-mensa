@@ -25,3 +25,8 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.changeWidth{
+  width: 80%;
+  margin: 0 10% 0 10%;
+}
