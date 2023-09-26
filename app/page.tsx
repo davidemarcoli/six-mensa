@@ -20,21 +20,21 @@ export default async function Home() {
   );
 }
 
-function getCurrentWeekday() {
-  const currentDate = new Date();
-  const dayOfWeek = currentDate.getDay();
-  const weekdays = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-  const currentWeekday = weekdays[dayOfWeek];
-  return currentWeekday;
-}
+// function getCurrentWeekday() {
+//   const currentDate = new Date();
+//   const dayOfWeek = currentDate.getDay();
+//   const weekdays = [
+//     "Sunday",
+//     "Monday",
+//     "Tuesday",
+//     "Wednesday",
+//     "Thursday",
+//     "Friday",
+//     "Saturday",
+//   ];
+//   const currentWeekday = weekdays[dayOfWeek];
+//   return currentWeekday;
+// }
 
 async function getPdfUrls() {
   const pdfData = [
@@ -50,7 +50,11 @@ async function getPdfUrls() {
 
   return await Promise.all(
     pdfData.map(async (data) => {
-      const response = await fetch(data.url);
+      const response = await fetch(data.url, {
+          next: {
+              revalidate: 60 * 60 * 24
+          }
+      });
       const blob = await response.blob();
       const buffer = await blob.arrayBuffer();
       const base64 = Buffer.from(buffer).toString("base64");
