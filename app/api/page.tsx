@@ -29,22 +29,24 @@ export default async function APIPage() {
         <>
             <main className="flex h-full items-center justify-center flex-col p-3">
                 {featuredMenus && (
-                    <Card className="mb-4 mt-8">
-                        <CardHeader>
-                            <CardTitle><span className="underline">Heute</span> <span className="text-lg">({featuredMenus.day})</span></CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p><b>Local:</b> {featuredMenus.Local}</p>
-                            <p><b>Vegi:</b> {featuredMenus.Vegi}</p>
-                            {featuredMenus.Globetrotter && <p><b>Globetrotter:</b> {featuredMenus.Globetrotter}</p>}
-                            {featuredMenus.Buffet && <p><b>Buffet:</b> {featuredMenus.Buffet}</p>}
-                        </CardContent>
-                    </Card>
+                    <div className="w-full flex justify-center mb-4">
+                        <Card className="flex-grow w-1/4">
+                            <CardHeader>
+                                <CardTitle><span className="underline">Heute</span> <span className="text-lg">({featuredMenus.day})</span></CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p><b>Local:</b> {featuredMenus.Local}</p>
+                                <p><b>Vegi:</b> {featuredMenus.Vegi}</p>
+                                {featuredMenus.Globetrotter && <p><b>Globetrotter:</b> {featuredMenus.Globetrotter}</p>}
+                                {featuredMenus.Buffet && <p><b>Buffet:</b> {featuredMenus.Buffet}</p>}
+                            </CardContent>
+                        </Card>
+                    </div>
                 )}
 
-                <div className="flex flex-wrap justify-center">
+                <div className="flex flex-wrap justify-center items-stretch">
                     {menuData.map((menu, i) => (
-                        <Card className="mr-2 mb-2"> {/* Add some margin for spacing between cards */}
+                        <Card key={i} className={`flex-grow w-full md:w-1/6 ${i == menuData.length - 1 ? '' : 'mr-2'}`}>
                             <CardHeader>
                                 <CardTitle>{menu.day}</CardTitle>
                             </CardHeader>
@@ -58,6 +60,7 @@ export default async function APIPage() {
                     ))}
                 </div>
             </main>
+
         </>
     )
 }
