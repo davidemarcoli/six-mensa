@@ -28,8 +28,8 @@ export default async function APIPage() {
 
     return (
         <>
-        {currentDate}
-            {{/*<main className="flex h-full items-center justify-center flex-col p-3">
+            <p>{currentDate}</p>
+            <main className="flex h-full items-center justify-center flex-col p-3">
                 {featuredMenus && (
                     <div className="w-full flex justify-center mb-4">
                         <Card className="flex-grow w-1/4">
@@ -61,7 +61,7 @@ export default async function APIPage() {
                         </Card>
                     ))}
                 </div>
-                    </main>*/}}
+            </main>
 
         </>
     )
