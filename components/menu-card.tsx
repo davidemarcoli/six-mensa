@@ -12,12 +12,12 @@ interface MenuCardProps {
     className?: string;
 }
 
-async function getImages(searchTerm: string): Promise<Image[]> {
-    if (!searchTerm) return [];
+async function getImages(searchTerm: string): Promise<Image | undefined> {
+    if (!searchTerm) return undefined;
 
     const abortController = new AbortController();
 
-    return await fetch('api/scrape/cheerio/', {
+    return await fetch('api/scrape/cheerio?singleResult=true', {
         method: 'POST',
         body: JSON.stringify({searchTerm}),
         next: {
@@ -58,14 +58,13 @@ export default function MenuCard({menu, className, featured}: MenuCardProps) {
 
             const menuImages: Menu = {
                 day: menu.day,
-                Local: Local[0].original,
-                Vegi: Vegi[0].original,
-                Globetrotter: menu.Globetrotter ? Globetrotter[0].original : '',
-                Buffet: menu.Buffet ? Buffet[0].original : ''
+                Local: Local!.original,
+                Vegi: Vegi!.original,
+                Globetrotter: menu.Globetrotter ? Globetrotter!.original : '',
+                Buffet: menu.Buffet ? Buffet!.original : ''
             }
 
             setMenuImages(menuImages);
-            //setImages(await getImages(menu.Local));
         }
 
         // call the function

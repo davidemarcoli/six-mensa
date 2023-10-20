@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
+import {NextRequest, NextResponse} from 'next/server';
+
 const unirest = require("unirest");
 const cheerio = require("cheerio");
 
@@ -34,6 +35,15 @@ export async function POST(req: NextRequest) {
                 thumbnail: $(el).find(".rg_l img").attr("src") || $(el).find(".rg_l img").attr("data-src"),
             });
         });
+
+        if (req.nextUrl.searchParams.get("singleResult") === "true") {
+            const getHttpsImage = (images: Image[]) => {
+                return images.filter((image) => image.original.includes("https"))[0];
+            }
+
+            const httpsImage = getHttpsImage(images_results);
+            return NextResponse.json(httpsImage);
+        }
 
         return NextResponse.json(images_results);
     } catch (error) {
