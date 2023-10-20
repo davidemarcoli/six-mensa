@@ -1,9 +1,10 @@
 "use client";
 
+import MenuCard from "@/components/menu-card";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {useEffect, useState} from "react";
 
-interface Menu {
+export interface Menu {
     day: string;
     Local: string;
     Vegi: string;
@@ -47,34 +48,36 @@ export default function APIPage() {
             <main className="flex h-full items-center justify-center flex-col p-3">
                 {featuredMenus && (
                     <div className="w-full flex justify-center mb-4">
-                        <Card className="flex-grow w-1/4">
-                            <CardHeader>
-                                <CardTitle><span className="underline">Heute</span> <span
-                                    className="text-lg">({featuredMenus.day})</span></CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <p><b>Local:</b> {featuredMenus.Local}</p>
-                                <p><b>Vegi:</b> {featuredMenus.Vegi}</p>
-                                {featuredMenus.Globetrotter && <p><b>Globetrotter:</b> {featuredMenus.Globetrotter}</p>}
-                                {featuredMenus.Buffet && <p><b>Buffet:</b> {featuredMenus.Buffet}</p>}
-                            </CardContent>
-                        </Card>
+                        {/*<Card className="flex-grow w-1/4">*/}
+                        {/*    <CardHeader>*/}
+                        {/*        <CardTitle><span className="underline">Heute</span> <span*/}
+                        {/*            className="text-lg">({featuredMenus.day})</span></CardTitle>*/}
+                        {/*    </CardHeader>*/}
+                        {/*    <CardContent>*/}
+                        {/*        <p><b>Local:</b> {featuredMenus.Local}</p>*/}
+                        {/*        <p className="mt-4"><b>Vegi:</b> {featuredMenus.Vegi}</p>*/}
+                        {/*        {featuredMenus.Globetrotter && <p className="mt-4"><b>Globetrotter:</b> {featuredMenus.Globetrotter}</p>}*/}
+                        {/*        {featuredMenus.Buffet && <p className="mt-4"><b>Buffet:</b> {featuredMenus.Buffet}</p>}*/}
+                        {/*    </CardContent>*/}
+                        {/*</Card>*/}
+                        <MenuCard className={`flex-grow w-1/4`} menu={featuredMenus} featured={true}/>
                     </div>
                 )}
 
                 <div className="flex flex-wrap justify-center items-stretch">
                     {menuData.map((menu, i) => (
-                        <Card key={i} className={`flex-grow w-full md:w-1/6 ${i == menuData.length - 1 ? '' : 'mr-2'}`}>
-                            <CardHeader>
-                                <CardTitle>{menu.day}</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <p><b>Local:</b> {menu.Local}</p>
-                                <p><b>Vegi:</b> {menu.Vegi}</p>
-                                {menu.Globetrotter && <p><b>Globetrotter:</b> {menu.Globetrotter}</p>}
-                                {menu.Buffet && <p><b>Buffet:</b> {menu.Buffet}</p>}
-                            </CardContent>
-                        </Card>
+                        // <Card key={i} className={`flex-grow w-full md:w-1/6 ${i == menuData.length - 1 ? '' : 'mr-2'}`}>
+                        //     <CardHeader>
+                        //         <CardTitle>{menu.day}</CardTitle>
+                        //     </CardHeader>
+                        //     <CardContent>
+                        //         <p><b>Local:</b> {menu.Local}</p>
+                        //         <p className="mt-4"><b>Vegi:</b> {menu.Vegi}</p>
+                        //         {menu.Globetrotter && <p className="mt-4"><b>Globetrotter:</b> {menu.Globetrotter}</p>}
+                        //         {menu.Buffet && <p className="mt-4"><b>Buffet:</b> {menu.Buffet}</p>}
+                        //     </CardContent>
+                        // </Card>
+                        <MenuCard key={i} className={`flex-grow w-full lg:w-1/6 ${i == menuData.length - 1 ? '' : 'lg:mr-4 mb-4 lg:mb-0'}`} menu={menu}/>
                     ))}
                 </div>
             </main>
