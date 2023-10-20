@@ -1,7 +1,7 @@
 "use client";
 
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 
 interface Menu {
     day: string;
@@ -11,10 +11,8 @@ interface Menu {
     Buffet: string | undefined;
 }
 
-//export const revalidate = 10;
-
 async function getMenuData(): Promise<Menu[]> {
-    return await fetch("https://server.davidemarcoli.dev/six-mensa/-1").then((response) => response.json());
+    return await fetch("api").then((response) => response.json());
 }
 
 export default function APIPage() {
@@ -36,7 +34,6 @@ export default function APIPage() {
     if (menuData.length == 0) return;
 
     const currentDay = new Date().getDay() - 1;
-    const currentDate = new Date().getTime();
 
     let featuredMenus: Menu | undefined = undefined;
     // if is weekday, show featured menu
@@ -47,13 +44,13 @@ export default function APIPage() {
 
     return (
         <>
-            <p>{currentDate}</p>
             <main className="flex h-full items-center justify-center flex-col p-3">
                 {featuredMenus && (
                     <div className="w-full flex justify-center mb-4">
                         <Card className="flex-grow w-1/4">
                             <CardHeader>
-                                <CardTitle><span className="underline">Heute</span> <span className="text-lg">({featuredMenus.day})</span></CardTitle>
+                                <CardTitle><span className="underline">Heute</span> <span
+                                    className="text-lg">({featuredMenus.day})</span></CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <p><b>Local:</b> {featuredMenus.Local}</p>
