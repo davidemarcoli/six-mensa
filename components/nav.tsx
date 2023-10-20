@@ -9,7 +9,7 @@ export default function Nav() {
                     <nav className="flex items-center space-x-4 lg:space-x-6">
                         <span>SIX Menus</span>
                         <Link
-                            href="/api"
+                            href="/fetch"
                             className="text-sm font-medium transition-colors hover:text-primary"
                         >
                             API

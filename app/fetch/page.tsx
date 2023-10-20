@@ -1,4 +1,7 @@
+"use client";
+
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import {useEffect, useState} from "react";
 
 interface Menu {
     day: string;
@@ -9,19 +12,33 @@ interface Menu {
 }
 
 async function getMenuData(): Promise<Menu[]> {
-    return await fetch("http://server.davidemarcoli.dev:3000/-1").then((response) => response.json());
+    return await fetch("api").then((response) => response.json());
 }
 
-export default async function APIPage() {
+export default function APIPage() {
 
-    const menuData = await getMenuData();
+    const [menuData, setMenuData] = useState<Menu[]>([])
+    const [featuredMenus, setFeaturedMenus] = useState<Menu | undefined>(undefined)
+
+    useEffect(() => {
+        // declare the data fetching function
+        const fetchData = async () => {
+            setMenuData(await getMenuData());
+        }
+
+        // call the function
+        fetchData()
+            // make sure to catch any error
+            .catch(console.error);
+    }, [])
+
+    if (menuData.length == 0) return <p>Loading...</p>
 
     const currentDay = new Date().getDay() - 1;
 
-    let featuredMenus: Menu | undefined = undefined;
     // if is weekday, show featured menu
-    if (currentDay > 0 && currentDay < 5) {
-        featuredMenus = menuData[currentDay];
+    if (!featuredMenus && currentDay > 0 && currentDay < 5) {
+        setFeaturedMenus(menuData[currentDay]);
         menuData.splice(currentDay, 1);
     }
 
@@ -32,7 +49,8 @@ export default async function APIPage() {
                     <div className="w-full flex justify-center mb-4">
                         <Card className="flex-grow w-1/4">
                             <CardHeader>
-                                <CardTitle><span className="underline">Heute</span> <span className="text-lg">({featuredMenus.day})</span></CardTitle>
+                                <CardTitle><span className="underline">Heute</span> <span
+                                    className="text-lg">({featuredMenus.day})</span></CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <p><b>Local:</b> {featuredMenus.Local}</p>
