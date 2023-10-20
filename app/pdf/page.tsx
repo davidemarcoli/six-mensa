@@ -4,7 +4,7 @@ export default async function PDFPage() {
 
     return (
         <>
-            <main className="flex h-full items-center justify-between flex-row p-3">
+            <main className="flex h-full items-center justify-between flex-row p-2">
                 {pdfDataUrls.map((pdf, i) => (
                     <div key={i} className="w-full h-full p-5">
                         <h2 className="text-lg font-semibold mb-5 uppercase tracking-wide shadow-md p-3 rounded">
