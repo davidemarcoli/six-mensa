@@ -8,6 +8,8 @@ interface Menu {
     Buffet: string | undefined;
 }
 
+export const revalidate = 10;
+
 async function getMenuData(): Promise<Menu[]> {
     return await fetch("http://server.davidemarcoli.dev:3000/-1").then((response) => response.json());
 }
