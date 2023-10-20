@@ -18,6 +18,7 @@ async function getMenuData(): Promise<Menu[]> {
 export default function APIPage() {
 
     const [menuData, setMenuData] = useState<Menu[]>([])
+    const [featuredMenus, setFeaturedMenus] = useState<Menu | undefined>(undefined)
 
     useEffect(() => {
         // declare the data fetching function
@@ -31,14 +32,13 @@ export default function APIPage() {
             .catch(console.error);
     }, [])
 
-    if (menuData.length == 0) return;
+    if (menuData.length == 0) return <p>Loading...</p>
 
     const currentDay = new Date().getDay() - 1;
 
-    let featuredMenus: Menu | undefined = undefined;
     // if is weekday, show featured menu
-    if (currentDay > 0 && currentDay < 5) {
-        featuredMenus = menuData[currentDay];
+    if (!featuredMenus && currentDay > 0 && currentDay < 5) {
+        setFeaturedMenus(menuData[currentDay]);
         menuData.splice(currentDay, 1);
     }
 
