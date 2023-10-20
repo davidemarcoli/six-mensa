@@ -14,13 +14,22 @@ interface MenuCardProps {
 
 async function getImages(searchTerm: string): Promise<Image[]> {
     if (!searchTerm) return [];
+
+    const abortController = new AbortController();
+
     return await fetch('http://localhost:3000/api/scrape/cheerio/', {
         method: 'POST',
         body: JSON.stringify({searchTerm}),
         next: {
             revalidate: 60 * 60 * 24
+        },
+        signal: abortController.signal
+    }).then((response) => response.json()).catch((error) => {
+        if (!abortController.signal.aborted) {
+            console.error('Error:', error.message);
         }
-    }).then((response) => response.json());
+        return [];
+    });
 }
 
 

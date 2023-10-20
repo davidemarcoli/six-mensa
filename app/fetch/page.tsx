@@ -20,13 +20,21 @@ async function getMenuData(): Promise<Menu[]> {
 export default function APIPage() {
     const [menuData, setMenuData] = useState<Menu[]>([]);
     const [featuredMenus, setFeaturedMenus] = useState<Menu | undefined>(undefined);
-    const [hasShownAlert, setHasShownAlert] = useState<boolean>(localStorage ? localStorage.getItem('hasShownHoverAlert') === 'true' : false);
+    const [hasShownAlert, setHasShownAlert] = useState<boolean>(true);
 
-    if (!hasShownAlert) {
-        localStorage.setItem('hasShownHoverAlert', 'true');
-    }
+
+
+
 
     useEffect(() => {
+        // check localStorage on the client side
+        const alertShown = localStorage.getItem('hoverAlertShown') === 'true';
+        setHasShownAlert(alertShown);
+
+        if (!alertShown) {
+            localStorage.setItem('hoverAlertShown', 'true');
+        }
+
         // declare the data fetching function
         const fetchData = async () => {
             const fetchedMenuData = await getMenuData();
