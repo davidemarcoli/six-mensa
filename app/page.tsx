@@ -1,25 +1,7 @@
-async function getImages(searchTerm: string) {
-    return await fetch('http://localhost:3000/api/scrape/cheerio/', {
-        method: 'POST',
-        body: JSON.stringify({searchTerm})
-    }).then((response) => response.json());
-}
+"use client";
 
-export const revalidate = 10;
+import APIPage from "@/app/fetch/page";
 
-export default async function Home() {
-
-    const images = await getImages('donald duck');
-
-    return (
-        <>
-            {/*<p>{JSON.stringify(images)}</p>*/}
-            {images.map((image: any, i: number) => {
-                console.log(image)
-                return (
-                    <img key={i} src={image.original} alt=""/>
-                )
-            })}
-        </>
-    )
+export default function Home() {
+    return <APIPage/>
 }

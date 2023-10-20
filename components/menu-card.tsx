@@ -17,7 +17,7 @@ async function getImages(searchTerm: string): Promise<Image[]> {
 
     const abortController = new AbortController();
 
-    return await fetch('http://localhost:3000/api/scrape/cheerio/', {
+    return await fetch('api/scrape/cheerio/', {
         method: 'POST',
         body: JSON.stringify({searchTerm}),
         next: {
@@ -93,7 +93,7 @@ export default function MenuCard({menu, className, featured}: MenuCardProps) {
                     <HoverCardTrigger asChild>
                         <p><b>Local:</b> {menu.Local}</p>
                     </HoverCardTrigger>
-                    <HoverCardContent className="w-80">
+                    <HoverCardContent className="w-96">
                         <img src={menuImages?.Local} alt=""/>
                     </HoverCardContent>
                 </HoverCard>
@@ -101,18 +101,18 @@ export default function MenuCard({menu, className, featured}: MenuCardProps) {
                     <HoverCardTrigger asChild>
                         <p className="mt-4"><b>Vegi:</b> {menu.Vegi}</p>
                     </HoverCardTrigger>
-                    <HoverCardContent className="w-80">
+                    <HoverCardContent className="w-96">
                         <img src={menuImages?.Vegi} alt=""/>
                     </HoverCardContent>
                 </HoverCard>
                 {menu.Globetrotter && <HoverCard><HoverCardTrigger asChild><p className="mt-4">
                     <b>Globetrotter:</b> {menu.Globetrotter}</p></HoverCardTrigger><HoverCardContent
-                    className="w-80">
+                    className="w-96">
                     <img src={menuImages?.Globetrotter} alt=""/>
                 </HoverCardContent></HoverCard>}
                 {menu.Buffet && <HoverCard><HoverCardTrigger asChild><p className="mt-4">
                     <b>Buffet:</b> {menu.Buffet}</p></HoverCardTrigger><HoverCardContent
-                    className="w-80">
+                    className="w-96">
                     <img src={menuImages?.Buffet} alt=""/>
                 </HoverCardContent></HoverCard>}
                 {/*{menuImages?.Local && <img src={menuImages.Local} alt=""/>}*/}
