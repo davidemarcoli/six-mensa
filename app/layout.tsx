@@ -3,6 +3,7 @@ import './globals.css'
 import type {Metadata} from 'next'
 import {Inter} from 'next/font/google'
 import Nav from "@/components/nav";
+import { Changelog } from '@/components/changelog';
 
 const inter = Inter({subsets: ['latin']})
 
@@ -27,6 +28,7 @@ export default function RootLayout({
         >
             <Nav/>
             {children}
+            <Changelog />
         </ThemeProvider>
         </body>
         </html>

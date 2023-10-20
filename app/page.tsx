@@ -1,7 +1,7 @@
+"use client";
+
 import APIPage from "@/app/fetch/page";
 
-export default async function Home() {
-    return (
-        <APIPage/>
-    )
+export default function Home() {
+    return <APIPage/>
 }

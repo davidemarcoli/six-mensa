@@ -1,7 +1,8 @@
 "use client";
 
 import MenuCard from "@/components/menu-card";
-import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Info } from "lucide-react";
 import {useEffect, useState} from "react";
 
 export interface Menu {
@@ -17,14 +18,28 @@ async function getMenuData(): Promise<Menu[]> {
 }
 
 export default function APIPage() {
+    const [menuData, setMenuData] = useState<Menu[]>([]);
+    const [featuredMenus, setFeaturedMenus] = useState<Menu | undefined>(undefined);
+    const [hasShownAlert, setHasShownAlert] = useState<boolean>(true);
 
-    const [menuData, setMenuData] = useState<Menu[]>([])
-    const [featuredMenus, setFeaturedMenus] = useState<Menu | undefined>(undefined)
+
+
+
 
     useEffect(() => {
+        // check localStorage on the client side
+        const alertShown = localStorage.getItem('hoverAlertShown') === 'true';
+        setHasShownAlert(alertShown);
+
+        if (!alertShown) {
+            localStorage.setItem('hoverAlertShown', 'true');
+        }
+
         // declare the data fetching function
         const fetchData = async () => {
-            setMenuData(await getMenuData());
+            const fetchedMenuData = await getMenuData();
+            const updatedMenuData = handleFeaturedMenu(fetchedMenuData);
+            setMenuData(updatedMenuData);
         }
 
         // call the function
@@ -35,53 +50,46 @@ export default function APIPage() {
 
     if (menuData.length == 0) return <p>Loading...</p>
 
-    const currentDay = new Date().getDay() - 1;
-
-    // if is weekday, show featured menu
-    if (!featuredMenus && currentDay > 0 && currentDay < 5) {
-        setFeaturedMenus(menuData[currentDay]);
-        menuData.splice(currentDay, 1);
-    }
-
     return (
         <>
             <main className="flex h-full items-center justify-center flex-col p-3">
+                {!hasShownAlert && (
+                    <Alert className="mb-4 -z-10">
+                        <Info className="h-4 w-4" />
+                        <AlertTitle>Heads up!</AlertTitle>
+                        <AlertDescription>
+                            You can hover over a menu to see a symbolic image of the food.
+                        </AlertDescription>
+                    </Alert>
+                )}
+
                 {featuredMenus && (
                     <div className="w-full flex justify-center mb-4">
-                        {/*<Card className="flex-grow w-1/4">*/}
-                        {/*    <CardHeader>*/}
-                        {/*        <CardTitle><span className="underline">Heute</span> <span*/}
-                        {/*            className="text-lg">({featuredMenus.day})</span></CardTitle>*/}
-                        {/*    </CardHeader>*/}
-                        {/*    <CardContent>*/}
-                        {/*        <p><b>Local:</b> {featuredMenus.Local}</p>*/}
-                        {/*        <p className="mt-4"><b>Vegi:</b> {featuredMenus.Vegi}</p>*/}
-                        {/*        {featuredMenus.Globetrotter && <p className="mt-4"><b>Globetrotter:</b> {featuredMenus.Globetrotter}</p>}*/}
-                        {/*        {featuredMenus.Buffet && <p className="mt-4"><b>Buffet:</b> {featuredMenus.Buffet}</p>}*/}
-                        {/*    </CardContent>*/}
-                        {/*</Card>*/}
                         <MenuCard className={`flex-grow w-1/4`} menu={featuredMenus} featured={true}/>
                     </div>
                 )}
 
                 <div className="flex flex-wrap justify-center items-stretch">
                     {menuData.map((menu, i) => (
-                        // <Card key={i} className={`flex-grow w-full md:w-1/6 ${i == menuData.length - 1 ? '' : 'mr-2'}`}>
-                        //     <CardHeader>
-                        //         <CardTitle>{menu.day}</CardTitle>
-                        //     </CardHeader>
-                        //     <CardContent>
-                        //         <p><b>Local:</b> {menu.Local}</p>
-                        //         <p className="mt-4"><b>Vegi:</b> {menu.Vegi}</p>
-                        //         {menu.Globetrotter && <p className="mt-4"><b>Globetrotter:</b> {menu.Globetrotter}</p>}
-                        //         {menu.Buffet && <p className="mt-4"><b>Buffet:</b> {menu.Buffet}</p>}
-                        //     </CardContent>
-                        // </Card>
                         <MenuCard key={i} className={`flex-grow w-full lg:w-1/6 ${i == menuData.length - 1 ? '' : 'lg:mr-4 mb-4 lg:mb-0'}`} menu={menu}/>
                     ))}
                 </div>
             </main>
-
         </>
     )
+
+    // Handle featured menu logic outside the useEffect callback
+    function handleFeaturedMenu(data: Menu[]): Menu[] {
+        const currentDay = new Date().getDay() - 1;
+
+        if (!featuredMenus && currentDay > 0 && currentDay < 5) {
+            const featured = data[currentDay];
+            setFeaturedMenus(featured);
+            const updatedData = [...data];
+            updatedData.splice(currentDay, 1);
+            return updatedData;
+        }
+
+        return data;
+    }
 }
