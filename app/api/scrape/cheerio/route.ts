@@ -37,8 +37,12 @@ export async function POST(req: NextRequest) {
         });
 
         if (req.nextUrl.searchParams.get("singleResult") === "true") {
+
+            const isValidImage = (url: string) => {
+                return /^https:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
+            }
             const getHttpsImage = (images: Image[]) => {
-                return images.filter((image) => image.original.includes("https"))[0];
+                return images.filter((image) => isValidImage(image.original))[0];
             }
 
             const httpsImage = getHttpsImage(images_results);
