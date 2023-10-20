@@ -1,4 +1,7 @@
+"use client;"
+
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import { useEffect, useState } from "react";
 
 interface Menu {
     day: string;
@@ -8,15 +11,29 @@ interface Menu {
     Buffet: string | undefined;
 }
 
-export const revalidate = 10;
+//export const revalidate = 10;
 
 async function getMenuData(): Promise<Menu[]> {
     return await fetch("http://server.davidemarcoli.dev:3000/-1").then((response) => response.json());
 }
 
-export default async function APIPage() {
+export default function APIPage() {
 
-    const menuData = await getMenuData();
+    const [menuData, setMenuData] = useState<Menu[]>([])
+
+    useEffect(() => {
+        // declare the data fetching function
+        const fetchData = async () => {
+            setMenuData(await getMenuData());
+        }
+
+        // call the function
+        fetchData()
+            // make sure to catch any error
+            .catch(console.error);
+    }, [])
+
+    if (menuData.length == 0) return;
 
     const currentDay = new Date().getDay() - 1;
     const currentDate = new Date().getTime();
