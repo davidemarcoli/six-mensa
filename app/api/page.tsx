@@ -17,6 +17,7 @@ export default async function APIPage() {
     const menuData = await getMenuData();
 
     const currentDay = new Date().getDay() - 1;
+    const currentDate = new Date().getTime();
 
     let featuredMenus: Menu | undefined = undefined;
     // if is weekday, show featured menu
@@ -27,7 +28,8 @@ export default async function APIPage() {
 
     return (
         <>
-            <main className="flex h-full items-center justify-center flex-col p-3">
+        {currentDate}
+            {{/*<main className="flex h-full items-center justify-center flex-col p-3">
                 {featuredMenus && (
                     <div className="w-full flex justify-center mb-4">
                         <Card className="flex-grow w-1/4">
@@ -59,7 +61,7 @@ export default async function APIPage() {
                         </Card>
                     ))}
                 </div>
-            </main>
+                    </main>*/}}
 
         </>
     )
