@@ -14,7 +14,7 @@ interface Menu {
 //export const revalidate = 10;
 
 async function getMenuData(): Promise<Menu[]> {
-    return await fetch("http://server.davidemarcoli.dev:3000/-1").then((response) => response.json());
+    return await fetch("https://server.davidemarcoli.dev/six-mensa/-1").then((response) => response.json());
 }
 
 export default function APIPage() {
