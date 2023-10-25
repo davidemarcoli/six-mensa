@@ -1,35 +1,63 @@
 "use client";
 
 import {ModeToggle} from "@/components/theme-toggle";
-import { Label } from "./ui/label";
-import { Switch } from "./ui/switch";
-import {usePathname, useRouter} from "next/navigation";
-import {useEffect, useState} from "react";
+import {Label} from "./ui/label";
+import {Switch} from "./ui/switch";
+import {usePathname, useRouter, useSearchParams} from "next/navigation";
+import {useCallback, useEffect, useState} from "react";
 
 export default function Nav() {
 
-    const [checked, setChecked] = useState(false);
+    const [checkedMode, setCheckedMode] = useState(false);
+    const [checkedMensa, setCheckedMensa] = useState(false);
 
-    const router = useRouter();
-    const pathname = usePathname();
+    const router = useRouter()
+    const pathname = usePathname()
+    const searchParams = useSearchParams()!
 
-    console.log(pathname)
+    // Get a new searchParams string by merging the current
+    // searchParams with a provided key/value pair
+    const createQueryString = useCallback(
+        (name: string, value: string) => {
+            const params = new URLSearchParams(searchParams)
+            params.set(name, value)
+
+            return params.toString()
+        },
+        [searchParams]
+    )
 
     useEffect(() => {
-        if (pathname === '/fetch' || pathname === '/') {
-            setChecked(true)
+        console.log("useEffect")
+        console.log(searchParams.get('viewMode'))
+        if (!searchParams.get('viewMode') || searchParams.get('viewMode') === 'text') {
+            onModeToggle(true)
         } else {
-            setChecked(false)
+            onModeToggle(false)
+        }
+        if (!searchParams.get('mensa') || searchParams.get('mensa') === 'htp') {
+            onMensaToggle(true)
+        } else {
+            onMensaToggle(false)
         }
     }, []);
 
     function onModeToggle(checked: boolean) {
-        console.log(checked)
-        setChecked(checked)
+        setCheckedMode(checked)
         if (checked) {
-            router.push('/fetch')
+            router.push(pathname + '?' + createQueryString('viewMode', 'text'))
         } else {
-            router.push('/pdf')
+            console.log(pathname + '?' + createQueryString('viewMode', 'pdf'))
+            router.push(pathname + '?' + createQueryString('viewMode', 'pdf'))
+        }
+    }
+
+    function onMensaToggle(checked: boolean) {
+        setCheckedMensa(checked)
+        if (checked) {
+            router.push(pathname + '?' + createQueryString('mensa', 'htp'))
+        } else {
+            router.push(pathname + '?' + createQueryString('mensa', 'ht201'))
         }
     }
 
@@ -39,8 +67,14 @@ export default function Nav() {
                 <div className="flex h-16 items-center px-4">
                     <nav className="flex items-center space-x-4 lg:space-x-6">
                         <span>SIX Menus</span>
-                        <Label htmlFor="mode-toggle">View Mode: <span className={`${!checked ? 'underline' : ''}`}>PDF</span> | <span className={`${checked ? 'underline' : ''}`}>Text</span></Label>
-                        <Switch id="mode-toggle" checked={checked} onCheckedChange={onModeToggle}/>
+                        <Label htmlFor="mode-toggle">View Mode: <span
+                            className={`${!checkedMode ? 'underline' : ''}`}>PDF</span> | <span
+                            className={`${checkedMode ? 'underline' : ''}`}>Text</span></Label>
+                        <Switch id="mode-toggle" checked={checkedMode} onCheckedChange={onModeToggle}/>
+                        <Label htmlFor="mensa-toggle">Mensa: <span
+                            className={`${!checkedMensa ? 'underline' : ''}`}>HT201</span> | <span
+                            className={`${checkedMensa ? 'underline' : ''}`}>HTP</span></Label>
+                        <Switch id="mensa-toggle" checked={checkedMensa} onCheckedChange={onMensaToggle}/>
                         {/*<Link*/}
                         {/*    href="/fetch"*/}
                         {/*    className="text-sm font-medium transition-colors hover:text-primary"*/}

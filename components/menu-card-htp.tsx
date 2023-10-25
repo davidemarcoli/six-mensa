@@ -1,13 +1,13 @@
 "use client";
 
-import {Menu} from "@/app/fetch/page";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {Image} from "@/app/api/scrape/cheerio/route";
 import {useEffect, useState} from "react";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "./ui/hover-card";
+import { HTPMenu } from "@/app/_components/htp-page";
 
-interface MenuCardProps {
-    menu: Menu;
+interface MenuCardHTPProps {
+    menu: HTPMenu;
     featured?: boolean;
     className?: string;
 }
@@ -33,10 +33,10 @@ async function getImages(searchTerm: string): Promise<Image | undefined> {
 }
 
 
-export default function MenuCard({menu, className, featured}: MenuCardProps) {
+export default function MenuCardHTP({menu, className, featured}: MenuCardHTPProps) {
 
     //const [images, setImages] = useState<Image[]>([]);
-    const [menuImages, setMenuImages] = useState<Menu>();
+    const [menuImages, setMenuImages] = useState<HTPMenu>();
 
     useEffect(() => {
         // declare the data fetching function
@@ -56,7 +56,7 @@ export default function MenuCard({menu, className, featured}: MenuCardProps) {
                 }
             });
 
-            const menuImages: Menu = {
+            const menuImages: HTPMenu = {
                 day: menu.day,
                 Local: Local!.original,
                 Vegi: Vegi!.original,
