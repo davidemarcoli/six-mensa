@@ -1,11 +1,11 @@
 "use client";
 
-import MenuCard from "@/components/menu-card";
+import MenuCardHTP from "@/components/menu-card-htp";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Info } from "lucide-react";
 import {useEffect, useState} from "react";
 
-export interface Menu {
+export interface HTPMenu {
     day: string;
     Local: string;
     Vegi: string;
@@ -13,18 +13,14 @@ export interface Menu {
     Buffet: string | undefined;
 }
 
-async function getMenuData(): Promise<Menu[]> {
-    return await fetch("api").then((response) => response.json());
+async function getMenuData(): Promise<HTPMenu[]> {
+    return await fetch("api/htp").then((response) => response.json());
 }
 
-export default function APIPage() {
-    const [menuData, setMenuData] = useState<Menu[]>([]);
-    const [featuredMenus, setFeaturedMenus] = useState<Menu | undefined>(undefined);
+export default function HTPPage() {
+    const [menuData, setMenuData] = useState<HTPMenu[]>([]);
+    const [featuredMenus, setFeaturedMenus] = useState<HTPMenu | undefined>(undefined);
     const [hasShownAlert, setHasShownAlert] = useState<boolean>(true);
-
-
-
-
 
     useEffect(() => {
         // check localStorage on the client side
@@ -65,13 +61,13 @@ export default function APIPage() {
 
                 {featuredMenus && (
                     <div className="w-full flex justify-center mb-4">
-                        <MenuCard className={`flex-grow w-1/4`} menu={featuredMenus} featured={true}/>
+                        <MenuCardHTP className={`flex-grow w-1/4`} menu={featuredMenus} featured={true}/>
                     </div>
                 )}
 
                 <div className="flex flex-wrap justify-center items-stretch">
                     {menuData.map((menu, i) => (
-                        <MenuCard key={i} className={`flex-grow w-full lg:w-1/6 ${i == menuData.length - 1 ? '' : 'lg:mr-4 mb-4 lg:mb-0'}`} menu={menu}/>
+                        <MenuCardHTP key={i} className={`flex-grow w-full lg:w-1/6 ${i == menuData.length - 1 ? '' : 'lg:mr-4 mb-4 lg:mb-0'}`} menu={menu}/>
                     ))}
                 </div>
             </main>
@@ -79,7 +75,7 @@ export default function APIPage() {
     )
 
     // Handle featured menu logic outside the useEffect callback
-    function handleFeaturedMenu(data: Menu[]): Menu[] {
+    function handleFeaturedMenu(data: HTPMenu[]): HTPMenu[] {
         const currentDay = new Date().getDay() - 1;
 
         if (!featuredMenus && currentDay > 0 && currentDay < 5) {

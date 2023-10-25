@@ -1,4 +1,14 @@
-export default async function PDFPage() {
+import {Suspense} from "react";
+
+export default function PDFPageSkeleton() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <PDFPage/>
+        </Suspense>
+    )
+}
+
+export async function PDFPage() {
 
     const pdfDataUrls = await getPdfUrls();
 

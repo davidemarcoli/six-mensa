@@ -1,13 +1,13 @@
 "use client";
 
-import {Menu} from "@/app/fetch/page";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {Image} from "@/app/api/scrape/cheerio/route";
 import {useEffect, useState} from "react";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "./ui/hover-card";
+import {HT201Menu} from "@/app/_components/ht201-page";
 
-interface MenuCardProps {
-    menu: Menu;
+interface MenuCardHT201Props {
+    menu: HT201Menu;
     featured?: boolean;
     className?: string;
 }
@@ -33,35 +33,39 @@ async function getImages(searchTerm: string): Promise<Image | undefined> {
 }
 
 
-export default function MenuCard({menu, className, featured}: MenuCardProps) {
+export default function MenuCardHT201({menu, className, featured}: MenuCardHT201Props) {
 
     //const [images, setImages] = useState<Image[]>([]);
-    const [menuImages, setMenuImages] = useState<Menu>();
+    const [menuImages, setMenuImages] = useState<HT201Menu>();
 
     useEffect(() => {
         // declare the data fetching function
         const fetchData = async () => {
 
+            //console.log(menu)
+
             const {
                 Local,
+                Global,
                 Vegi,
-                Globetrotter,
-                Buffet
-            } = await Promise.all([getImages(menu.Local), getImages(menu.Vegi), getImages(menu.Globetrotter || ""), getImages(menu.Buffet + " food buffet" || "")]).then((values) => {
+                PizzaPasta
+            } = await Promise.all([getImages(menu.Local), getImages(menu.Global || ""), getImages(menu.Vegi), getImages(menu["Pizza & Pasta"])]).then((values) => {
                 return {
                     Local: values[0],
-                    Vegi: values[1],
-                    Globetrotter: values[2],
-                    Buffet: values[3]
+                    Global: values[1],
+                    Vegi: values[2],
+                    PizzaPasta: values[3]
                 }
             });
 
-            const menuImages: Menu = {
+            console.log(Vegi)
+
+            const menuImages: HT201Menu = {
                 day: menu.day,
+                Global: menu.Global ? Global!.original : '',
                 Local: Local!.original,
                 Vegi: Vegi!.original,
-                Globetrotter: menu.Globetrotter ? Globetrotter!.original : '',
-                Buffet: menu.Buffet ? Buffet!.original : ''
+                "Pizza & Pasta": menu["Pizza & Pasta"] ? PizzaPasta!.original : ''
             }
 
             setMenuImages(menuImages);
@@ -96,6 +100,11 @@ export default function MenuCard({menu, className, featured}: MenuCardProps) {
                         <img src={menuImages?.Local} alt=""/>
                     </HoverCardContent>
                 </HoverCard>
+                {menu.Global && <HoverCard><HoverCardTrigger asChild><p className="mt-4">
+                    <b>Global:</b> {menu.Global}</p></HoverCardTrigger><HoverCardContent
+                    className="w-96">
+                    <img src={menuImages?.Global} alt=""/>
+                </HoverCardContent></HoverCard>}
                 <HoverCard>
                     <HoverCardTrigger asChild>
                         <p className="mt-4"><b>Vegi:</b> {menu.Vegi}</p>
@@ -104,15 +113,10 @@ export default function MenuCard({menu, className, featured}: MenuCardProps) {
                         <img src={menuImages?.Vegi} alt=""/>
                     </HoverCardContent>
                 </HoverCard>
-                {menu.Globetrotter && <HoverCard><HoverCardTrigger asChild><p className="mt-4">
-                    <b>Globetrotter:</b> {menu.Globetrotter}</p></HoverCardTrigger><HoverCardContent
+                {menu["Pizza & Pasta"] && <HoverCard><HoverCardTrigger asChild><p className="mt-4">
+                    <b>Pizza & Pasta:</b> {menu["Pizza & Pasta"]}</p></HoverCardTrigger><HoverCardContent
                     className="w-96">
-                    <img src={menuImages?.Globetrotter} alt=""/>
-                </HoverCardContent></HoverCard>}
-                {menu.Buffet && <HoverCard><HoverCardTrigger asChild><p className="mt-4">
-                    <b>Buffet:</b> {menu.Buffet}</p></HoverCardTrigger><HoverCardContent
-                    className="w-96">
-                    <img src={menuImages?.Buffet} alt=""/>
+                    <img src={menuImages ? menuImages["Pizza & Pasta"] : ''} alt=""/>
                 </HoverCardContent></HoverCard>}
                 {/*{menuImages?.Local && <img src={menuImages.Local} alt=""/>}*/}
             </CardContent>
