@@ -28,15 +28,17 @@ export default function Nav() {
     )
 
     useEffect(() => {
-        if (searchParams.get('viewMode') === 'text' || searchParams.get('viewMode') === '') {
-            setCheckedMode(true)
+        console.log("useEffect")
+        console.log(searchParams.get('viewMode'))
+        if (!searchParams.get('viewMode') || searchParams.get('viewMode') === 'text') {
+            onModeToggle(true)
         } else {
-            setCheckedMode(false)
+            onModeToggle(false)
         }
-        if (searchParams.get('mensa') === 'htp' || searchParams.get('mensa') === '') {
-            setCheckedMensa(true)
+        if (!searchParams.get('mensa') || searchParams.get('mensa') === 'htp') {
+            onMensaToggle(true)
         } else {
-            setCheckedMensa(false)
+            onMensaToggle(false)
         }
     }, []);
 

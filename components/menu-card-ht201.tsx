@@ -58,8 +58,6 @@ export default function MenuCardHT201({menu, className, featured}: MenuCardHT201
                 }
             });
 
-            console.log(Vegi)
-
             const menuImages: HT201Menu = {
                 day: menu.day,
                 Global: menu.Global ? Global!.original : '',
