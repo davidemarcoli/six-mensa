@@ -1,7 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
-import {Image} from "@/app/api/scrape/cheerio/route";
+import {Image as MyImage} from "@/app/api/scrape/cheerio/route";
 import {useEffect, useState} from "react";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "./ui/hover-card";
 import { HTPMenu } from "@/app/_components/htp-page";
@@ -12,7 +13,7 @@ interface MenuCardHTPProps {
     className?: string;
 }
 
-async function getImages(searchTerm: string): Promise<Image | undefined> {
+async function getImages(searchTerm: string): Promise<MyImage | undefined> {
     if (!searchTerm) return undefined;
 
     const abortController = new AbortController();
@@ -93,7 +94,7 @@ export default function MenuCardHTP({menu, className, featured}: MenuCardHTPProp
                         <p><b>Local:</b> {menu.Local}</p>
                     </HoverCardTrigger>
                     <HoverCardContent className="w-96">
-                        <img src={menuImages?.Local} alt=""/>
+                        <Image src={menuImages?.Local!} alt=""/>
                     </HoverCardContent>
                 </HoverCard>
                 <HoverCard>
@@ -101,18 +102,18 @@ export default function MenuCardHTP({menu, className, featured}: MenuCardHTPProp
                         <p className="mt-4"><b>Vegi:</b> {menu.Vegi}</p>
                     </HoverCardTrigger>
                     <HoverCardContent className="w-96">
-                        <img src={menuImages?.Vegi} alt=""/>
+                        <Image src={menuImages?.Vegi!} alt=""/>
                     </HoverCardContent>
                 </HoverCard>
                 {menu.Globetrotter && <HoverCard><HoverCardTrigger asChild><p className="mt-4">
                     <b>Globetrotter:</b> {menu.Globetrotter}</p></HoverCardTrigger><HoverCardContent
                     className="w-96">
-                    <img src={menuImages?.Globetrotter} alt=""/>
+                    <Image src={menuImages?.Globetrotter!} alt=""/>
                 </HoverCardContent></HoverCard>}
                 {menu.Buffet && <HoverCard><HoverCardTrigger asChild><p className="mt-4">
                     <b>Buffet:</b> {menu.Buffet}</p></HoverCardTrigger><HoverCardContent
                     className="w-96">
-                    <img src={menuImages?.Buffet} alt=""/>
+                    <Image src={menuImages?.Buffet!} alt=""/>
                 </HoverCardContent></HoverCard>}
                 {/*{menuImages?.Local && <img src={menuImages.Local} alt=""/>}*/}
             </CardContent>
