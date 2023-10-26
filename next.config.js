@@ -1,5 +1,14 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+    images: {
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "**",
+            },
+        ],
+    },
+}
 
 const withPWA = require("@ducanh2912/next-pwa").default({
     dest: "public",
