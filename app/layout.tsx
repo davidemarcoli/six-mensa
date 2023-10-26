@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     title: 'SIX Menus',
     description: 'Get the latest menus from SIX',
     manifest: '/manifest.webmanifest',
+    keywords: ['SIX', 'Mensa', 'Menu', 'HTP', 'HT201']
 }
 
 export default function RootLayout({
