@@ -28,8 +28,6 @@ export default function Nav() {
     )
 
     useEffect(() => {
-        console.log("useEffect")
-        console.log(searchParams.get('viewMode'))
         if (!searchParams.get('viewMode') || searchParams.get('viewMode') === 'text') {
             onModeToggle(true)
         } else {
@@ -47,7 +45,6 @@ export default function Nav() {
         if (checked) {
             router.push(pathname + '?' + createQueryString('viewMode', 'text'))
         } else {
-            console.log(pathname + '?' + createQueryString('viewMode', 'pdf'))
             router.push(pathname + '?' + createQueryString('viewMode', 'pdf'))
         }
     }

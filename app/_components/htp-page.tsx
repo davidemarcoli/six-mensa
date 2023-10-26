@@ -65,7 +65,7 @@ export default function HTPPage() {
                     </div>
                 )}
 
-                <div className="flex flex-wrap justify-center items-stretch">
+                <div className="flex flex-wrap justify-center items-stretch w-full">
                     {menuData.map((menu, i) => (
                         <MenuCardHTP key={i} className={`flex-grow w-full lg:w-1/6 ${i == menuData.length - 1 ? '' : 'lg:mr-4 mb-4 lg:mb-0'}`} menu={menu}/>
                     ))}
