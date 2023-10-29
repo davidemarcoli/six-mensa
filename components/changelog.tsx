@@ -23,13 +23,12 @@ export function Changelog() {
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Changelog</DialogTitle>
-                    <h1 className="text-2xl">October 25, 2023 - Release {version}</h1>
+                    <h1 className="text-2xl">October 26, 2023 - Release {version}</h1>
                     <hr/>
 
                     <h3 className="text-xl">Summary</h3>
                     <ul>
-                        <li><strong>[New]</strong> Add Mensa Selection</li>
-                        <li><strong>[Refactor]</strong> Switch url path to query params</li>
+                        <li><strong>[New]</strong> Add PWA</li>
 
                         {/*<li><strong>[New]</strong> Added new feature</li>*/}
                         {/*<li><strong>[Fix]</strong> Fixed some bugs</li>*/}

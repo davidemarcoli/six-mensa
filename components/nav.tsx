@@ -28,12 +28,12 @@ export default function Nav() {
     )
 
     useEffect(() => {
-        console.log(pathname)
-        if (pathname !== '/') {
-            return
-        }
-        console.log("useEffect")
-        console.log(searchParams.get('viewMode'))
+        // console.log(pathname)
+        // if (pathname !== '/') {
+        //     return
+        // }
+        // console.log("useEffect")
+        // console.log(searchParams.get('viewMode'))
         if (!searchParams.get('viewMode') || searchParams.get('viewMode') === 'text') {
             onModeToggle(true)
         } else {
