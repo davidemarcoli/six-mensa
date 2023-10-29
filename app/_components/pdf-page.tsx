@@ -1,4 +1,4 @@
-import {Suspense} from "react";
+import {Suspense, useEffect, useState} from "react";
 
 export default function PDFPageSkeleton() {
     return (
@@ -8,9 +8,15 @@ export default function PDFPageSkeleton() {
     )
 }
 
-export async function PDFPage() {
+export function PDFPage() {
 
-    const pdfDataUrls = await getPdfUrls();
+    const [pdfDataUrls, setPdfDataUrls] = useState<any[]>([])
+
+    useEffect(() => {
+        getPdfUrls().then((urls) => {
+            setPdfDataUrls(urls)
+        })
+    }, [])
 
     return (
         <>
@@ -33,12 +39,18 @@ export async function PDFPage() {
 
 async function getPdfUrls() {
     const pdfData = [
-        { url: "https://www.betriebsrestaurants-migros.ch/media/x4vjg4pd/menueplan_six-ht201.pdf", title: "Menu Plan HT201" },
-        { url: "https://www.betriebsrestaurants-migros.ch/media/k5dnh0sd/landingpage_menueplan_htp.pdf", title: "Menu Plan HTP" }
+        {
+            url: "https://www.betriebsrestaurants-migros.ch/media/x4vjg4pd/menueplan_six-ht201.pdf",
+            title: "Menu Plan HT201"
+        },
+        {
+            url: "https://www.betriebsrestaurants-migros.ch/media/k5dnh0sd/landingpage_menueplan_htp.pdf",
+            title: "Menu Plan HTP"
+        }
     ];
 
     return await Promise.all(pdfData.map(async (data) => {
-        const response = await fetch(data.url);
+        const response = await fetch(data.url, {next: {revalidate: 60 * 60 * 4}});
         const blob = await response.blob();
         const buffer = await blob.arrayBuffer();
         const base64 = Buffer.from(buffer).toString('base64');

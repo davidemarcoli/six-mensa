@@ -28,6 +28,10 @@ export default function Nav() {
     )
 
     useEffect(() => {
+        console.log(pathname)
+        if (pathname !== '/') {
+            return
+        }
         console.log("useEffect")
         console.log(searchParams.get('viewMode'))
         if (!searchParams.get('viewMode') || searchParams.get('viewMode') === 'text') {
@@ -42,12 +46,33 @@ export default function Nav() {
         }
     }, []);
 
+
+    /*
+        useEffect(() => {
+        if (!searchParams.get('viewMode') || searchParams.get('viewMode') === 'text') {
+            setCheckedMode(true)
+            router.push(pathname + '?' + createQueryString('viewMode', 'text'))
+            // onModeToggle(true)
+        } else {
+            setCheckedMode(false)
+            // onModeToggle(false)
+        }
+        if (!searchParams.get('mensa') || searchParams.get('mensa') === 'htp') {
+            setCheckedMensa(true)
+            router.push(pathname + '?' + createQueryString('mensa', 'htp'))
+            // onMensaToggle(true)
+        } else {
+            setCheckedMensa(false)
+            // onMensaToggle(false)
+        }
+    }, []);
+     */
+
     function onModeToggle(checked: boolean) {
         setCheckedMode(checked)
         if (checked) {
             router.push(pathname + '?' + createQueryString('viewMode', 'text'))
         } else {
-            console.log(pathname + '?' + createQueryString('viewMode', 'pdf'))
             router.push(pathname + '?' + createQueryString('viewMode', 'pdf'))
         }
     }

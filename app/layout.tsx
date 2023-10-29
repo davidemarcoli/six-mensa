@@ -3,7 +3,7 @@ import './globals.css'
 import type {Metadata} from 'next'
 import {Inter} from 'next/font/google'
 import Nav from "@/components/nav";
-import { Changelog } from '@/components/changelog';
+import {Changelog} from '@/components/changelog';
 
 const inter = Inter({subsets: ['latin']})
 
@@ -18,7 +18,7 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning={true}>
         <body className={`${inter.className}`}>
         <ThemeProvider
             attribute="class"
@@ -28,7 +28,7 @@ export default function RootLayout({
         >
             <Nav/>
             {children}
-            <Changelog />
+            <Changelog/>
         </ThemeProvider>
         </body>
         </html>
