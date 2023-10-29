@@ -1,9 +1,8 @@
 "use client";
 
 import {useSearchParams} from "next/navigation";
-import HT201Page from "@/app/_components/ht201-page";
-import HTPPage from "@/app/_components/htp-page";
 import PDFPageSkeleton from "@/app/_components/pdf-page";
+import MenuPage from "@/app/_components/menu-page";
 
 export default function Home() {
 
@@ -13,7 +12,7 @@ export default function Home() {
 
     return (
         <>
-            {viewMode === 'text' ? (mensa === 'htp' ? <HTPPage/> : <HT201Page/>) : <PDFPageSkeleton/>}
+            {viewMode === 'text' ? <MenuPage pageType={mensa === 'htp' ? 'HTP' : 'HT201'}/> : <PDFPageSkeleton/>}
         </>
     )
 }

@@ -1,30 +1,38 @@
 "use client";
 
-import MenuCardHTP from "@/components/menu-card-htp";
+import MenuCard from "@/components/menu-card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Info } from "lucide-react";
-import {useEffect, useState} from "react";
-import MenuCardHT201 from "@/components/menu-card-ht201";
+import { useEffect, useState } from "react";
 
-export interface HT201Menu {
-    day: string;
-    Local: string;
-    Global: string | undefined;
-    Vegi: string;
-    "Pizza & Pasta": string;
+// Define the prop type for the combined page
+interface CombinedPageProps {
+    pageType: 'HT201' | 'HTP';
 }
 
-async function getMenuData(): Promise<HT201Menu[]> {
-    return await fetch("api/ht201").then((response) => response.json());
-}
+// Define the menu item structures for HT201 and HTP
+const menuItemsHT201 = [
+    { name: 'Local', imageKey: 'Local', menuKey: 'Local' },
+    { name: 'Global', imageKey: 'Global', menuKey: 'Global' },
+    { name: 'Vegi', imageKey: 'Vegi', menuKey: 'Vegi' },
+    { name: 'Pizza & Pasta', imageKey: 'PizzaPasta', menuKey: 'Pizza & Pasta' },
+];
 
-export default function HT201Page() {
-    const [menuData, setMenuData] = useState<HT201Menu[]>([]);
-    const [featuredMenus, setFeaturedMenus] = useState<HT201Menu | undefined>(undefined);
+const menuItemsHTP = [
+    { name: 'Local', imageKey: 'Local', menuKey: 'Local' },
+    { name: 'Vegi', imageKey: 'Vegi', menuKey: 'Vegi' },
+    { name: 'Globetrotter', imageKey: 'Globetrotter', menuKey: 'Globetrotter' },
+    { name: 'Buffet', imageKey: 'Buffet', menuKey: 'Buffet' },
+];
+
+export default function MenuPage({ pageType }: CombinedPageProps) {
+    const [menuData, setMenuData] = useState<any[]>([]);
+    const [featuredMenus, setFeaturedMenus] = useState<any | undefined>(undefined);
     const [hasShownAlert, setHasShownAlert] = useState<boolean>(true);
+    const apiPath = pageType === 'HT201' ? 'api/ht201' : 'api/htp';
+    const menuItems = pageType === 'HT201' ? menuItemsHT201 : menuItemsHTP;
 
     useEffect(() => {
-        // check localStorage on the client side
         const alertShown = localStorage.getItem('hoverAlertShown') === 'true';
         setHasShownAlert(alertShown);
 
@@ -32,20 +40,16 @@ export default function HT201Page() {
             localStorage.setItem('hoverAlertShown', 'true');
         }
 
-        // declare the data fetching function
         const fetchData = async () => {
-            const fetchedMenuData = await getMenuData();
+            const fetchedMenuData = await fetch(apiPath).then((response) => response.json());
             const updatedMenuData = handleFeaturedMenu(fetchedMenuData);
             setMenuData(updatedMenuData);
-        }
+        };
 
-        // call the function
-        fetchData()
-            // make sure to catch any error
-            .catch(console.error);
-    }, [])
+        fetchData().catch(console.error);
+    }, [pageType]);
 
-    if (menuData.length == 0) return <p>Loading...</p>
+    if (menuData.length === 0) return <p>Loading...</p>;
 
     return (
         <>
@@ -62,21 +66,20 @@ export default function HT201Page() {
 
                 {featuredMenus && (
                     <div className="w-full flex justify-center mb-4">
-                        <MenuCardHT201 className={`flex-grow w-1/4`} menu={featuredMenus} featured={true}/>
+                        <MenuCard className={`flex-grow w-1/4`} menu={featuredMenus} featured={true} menuItems={menuItems}/>
                     </div>
                 )}
 
                 <div className="flex flex-wrap justify-center items-stretch w-full">
                     {menuData.map((menu, i) => (
-                        <MenuCardHT201 key={i} className={`flex-grow w-full lg:w-1/6 ${i == menuData.length - 1 ? '' : 'lg:mr-4 mb-4 lg:mb-0'}`} menu={menu}/>
+                        <MenuCard key={i} className={`flex-grow w-full lg:w-1/6 ${i === menuData.length - 1 ? '' : 'lg:mr-4 mb-4 lg:mb-0'}`} menu={menu} menuItems={menuItems}/>
                     ))}
                 </div>
             </main>
         </>
-    )
+    );
 
-    // Handle featured menu logic outside the useEffect callback
-    function handleFeaturedMenu(data: HT201Menu[]): HT201Menu[] {
+    function handleFeaturedMenu(data: any[]): any[] {
         const currentDay = new Date().getDay() - 1;
 
         if (!featuredMenus && currentDay > 0 && currentDay < 5) {
