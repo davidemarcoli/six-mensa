@@ -82,7 +82,7 @@ export default function MenuPage({ pageType }: CombinedPageProps) {
     function handleFeaturedMenu(data: any[]): any[] {
         const currentDay = new Date().getDay() - 1;
 
-        if (!featuredMenus && currentDay > 0 && currentDay < 5) {
+        if (currentDay > 0 && currentDay < 5) {
             const featured = data[currentDay];
             setFeaturedMenus(featured);
             const updatedData = [...data];
