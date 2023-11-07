@@ -65,7 +65,7 @@ export default function GenericMenuCard({menu, className, featured, menuItems}: 
     }, [menu]);
 
     return (
-        <Card className={`${className} ${featured ? 'border border-solid' : ''}`}>
+        <Card className={`${className} ${featured ? 'border-black dark:border-white' : ''}`}>
             <CardHeader>
                 {featured && <CardTitle><span className="underline">Heute</span> <span
                     className="text-lg">({menu.day})</span></CardTitle>}
