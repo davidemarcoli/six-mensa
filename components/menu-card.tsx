@@ -16,6 +16,8 @@ interface GenericMenuProps {
     featured?: boolean;
     className?: string;
     menuItems: MenuItem[];
+    language: 'en' | 'de';
+    translationEngine: 'libreTranslate' | 'myMemory';
 }
 
 async function getImages(searchTerm: string): Promise<Image | undefined> {
@@ -38,7 +40,21 @@ async function getImages(searchTerm: string): Promise<Image | undefined> {
     });
 }
 
-export default function GenericMenuCard({menu, className, featured, menuItems}: GenericMenuProps) {
+async function getTranslatedMenu(menu: any, translationEngine: string): Promise<any> {
+    return await fetch(`api/translate`, {
+        method: 'POST',
+        body: JSON.stringify({
+            object: menu,
+            translationEngine
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then((response) => response.json());
+}
+
+export default function GenericMenuCard({menu, className, featured, menuItems, language, translationEngine}: GenericMenuProps) {
+    const [translatedMenu, setTranslatedMenu] = useState<any>(menu);
     const [menuImages, setMenuImages] = useState<any>();
     const [filteredMenuItems, setFilteredMenuItems] = useState<MenuItem[]>([]);
 
@@ -64,6 +80,21 @@ export default function GenericMenuCard({menu, className, featured, menuItems}: 
         fetchData().catch(console.error);
     }, [menu]);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            console.log(language)
+            if (language === 'en') {
+                // const translatedMenuItems = await Promise.all(filteredMenuItems.map(item => getTranslatedMenu(menu[item.menuKey])));
+                // setFilteredMenuItems(translatedMenuItems)
+
+                setTranslatedMenu(await getTranslatedMenu(menu, translationEngine))
+            } else {
+                setTranslatedMenu(menu)
+            }
+        }
+        fetchData().catch(console.error);
+    }, [language, translationEngine])
+
     return (
         <Card className={`${className} ${featured ? 'border-black dark:border-white' : ''}`}>
             <CardHeader>
@@ -75,7 +106,7 @@ export default function GenericMenuCard({menu, className, featured, menuItems}: 
                 {filteredMenuItems.map((item, index) => (
                     <HoverCard key={item.name}>
                         <HoverCardTrigger asChild>
-                            <p className={index !== 0 ? 'mt-4' : ''}><b>{item.name}:</b> {menu[item.menuKey]}
+                            <p className={index !== 0 ? 'mt-4' : ''}><b>{item.name}:</b> {translatedMenu[item.menuKey]}
                             </p>
                         </HoverCardTrigger>
                         <HoverCardContent className="w-96">

@@ -5,6 +5,8 @@ import {Label} from "./ui/label";
 import {Switch} from "./ui/switch";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import {useCallback, useEffect, useState} from "react";
+import {Settings} from "lucide-react";
+import {Button} from "@/components/ui/button";
 
 export default function Nav() {
 
@@ -28,12 +30,6 @@ export default function Nav() {
     )
 
     useEffect(() => {
-        // console.log(pathname)
-        // if (pathname !== '/') {
-        //     return
-        // }
-        // console.log("useEffect")
-        // console.log(searchParams.get('viewMode'))
         if (!searchParams.get('viewMode') || searchParams.get('viewMode') === 'text') {
             onModeToggle(true)
         } else {
@@ -45,28 +41,6 @@ export default function Nav() {
             onMensaToggle(false)
         }
     }, []);
-
-
-    /*
-        useEffect(() => {
-        if (!searchParams.get('viewMode') || searchParams.get('viewMode') === 'text') {
-            setCheckedMode(true)
-            router.push(pathname + '?' + createQueryString('viewMode', 'text'))
-            // onModeToggle(true)
-        } else {
-            setCheckedMode(false)
-            // onModeToggle(false)
-        }
-        if (!searchParams.get('mensa') || searchParams.get('mensa') === 'htp') {
-            setCheckedMensa(true)
-            router.push(pathname + '?' + createQueryString('mensa', 'htp'))
-            // onMensaToggle(true)
-        } else {
-            setCheckedMensa(false)
-            // onMensaToggle(false)
-        }
-    }, []);
-     */
 
     function onModeToggle(checked: boolean) {
         setCheckedMode(checked)
@@ -114,6 +88,9 @@ export default function Nav() {
                         {/*</Link>*/}
                     </nav>
                     <div className="ml-auto flex items-center space-x-4">
+                        <Button variant="outline" size="icon" onClick={() => router.push('/settings')}>
+                            <Settings className="h-6 w-6"/>
+                        </Button>
                         <ModeToggle/>
                     </div>
                 </div>

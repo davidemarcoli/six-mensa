@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 // Define the prop type for the combined page
 interface CombinedPageProps {
     pageType: 'HT201' | 'HTP';
+    language: 'en' | 'de';
+    translationEngine: 'libreTranslate' | 'myMemory';
 }
 
 // Define the menu item structures for HT201 and HTP
@@ -25,7 +27,7 @@ const menuItemsHTP = [
     { name: 'Buffet', imageKey: 'Buffet', menuKey: 'Buffet' },
 ];
 
-export default function MenuPage({ pageType }: CombinedPageProps) {
+export default function MenuPage({ pageType, language, translationEngine }: CombinedPageProps) {
     const [menuData, setMenuData] = useState<any[]>([]);
     const [featuredMenus, setFeaturedMenus] = useState<any | undefined>(undefined);
     const [hasShownAlert, setHasShownAlert] = useState<boolean>(true);
@@ -66,13 +68,13 @@ export default function MenuPage({ pageType }: CombinedPageProps) {
 
                 {featuredMenus && (
                     <div className="w-full flex justify-center mb-4">
-                        <MenuCard className={`flex-grow w-1/4`} menu={featuredMenus} featured={true} menuItems={menuItems}/>
+                        <MenuCard className={`flex-grow w-1/4`} menu={featuredMenus} featured={true} menuItems={menuItems} language={language} translationEngine={translationEngine} />
                     </div>
                 )}
 
                 <div className="flex flex-wrap justify-center items-stretch w-full">
                     {menuData.map((menu, i) => (
-                        <MenuCard key={i} className={`flex-grow w-full lg:w-1/6 ${i === menuData.length - 1 ? '' : 'lg:mr-4 mb-4 lg:mb-0'}`} menu={menu} menuItems={menuItems}/>
+                        <MenuCard key={i} className={`flex-grow w-full lg:w-1/6 ${i === menuData.length - 1 ? '' : 'lg:mr-4 mb-4 lg:mb-0'}`} menu={menu} menuItems={menuItems} language={language} translationEngine={translationEngine} />
                     ))}
                 </div>
             </main>
