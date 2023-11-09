@@ -78,7 +78,7 @@ export default function GenericMenuCard({menu, className, featured, menuItems, l
         };
 
         fetchData().catch(console.error);
-    }, [menu]);
+    }, [menu, menuItems]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -93,7 +93,7 @@ export default function GenericMenuCard({menu, className, featured, menuItems, l
             }
         }
         fetchData().catch(console.error);
-    }, [language, translationEngine])
+    }, [language, menu, translationEngine])
 
     return (
         <Card className={`${className} ${featured ? 'border-black dark:border-white' : ''}`}>

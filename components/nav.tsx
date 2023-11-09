@@ -7,8 +7,12 @@ import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import {useCallback, useEffect, useState} from "react";
 import {Settings} from "lucide-react";
 import {Button} from "@/components/ui/button";
+import {useLocalStorage} from "usehooks-ts";
 
 export default function Nav() {
+
+    // const [language] = useLocalStorage('language', 'de');
+    // const [translationEngine] = useLocalStorage('translationEngine', 'libreTranslate');
 
     const [checkedMode, setCheckedMode] = useState(false);
     const [checkedMensa, setCheckedMensa] = useState(false);
@@ -74,6 +78,11 @@ export default function Nav() {
                             className={`${!checkedMensa ? 'underline' : ''}`}>HT201</span> | <span
                             className={`${checkedMensa ? 'underline' : ''}`}>HTP</span></Label>
                         <Switch id="mensa-toggle" checked={checkedMensa} onCheckedChange={onMensaToggle}/>
+                        {/*{language === 'en' && (*/}
+                        {/*    <>*/}
+                        {/*        <span>Using Translation Engine: {translationEngine === 'myMemory' ? 'My Memory' : 'Libre Translate'}</span>*/}
+                        {/*    </>*/}
+                        {/*)}*/}
                         {/*<Link*/}
                         {/*    href="/fetch"*/}
                         {/*    className="text-sm font-medium transition-colors hover:text-primary"*/}
