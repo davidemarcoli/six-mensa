@@ -4,6 +4,7 @@ import type {Metadata} from 'next'
 import {Inter} from 'next/font/google'
 import Nav from "@/components/nav";
 import {Changelog} from '@/components/changelog';
+import Script from 'next/script'
 
 const inter = Inter({subsets: ['latin']})
 
@@ -21,18 +22,30 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en" suppressHydrationWarning={true}>
-        <body className={`${inter.className}`}>
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-        >
-            <Nav/>
-            {children}
-            <Changelog/>
-        </ThemeProvider>
-        </body>
+            <head>
+                <Script src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID" />
+                <Script id="google-analytics">
+                    {`
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+            
+                    gtag('config', 'GA_MEASUREMENT_ID');
+                    `}
+                </Script>
+            </head>
+            <body className={`${inter.className}`}>
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    <Nav/>
+                    {children}
+                    <Changelog/>
+                </ThemeProvider>
+            </body>
         </html>
     )
 }
