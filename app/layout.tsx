@@ -23,7 +23,7 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning={true}>
             <head>
-                <Script src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID" />
+                <Script src="https://www.googletagmanager.com/gtag/js?id=G-GXP0XVRRJY" />
                 <Script id="google-analytics">
                     {`
                     window.dataLayer = window.dataLayer || [];
