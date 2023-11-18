@@ -75,7 +75,8 @@ export default function GenericMenuCard({menu, className, featured, menuItems}: 
                 {filteredMenuItems.map((item, index) => (
                     <HoverCard key={item.name}>
                         <HoverCardTrigger asChild>
-                            <p className={index !== 0 ? 'mt-4' : ''}><b>{item.name}:</b> {menu[item.menuKey]}
+                            <p className={index !== 0 ? 'mt-4' : ''}><b className={'underline'}>{item.name}:</b> <b>{menu[item.menuKey].title}</b> {menu[item.menuKey].description} (Intern: {menu[item.menuKey].price.intern}.- / Extern: {menu[item.menuKey].price.extern}.-)
+                                {menu[item.menuKey].origin && <span> ({menu[item.menuKey].origin})</span>}
                             </p>
                         </HoverCardTrigger>
                         <HoverCardContent className="w-96">
