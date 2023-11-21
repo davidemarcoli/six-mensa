@@ -25,13 +25,13 @@ export default function SettingsPage() {
     // settings page for language and translation engine
 
     const [language, setLanguage] = useLocalStorage('language', 'de');
-    const [translationEngine, setTranslationEngine] = useLocalStorage('translationEngine', 'libreTranslate');
+    //const [translationEngine, setTranslationEngine] = useLocalStorage('translationEngine', 'myMemory');
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             language: language || 'de',
-            translationEngine: translationEngine || 'libreTranslate',
+            //translationEngine: translationEngine || 'myMemory',
         },
     })
 
@@ -46,7 +46,7 @@ export default function SettingsPage() {
     const onSubmit = (data: any) => {
         console.log(data);
         setLanguage(data.language as string)
-        setTranslationEngine(data.translationEngine as string)
+        //setTranslationEngine(data.translationEngine as string)
     }
 
     return (
@@ -79,7 +79,7 @@ export default function SettingsPage() {
                                 </FormItem>
                             )}
                         />
-                        <FormField
+                        {/*<FormField
                             control={form.control}
                             name="translationEngine"
                             render={({ field }) => (
@@ -102,7 +102,7 @@ export default function SettingsPage() {
                                     <FormMessage />
                                 </FormItem>
                             )}
-                        />
+                        />*/}
                         <Button type="submit">Submit</Button>
                     </form>
                 </Form>
