@@ -7,28 +7,19 @@ import {
     CommandInput,
     CommandItem,
     CommandList,
-    CommandSeparator,
-    CommandShortcut
+    CommandSeparator
 } from "@/components/ui/command";
 import {
-    Calculator,
-    Calendar,
-    CreditCard,
     LayoutList,
-    LogIn,
-    LogOut,
-    PlusSquare,
-    Settings,
-    Smile,
-    User
+    PlusSquare
 } from "lucide-react";
-import React, {useEffect} from "react";
+import React from "react";
 import {useRouter} from "next/navigation";
 import {useLocalStorage} from "usehooks-ts";
 export function CommandMenu() {
     const [open, setOpen] = React.useState(false)
     const [language, setLanguage] = useLocalStorage('language', 'de');
-    const [translationEngine, setTranslationEngine] = useLocalStorage('translationEngine', 'myMemory');
+    //const [translationEngine, setTranslationEngine] = useLocalStorage('translationEngine', 'libreTranslate');
 
     const router = useRouter();
 
@@ -53,10 +44,10 @@ export function CommandMenu() {
         setOpen(false);
     }
 
-    const setTranslationEngineStorage = (translationEngine: string) => {
+    /*const setTranslationEngineStorage = (translationEngine: string) => {
         setTranslationEngine(translationEngine);
         setOpen(false);
-    }
+    }*/
 
     return (
         <CommandDialog open={open} onOpenChange={setOpen}>
@@ -82,7 +73,7 @@ export function CommandMenu() {
                         <span>English</span>
                     </CommandItem>
                 </CommandGroup>
-                <CommandSeparator/>
+                {/*<CommandSeparator/>
                 <CommandGroup heading="Translation Engine">
                     <CommandItem onSelect={() => setTranslationEngineStorage('libreTranslate')}>
                         <span>Libre Translate</span>
@@ -90,7 +81,7 @@ export function CommandMenu() {
                     <CommandItem onSelect={() => setTranslationEngineStorage('myMemory')}>
                         <span>My Memory</span>
                     </CommandItem>
-                </CommandGroup>
+                </CommandGroup>*/}
             </CommandList>
         </CommandDialog>
     )
