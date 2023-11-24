@@ -59,13 +59,10 @@ export default function GenericMenuCard({menu, className, featured, menuItems, l
             const menuCopy = {...menu};
             delete menuCopy.day;
             const images = await getImages(menuCopy);
-            console.log(images)
             const newMenuImages = filteredMenuItems.reduce((acc, item) => ({
                 ...acc,
                 [item.imageKey]: images[item.imageKey]?.original || ''
             }), {});
-
-            console.log(newMenuImages)
 
             setMenuImages({
                 day: menu.day,
