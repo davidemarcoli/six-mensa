@@ -28,7 +28,7 @@ import {useLocalStorage} from "usehooks-ts";
 export function CommandMenu() {
     const [open, setOpen] = React.useState(false)
     const [language, setLanguage] = useLocalStorage('language', 'de');
-    const [translationEngine, setTranslationEngine] = useLocalStorage('translationEngine', 'libreTranslate');
+    const [translationEngine, setTranslationEngine] = useLocalStorage('translationEngine', 'myMemory');
 
     const router = useRouter();
 

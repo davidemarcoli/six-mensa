@@ -1,9 +1,10 @@
 "use client";
 
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
-import {Image} from "@/app/api/scrape/cheerio/route";
+import {Image as ScrapedImage} from "@/app/api/scrape/cheerio/route";
 import {useEffect, useState} from "react";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "./ui/hover-card";
+import Image from "next/image";
 
 interface MenuItem {
     name: string;
@@ -20,14 +21,13 @@ interface GenericMenuProps {
     translationEngine: 'libreTranslate' | 'myMemory';
 }
 
-async function getImages(searchTerm: string): Promise<Image | undefined> {
-    if (!searchTerm) return undefined;
+async function getImages(menu: any): Promise<any> {
+
+    const stringifiedMenu = JSON.stringify(menu);
 
     const abortController = new AbortController();
 
-    return await fetch('api/scrape/cheerio?singleResult=true', {
-        method: 'POST',
-        body: JSON.stringify({searchTerm}),
+    return await fetch(`api/scrape/cheerio?singleResult=true&object=${stringifiedMenu}`, {
         next: {
             revalidate: 60 * 60 * 24
         },
@@ -41,16 +41,8 @@ async function getImages(searchTerm: string): Promise<Image | undefined> {
 }
 
 async function getTranslatedMenu(menu: any, translationEngine: string): Promise<any> {
-    return await fetch(`api/translate`, {
-        method: 'POST',
-        body: JSON.stringify({
-            object: menu,
-            translationEngine
-        }),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }).then((response) => response.json());
+    const stringifiedMenu = JSON.stringify(menu);
+    return await fetch(`api/translate?object=${stringifiedMenu}&translationEngine=${translationEngine}`).then((response) => response.json());
 }
 
 export default function GenericMenuCard({menu, className, featured, menuItems, language, translationEngine}: GenericMenuProps) {
@@ -64,12 +56,16 @@ export default function GenericMenuCard({menu, className, featured, menuItems, l
         })
         setFilteredMenuItems(filteredMenuItems)
         const fetchData = async () => {
-            const imagePromises = filteredMenuItems.map(item => getImages(menu[item.menuKey]));
-            const images = await Promise.all(imagePromises);
-            const newMenuImages = filteredMenuItems.reduce((acc, item, index) => ({
+            const menuCopy = {...menu};
+            delete menuCopy.day;
+            const images = await getImages(menuCopy);
+            console.log(images)
+            const newMenuImages = filteredMenuItems.reduce((acc, item) => ({
                 ...acc,
-                [item.imageKey]: images[index]?.original || ''
+                [item.imageKey]: images[item.imageKey]?.original || ''
             }), {});
+
+            console.log(newMenuImages)
 
             setMenuImages({
                 day: menu.day,
@@ -110,7 +106,7 @@ export default function GenericMenuCard({menu, className, featured, menuItems, l
                             </p>
                         </HoverCardTrigger>
                         <HoverCardContent className="w-96">
-                            <img src={menuImages?.[item.imageKey]} alt=""/>
+                            <Image src={menuImages?.[item.imageKey]} width={500} height={500} alt={item.name} priority={true} />
                         </HoverCardContent>
                     </HoverCard>
                 ))}

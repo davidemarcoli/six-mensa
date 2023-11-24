@@ -12,7 +12,7 @@ export default function Home() {
     const mensa = searchParams.get('mensa') || 'htp';
 
     const [language] = useLocalStorage('language', 'de');
-    const [translationEngine] = useLocalStorage('translationEngine', 'libreTranslate');
+    const [translationEngine] = useLocalStorage('translationEngine', 'myMemory');
 
     return (
         <>

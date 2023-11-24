@@ -1,7 +1,9 @@
 import {NextRequest, NextResponse} from 'next/server';
 
-export async function POST(req: NextRequest) {
-    const {object, translationEngine} = await req.json();
+export async function GET(req: NextRequest) {
+    const url = new URL(req.url);
+    const object = JSON.parse(url.searchParams.get('object') || '{}');
+    const translationEngine = url.searchParams.get('translationEngine');
 
     // translate each property of the object
     const data = await Promise.all(Object.keys(object).map(async (key) => {

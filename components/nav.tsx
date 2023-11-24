@@ -12,7 +12,7 @@ import {useLocalStorage} from "usehooks-ts";
 export default function Nav() {
 
     // const [language] = useLocalStorage('language', 'de');
-    // const [translationEngine] = useLocalStorage('translationEngine', 'libreTranslate');
+    // const [translationEngine] = useLocalStorage('translationEngine', 'myMemory');
 
     const [checkedMode, setCheckedMode] = useState(false);
     const [checkedMensa, setCheckedMensa] = useState(false);
@@ -71,12 +71,12 @@ export default function Nav() {
                     <nav className="flex items-center space-x-4 lg:space-x-6">
                         <span>SIX Menus</span>
                         <Label htmlFor="mode-toggle">View Mode: <span
-                            className={`${!checkedMode ? 'underline' : ''}`}>PDF</span> | <span
-                            className={`${checkedMode ? 'underline' : ''}`}>Text</span></Label>
+                            className={`${!checkedMode ? 'font-extrabold' : ''}`}>PDF</span> | <span
+                            className={`${checkedMode ? 'font-extrabold' : ''}`}>Text</span></Label>
                         <Switch id="mode-toggle" checked={checkedMode} onCheckedChange={onModeToggle}/>
                         <Label htmlFor="mensa-toggle">Mensa: <span
-                            className={`${!checkedMensa ? 'underline' : ''}`}>HT201</span> | <span
-                            className={`${checkedMensa ? 'underline' : ''}`}>HTP</span></Label>
+                            className={`${!checkedMensa ? 'font-extrabold' : ''}`}>HT201</span> | <span
+                            className={`${checkedMensa ? 'font-extrabold' : ''}`}>HTP</span></Label>
                         <Switch id="mensa-toggle" checked={checkedMensa} onCheckedChange={onMensaToggle}/>
                         {/*{language === 'en' && (*/}
                         {/*    <>*/}

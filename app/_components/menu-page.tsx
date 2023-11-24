@@ -68,12 +68,12 @@ export default function MenuPage({ pageType, language, translationEngine }: Comb
                         </AlertDescription>
                     </Alert>
                 )}
-                {language === 'en' && (
-                    <Alert className="mb-4 -z-10">
-                        <Info className="h-4 w-4" />
-                        <AlertTitle>Using Translation Engine: <span className={'underline'}>{translationEngine === 'myMemory' ? 'My Memory' : 'Libre Translate'}</span></AlertTitle>
-                    </Alert>
-                )}
+                {/*{language === 'en' && (*/}
+                {/*    <Alert className="mb-4 -z-10">*/}
+                {/*        <Info className="h-4 w-4" />*/}
+                {/*        <AlertTitle>Using Translation Engine: <span className={'underline'}>{translationEngine === 'myMemory' ? 'My Memory' : 'Libre Translate'}</span></AlertTitle>*/}
+                {/*    </Alert>*/}
+                {/*)}*/}
 
                 {featuredMenu && (
                     <div className="w-full flex justify-center mb-4">

@@ -25,7 +25,7 @@ export default function SettingsPage() {
     // settings page for language and translation engine
 
     const [language, setLanguage] = useLocalStorage('language', 'de');
-    const [translationEngine, setTranslationEngine] = useLocalStorage('translationEngine', 'libreTranslate');
+    const [translationEngine, setTranslationEngine] = useLocalStorage('translationEngine', 'myMemory');
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -84,7 +84,7 @@ export default function SettingsPage() {
                             name="translationEngine"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Translation Engine</FormLabel>
+                                    <FormLabel>Translation Engine <span className={'text-sm text-red-500'}>(Experimental)</span></FormLabel>
                                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                                         <FormControl>
                                             <SelectTrigger>
@@ -98,6 +98,7 @@ export default function SettingsPage() {
                                     </Select>
                                     <FormDescription>
                                         This is the translation engine used for translating the menu
+                                        {/*Attention: The My Memory translation engine produces better results, but is limited to 1000 requests per day.*/}
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
