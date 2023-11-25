@@ -11,8 +11,24 @@ export interface Image {
     thumbnail: string;
 }
 
-export async function POST(req: NextRequest) {
-    const searchTerm = encodeURIComponent((await req.json()).searchTerm);
+export async function GET(req: NextRequest) {
+    const object = JSON.parse(req.nextUrl.searchParams.get('object') || '{}');
+
+    const data = await Promise.all(Object.keys(object).map(async (key) => {
+        if (key === 'day') return undefined;
+        const menu = object[key];
+        return await fetchImageForObjectProperty(menu.title);
+    }));
+
+    const imageObject: any = {};
+    Object.keys(object).forEach((key, index) => {
+        imageObject[key] = data[index];
+    });
+
+    return NextResponse.json(imageObject);
+}
+
+async function fetchImageForObjectProperty(searchTerm: string): Promise<Image | undefined> {
     const user_agent = selectRandom();
     const header = {
         "User-Agent": user_agent,
@@ -36,24 +52,19 @@ export async function POST(req: NextRequest) {
             });
         });
 
-        if (req.nextUrl.searchParams.get("singleResult") === "true") {
+        return getHttpsImage(images_results);
 
-            const isValidImage = (url: string) => {
-                return /^https:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
-            }
-            const getHttpsImage = (images: Image[]) => {
-                return images.filter((image) => isValidImage(image.original))[0];
-            }
-
-            const httpsImage = getHttpsImage(images_results);
-            return NextResponse.json(httpsImage);
-        }
-
-        return NextResponse.json(images_results);
     } catch (error) {
         console.error("Error fetching images:", error);
-        return NextResponse.error();
+        return undefined;
     }
+}
+
+const isValidImage = (url: string) => {
+    return /^https:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
+}
+const getHttpsImage = (images: Image[]) => {
+    return images.filter((image) => isValidImage(image.original))[0];
 }
 
 function selectRandom(): string {

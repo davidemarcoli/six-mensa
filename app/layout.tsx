@@ -1,10 +1,12 @@
-import {ThemeProvider} from '@/components/theme-provider'
+import {ThemeProvider} from '@/components/theme/theme-provider'
 import './globals.css'
 import type {Metadata} from 'next'
 import {Inter} from 'next/font/google'
-import Nav from "@/components/nav";
+import Nav from "@/components/navbar/nav";
 import {Changelog} from '@/components/changelog';
+import {CommandMenu} from "@/components/command-menu";
 import Script from 'next/script'
+import {Toaster} from "@/components/ui/toaster";
 
 const inter = Inter({subsets: ['latin']})
 
@@ -35,6 +37,8 @@ export default function RootLayout({
                     <Nav/>
                     {children}
                     <Changelog/>
+                    <CommandMenu/>
+                    <Toaster/>
                 </ThemeProvider>
             </body>
         </html>

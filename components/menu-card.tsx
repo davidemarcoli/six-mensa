@@ -1,9 +1,10 @@
 "use client";
 
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
-import {Image} from "@/app/api/scrape/cheerio/route";
+import {Image as ScrapedImage} from "@/app/api/scrape/cheerio/route";
 import {useEffect, useState} from "react";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "./ui/hover-card";
+import Image from "next/image";
 
 interface MenuItem {
     name: string;
@@ -16,16 +17,17 @@ interface GenericMenuProps {
     featured?: boolean;
     className?: string;
     menuItems: MenuItem[];
+    language: 'en' | 'de';
+    translationEngine: 'libreTranslate' | 'myMemory';
 }
 
-async function getImages(searchTerm: string): Promise<Image | undefined> {
-    if (!searchTerm) return undefined;
+async function getImages(menu: any): Promise<any> {
+
+    const stringifiedMenu = encodeURIComponent(JSON.stringify(menu));
 
     const abortController = new AbortController();
 
-    return await fetch('api/scrape/cheerio?singleResult=true', {
-        method: 'POST',
-        body: JSON.stringify({searchTerm}),
+    return await fetch(`api/scrape/cheerio?singleResult=true&object=${stringifiedMenu}`, {
         next: {
             revalidate: 60 * 60 * 24
         },
@@ -38,7 +40,13 @@ async function getImages(searchTerm: string): Promise<Image | undefined> {
     });
 }
 
-export default function GenericMenuCard({menu, className, featured, menuItems}: GenericMenuProps) {
+async function getTranslatedMenu(menu: any, translationEngine: string): Promise<any> {
+    const stringifiedMenu = encodeURIComponent(JSON.stringify(menu));
+    return await fetch(`api/translate?object=${stringifiedMenu}&translationEngine=${translationEngine}`).then((response) => response.json());
+}
+
+export default function GenericMenuCard({menu, className, featured, menuItems, language, translationEngine}: GenericMenuProps) {
+    const [translatedMenu, setTranslatedMenu] = useState<any>(menu);
     const [menuImages, setMenuImages] = useState<any>();
     const [filteredMenuItems, setFilteredMenuItems] = useState<MenuItem[]>([]);
 
@@ -48,11 +56,12 @@ export default function GenericMenuCard({menu, className, featured, menuItems}: 
         })
         setFilteredMenuItems(filteredMenuItems)
         const fetchData = async () => {
-            const imagePromises = filteredMenuItems.map(item => getImages(menu[item.menuKey]));
-            const images = await Promise.all(imagePromises);
-            const newMenuImages = filteredMenuItems.reduce((acc, item, index) => ({
+            const menuCopy = {...menu};
+            delete menuCopy.day;
+            const images = await getImages(menuCopy);
+            const newMenuImages = filteredMenuItems.reduce((acc, item) => ({
                 ...acc,
-                [item.imageKey]: images[index]?.original || ''
+                [item.imageKey]: images[item.imageKey]?.original || ''
             }), {});
 
             setMenuImages({
@@ -62,7 +71,25 @@ export default function GenericMenuCard({menu, className, featured, menuItems}: 
         };
 
         fetchData().catch(console.error);
-    }, [menu]);
+    }, [menu, menuItems]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            console.log(language)
+            if (language === 'en') {
+                // const translatedMenuItems = await Promise.all(filteredMenuItems.map(item => getTranslatedMenu(menu[item.menuKey])));
+                // setFilteredMenuItems(translatedMenuItems)
+
+                setTranslatedMenu(() => menu)
+                setTranslatedMenu(await getTranslatedMenu(menu, translationEngine))
+            } else {
+                setTranslatedMenu(menu)
+            }
+        }
+        fetchData().catch(console.error);
+    }, [language, menu, translationEngine])
+
+    if (!menu || !menu.day) return <p>Loading...</p>;
 
     return (
         <Card className={`${className} ${featured ? 'border-black dark:border-white' : ''}`}>
@@ -72,18 +99,22 @@ export default function GenericMenuCard({menu, className, featured, menuItems}: 
                 {!featured && <CardTitle>{menu.day}</CardTitle>}
             </CardHeader>
             <CardContent>
-                {filteredMenuItems.map((item, index) => (
+                {filteredMenuItems.filter(item => menu[item.menuKey]).filter(item => translatedMenu[item.menuKey]).map((item, index) => (
                     <HoverCard key={item.name}>
                         <HoverCardTrigger asChild>
-                            <p className={index !== 0 ? 'mt-4' : ''}><b className={'underline'}>{item.name}:</b> <b>{menu[item.menuKey].title}</b> {menu[item.menuKey].description} (Intern: {menu[item.menuKey].price.intern}.- / Extern: {menu[item.menuKey].price.extern}.-)
-                                {menu[item.menuKey].origin && <span> ({menu[item.menuKey].origin})</span>}
-                            </p>
+                            <div className={index !== 0 ? 'mt-4' : ''}>
+                                <p><b className={'underline'}>{item.name}</b></p>
+                                <p><b>{translatedMenu[item.menuKey].title}</b> {translatedMenu[item.menuKey].description}</p>
+                                {menu[item.menuKey].price.intern && <p>Intern: {menu[item.menuKey].price.intern}.- /
+                                    Extern: {menu[item.menuKey].price.extern}.-</p>}
+                                <p>{menu[item.menuKey].origin && <span> ({translatedMenu[item.menuKey].origin})</span>}</p>
+                            </div>
                         </HoverCardTrigger>
                         <HoverCardContent className="w-96">
-                            <img src={menuImages?.[item.imageKey]} alt=""/>
+                            <Image src={menuImages?.[item.imageKey]} width={500} height={500} alt={item.name} priority={true} />
                         </HoverCardContent>
                     </HoverCard>
-                ))}
+                    ))}
             </CardContent>
         </Card>
     )
