@@ -5,6 +5,7 @@ import {Inter} from 'next/font/google'
 import Nav from "@/components/nav";
 import {Changelog} from '@/components/changelog';
 import {CommandMenu} from "@/components/command-menu";
+import Script from 'next/script'
 
 const inter = Inter({subsets: ['latin']})
 
@@ -22,19 +23,22 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en" suppressHydrationWarning={true}>
-        <body className={`${inter.className}`}>
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-        >
-            <Nav/>
-            {children}
-            <Changelog/>
-            <CommandMenu/>
-        </ThemeProvider>
-        </body>
+            <head>
+                <Script src="https://plausible.davidemarcoli.dev/js/script.js" data-domain="six-mensa.davidemarcoli.dev" />
+            </head>
+            <body className={`${inter.className}`}>
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    <Nav/>
+                    {children}
+                    <Changelog/>
+                    <CommandMenu/>
+                </ThemeProvider>
+            </body>
         </html>
     )
 }
