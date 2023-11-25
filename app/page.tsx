@@ -1,8 +1,8 @@
 "use client";
 
 import {useSearchParams} from "next/navigation";
-import PDFPageSkeleton from "@/app/_components/pdf-page";
-import MenuPage from "@/app/_components/menu-page";
+import PDFPageSkeleton from "@/components/pdf-page";
+import MenuPage from "@/components/menu-page";
 import {useLocalStorage} from "usehooks-ts";
 
 export default function Home() {

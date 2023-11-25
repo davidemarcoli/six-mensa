@@ -16,13 +16,21 @@ import {
 } from "@/components/ui/form"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select"
 import {useLocalStorage} from "usehooks-ts";
+import {useToast} from "@/components/ui/use-toast";
+import Link from "next/link";
+import {ArrowLeft} from "lucide-react";
+import {router} from "next/client";
+import {useRouter} from "next/navigation";
 
 const formSchema = z.object({
     language: z.string(),
     translationEngine: z.string(),
 });
 export default function SettingsPage() {
-    // settings page for language and translation engine
+
+    const { toast } = useToast()
+
+    const router = useRouter()
 
     const [language, setLanguage] = useLocalStorage('language', 'de');
     const [translationEngine, setTranslationEngine] = useLocalStorage('translationEngine', 'myMemory');
@@ -47,10 +55,22 @@ export default function SettingsPage() {
         console.log(data);
         setLanguage(data.language as string)
         setTranslationEngine(data.translationEngine as string)
+        toast({
+            title: "Settings saved.",
+            description: "Your settings have been saved.",
+            duration: 5000,
+        })
     }
 
     return (
         <div>
+            {/*Back button at the top left*/}
+            {/*<Link href="/" className="m-4">*/}
+            {/*    <ArrowLeft />*/}
+            {/*</Link>*/}
+            <Button variant={"link"} className={"m-4"} onClick={() => router.push('/')}>
+                <ArrowLeft className="h-6 w-6" />
+            </Button>
             <div className="flex flex-col items-center justify-center">
                 <h1 className="text-2xl font-bold mb-4 mt-8">Settings</h1>
                 <Form {...form}>

@@ -1,13 +1,14 @@
 "use client";
 
-import {ModeToggle} from "@/components/theme-toggle";
-import {Label} from "./ui/label";
-import {Switch} from "./ui/switch";
+import {ModeToggle} from "@/components/theme/theme-toggle";
+import {Label} from "../ui/label";
+import {Switch} from "../ui/switch";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import {useCallback, useEffect, useState} from "react";
 import {Settings} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {useLocalStorage} from "usehooks-ts";
+import Link from "next/link";
 
 export default function Nav() {
 
@@ -69,7 +70,7 @@ export default function Nav() {
             <div className="border-b sticky top-0 bg-background">
                 <div className="flex h-16 items-center px-4">
                     <nav className="flex items-center space-x-4 lg:space-x-6">
-                        <span>SIX Menus</span>
+                        <Link href={"/"}>SIX Menus</Link>
                         <Label htmlFor="mode-toggle">View Mode: <span
                             className={`${!checkedMode ? 'font-extrabold' : ''}`}>PDF</span> | <span
                             className={`${checkedMode ? 'font-extrabold' : ''}`}>Text</span></Label>
