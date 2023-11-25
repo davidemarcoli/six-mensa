@@ -4,6 +4,7 @@ import type {Metadata} from 'next'
 import {Inter} from 'next/font/google'
 import Nav from "@/components/nav";
 import {Changelog} from '@/components/changelog';
+import {CommandMenu} from "@/components/command-menu";
 import Script from 'next/script'
 
 const inter = Inter({subsets: ['latin']})
@@ -35,6 +36,7 @@ export default function RootLayout({
                     <Nav/>
                     {children}
                     <Changelog/>
+                    <CommandMenu/>
                 </ThemeProvider>
             </body>
         </html>

@@ -3,11 +3,13 @@
 import MenuCard from "@/components/menu-card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Info } from "lucide-react";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 
 // Define the prop type for the combined page
 interface CombinedPageProps {
     pageType: 'HT201' | 'HTP';
+    language: 'en' | 'de';
+    translationEngine: 'libreTranslate' | 'myMemory';
 }
 
 // Define the menu item structures for HT201 and HTP
@@ -25,9 +27,9 @@ const menuItemsHTP = [
     { name: 'Buffet', imageKey: 'Buffet', menuKey: 'Buffet' },
 ];
 
-export default function MenuPage({ pageType }: CombinedPageProps) {
+export default function MenuPage({ pageType, language, translationEngine }: CombinedPageProps) {
     const [menuData, setMenuData] = useState<any[]>([]);
-    const [featuredMenus, setFeaturedMenus] = useState<any | undefined>(undefined);
+    const [featuredMenu, setFeaturedMenu] = useState<any | undefined>(undefined);
     const [hasShownAlert, setHasShownAlert] = useState<boolean>(true);
     const apiPath = pageType === 'HT201' ? 'api/ht201' : 'api/htp';
     const menuItems = pageType === 'HT201' ? menuItemsHT201 : menuItemsHTP;
@@ -39,6 +41,9 @@ export default function MenuPage({ pageType }: CombinedPageProps) {
         if (!alertShown) {
             localStorage.setItem('hoverAlertShown', 'true');
         }
+
+        // console.log('Fetching menu data from: ' + apiPath)
+        // console.log('With menu items: ' + (menuItems === menuItemsHT201 ? 'HT201' : 'HTP'))
 
         const fetchData = async () => {
             const fetchedMenuData = await fetch(apiPath).then((response) => response.json());
@@ -63,16 +68,22 @@ export default function MenuPage({ pageType }: CombinedPageProps) {
                         </AlertDescription>
                     </Alert>
                 )}
+                {/*{language === 'en' && (*/}
+                {/*    <Alert className="mb-4 -z-10">*/}
+                {/*        <Info className="h-4 w-4" />*/}
+                {/*        <AlertTitle>Using Translation Engine: <span className={'underline'}>{translationEngine === 'myMemory' ? 'My Memory' : 'Libre Translate'}</span></AlertTitle>*/}
+                {/*    </Alert>*/}
+                {/*)}*/}
 
-                {featuredMenus && (
+                {featuredMenu && (
                     <div className="w-full flex justify-center mb-4">
-                        <MenuCard className={`flex-grow w-1/4`} menu={featuredMenus} featured={true} menuItems={menuItems}/>
+                        <MenuCard className={`flex-grow w-1/4`} menu={featuredMenu} featured={true} menuItems={menuItems} language={language} translationEngine={translationEngine} />
                     </div>
                 )}
 
                 <div className="flex flex-wrap justify-center items-stretch w-full">
                     {menuData.map((menu, i) => (
-                        <MenuCard key={i} className={`flex-grow w-full lg:w-1/6 ${i === menuData.length - 1 ? '' : 'lg:mr-4 mb-4 lg:mb-0'}`} menu={menu} menuItems={menuItems}/>
+                        <MenuCard key={i} className={`flex-grow w-full lg:w-1/6 ${i === menuData.length - 1 ? '' : 'lg:mr-4 mb-4 lg:mb-0'}`} menu={menu} menuItems={menuItems} language={language} translationEngine={translationEngine} />
                     ))}
                 </div>
             </main>
@@ -84,7 +95,7 @@ export default function MenuPage({ pageType }: CombinedPageProps) {
 
         if (currentDay > 0 && currentDay < 5) {
             const featured = data[currentDay];
-            setFeaturedMenus(featured);
+            setFeaturedMenu(featured);
             const updatedData = [...data];
             updatedData.splice(currentDay, 1);
             return updatedData;

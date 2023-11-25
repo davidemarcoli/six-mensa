@@ -5,8 +5,14 @@ import {Label} from "./ui/label";
 import {Switch} from "./ui/switch";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import {useCallback, useEffect, useState} from "react";
+import {Settings} from "lucide-react";
+import {Button} from "@/components/ui/button";
+import {useLocalStorage} from "usehooks-ts";
 
 export default function Nav() {
+
+    // const [language] = useLocalStorage('language', 'de');
+    // const [translationEngine] = useLocalStorage('translationEngine', 'myMemory');
 
     const [checkedMode, setCheckedMode] = useState(false);
     const [checkedMensa, setCheckedMensa] = useState(false);
@@ -28,12 +34,6 @@ export default function Nav() {
     )
 
     useEffect(() => {
-        // console.log(pathname)
-        // if (pathname !== '/') {
-        //     return
-        // }
-        // console.log("useEffect")
-        // console.log(searchParams.get('viewMode'))
         if (!searchParams.get('viewMode') || searchParams.get('viewMode') === 'text') {
             onModeToggle(true)
         } else {
@@ -45,28 +45,6 @@ export default function Nav() {
             onMensaToggle(false)
         }
     }, []);
-
-
-    /*
-        useEffect(() => {
-        if (!searchParams.get('viewMode') || searchParams.get('viewMode') === 'text') {
-            setCheckedMode(true)
-            router.push(pathname + '?' + createQueryString('viewMode', 'text'))
-            // onModeToggle(true)
-        } else {
-            setCheckedMode(false)
-            // onModeToggle(false)
-        }
-        if (!searchParams.get('mensa') || searchParams.get('mensa') === 'htp') {
-            setCheckedMensa(true)
-            router.push(pathname + '?' + createQueryString('mensa', 'htp'))
-            // onMensaToggle(true)
-        } else {
-            setCheckedMensa(false)
-            // onMensaToggle(false)
-        }
-    }, []);
-     */
 
     function onModeToggle(checked: boolean) {
         setCheckedMode(checked)
@@ -93,13 +71,18 @@ export default function Nav() {
                     <nav className="flex items-center space-x-4 lg:space-x-6">
                         <span>SIX Menus</span>
                         <Label htmlFor="mode-toggle">View Mode: <span
-                            className={`${!checkedMode ? 'underline' : ''}`}>PDF</span> | <span
-                            className={`${checkedMode ? 'underline' : ''}`}>Text</span></Label>
+                            className={`${!checkedMode ? 'font-extrabold' : ''}`}>PDF</span> | <span
+                            className={`${checkedMode ? 'font-extrabold' : ''}`}>Text</span></Label>
                         <Switch id="mode-toggle" checked={checkedMode} onCheckedChange={onModeToggle}/>
                         <Label htmlFor="mensa-toggle">Mensa: <span
-                            className={`${!checkedMensa ? 'underline' : ''}`}>HT201</span> | <span
-                            className={`${checkedMensa ? 'underline' : ''}`}>HTP</span></Label>
+                            className={`${!checkedMensa ? 'font-extrabold' : ''}`}>HT201</span> | <span
+                            className={`${checkedMensa ? 'font-extrabold' : ''}`}>HTP</span></Label>
                         <Switch id="mensa-toggle" checked={checkedMensa} onCheckedChange={onMensaToggle}/>
+                        {/*{language === 'en' && (*/}
+                        {/*    <>*/}
+                        {/*        <span>Using Translation Engine: {translationEngine === 'myMemory' ? 'My Memory' : 'Libre Translate'}</span>*/}
+                        {/*    </>*/}
+                        {/*)}*/}
                         {/*<Link*/}
                         {/*    href="/fetch"*/}
                         {/*    className="text-sm font-medium transition-colors hover:text-primary"*/}
@@ -114,6 +97,9 @@ export default function Nav() {
                         {/*</Link>*/}
                     </nav>
                     <div className="ml-auto flex items-center space-x-4">
+                        <Button variant="outline" size="icon" onClick={() => router.push('/settings')}>
+                            <Settings className="h-6 w-6"/>
+                        </Button>
                         <ModeToggle/>
                     </div>
                 </div>
