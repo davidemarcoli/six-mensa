@@ -3,35 +3,47 @@ import {NextRequest, NextResponse} from 'next/server';
 export async function GET(req: NextRequest) {
     const url = new URL(req.url);
     const object = JSON.parse(url.searchParams.get('object') || '{}');
-    const translationEngine = url.searchParams.get('translationEngine');
+    const translationEngine = url.searchParams.get('translationEngine') || 'myMemory';
 
-    // translate each property of the object
-    const data = await Promise.all(Object.keys(object).map(async (key) => {
-        const text = object[key];
-        let translatedText = "";
-
-        switch (translationEngine) {
-            case "libreTranslate":
-                translatedText = await getLibreTranslateTranslation(text);
-                break;
-            case "myMemory":
-                translatedText = await getMyMemoryTranslation(text);
-                break;
-            default:
-                translatedText = await getLibreTranslateTranslation(text);
+    // Recursive function to translate properties
+    const translateObject = async (obj: any): Promise<any> => {
+        const translatedObject: any = {};
+        for (const key of Object.keys(obj)) {
+            if (key !== 'price') {
+                if (!obj[key]) {
+                    translatedObject[key] = null;
+                    continue;
+                }
+                if (typeof obj[key] === 'object' && obj[key] !== null) {
+                    translatedObject[key] = await translateObject(obj[key]);
+                } else {
+                    translatedObject[key] = await translateText(obj[key], translationEngine);
+                }
+            } else {
+                translatedObject[key] = obj[key];
+            }
         }
+        return translatedObject;
+    };
 
-        return translatedText;
-    }));
+    // Translate a single text
+    const translateText = async (text: string, engine: string): Promise<string> => {
+        switch (engine) {
+            case "libreTranslate":
+                return await getLibreTranslateTranslation(text);
+            case "myMemory":
+                return await getMyMemoryTranslation(text);
+            default:
+                return await getLibreTranslateTranslation(text);
+        }
+    };
 
-    // consruct the new object
-    const translatedObject: any = {};
-    Object.keys(object).forEach((key, index) => {
-        translatedObject[key] = data[index];
-    });
+    // Call the recursive function
+    const translatedObject = await translateObject(object);
 
     return NextResponse.json(translatedObject);
 }
+
 
 const getLibreTranslateTranslation = async (text: string) => {
     const res = await fetch("https://translator.davidemarcoli.dev/translate", {
@@ -43,7 +55,7 @@ const getLibreTranslateTranslation = async (text: string) => {
             format: "text",
             api_key: ""
         }),
-        headers: { "Content-Type": "application/json" },
+        headers: {"Content-Type": "application/json"},
         cache: "force-cache"
     });
 
@@ -52,7 +64,7 @@ const getLibreTranslateTranslation = async (text: string) => {
 }
 
 const getMyMemoryTranslation = async (text: string) => {
-    const res = await fetch(`https://api.mymemory.translated.net/get?q=${text}&langpair=de|en`, {
+    const res = await fetch(`https://api.mymemory.translated.net/get?q=${text}&langpair=de|en&de=fakemail@fakemail.ch`, {
         cache: "force-cache"
     });
 

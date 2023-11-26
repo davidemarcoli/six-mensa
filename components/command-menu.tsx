@@ -15,10 +15,16 @@ import {
 } from "lucide-react";
 import React from "react";
 import {useRouter} from "next/navigation";
-import {useLocalStorage} from "usehooks-ts";
+import useLocalStorage from "@/lib/utils";
+import useStore from "@/lib/store";
+
 export function CommandMenu() {
     const [open, setOpen] = React.useState(false)
-    const [language, setLanguage] = useLocalStorage('language', 'de');
+
+    const  {language, setLanguage, displayFeaturedMenu, setDisplayFeaturedMenu} = useStore();
+
+    // const [language, setLanguage] = useLocalStorage('language', 'de');
+    // const [displayFeaturedMenu, setDisplayFeaturedMenu] = useLocalStorage('displayFeaturedMenu', true);
     //const [translationEngine, setTranslationEngine] = useLocalStorage('translationEngine', 'libreTranslate');
 
     const router = useRouter();
@@ -41,6 +47,11 @@ export function CommandMenu() {
 
     const setLanguageStorage = (language: string) => {
         setLanguage(language);
+        setOpen(false);
+    }
+
+    const setDisplayFeaturedMenuStorage = (displayFeaturedMenu: boolean) => {
+        setDisplayFeaturedMenu(displayFeaturedMenu);
         setOpen(false);
     }
 
@@ -71,6 +82,15 @@ export function CommandMenu() {
                     </CommandItem>
                     <CommandItem onSelect={() => setLanguageStorage('en')}>
                         <span>English</span>
+                    </CommandItem>
+                </CommandGroup>
+                <CommandSeparator/>
+                <CommandGroup heading="Featured Menu">
+                    <CommandItem onSelect={() => setDisplayFeaturedMenuStorage(true)}>
+                        <span>On</span>
+                    </CommandItem>
+                    <CommandItem onSelect={() => setDisplayFeaturedMenuStorage(false)}>
+                        <span>Off</span>
                     </CommandItem>
                 </CommandGroup>
                 {/*<CommandSeparator/>

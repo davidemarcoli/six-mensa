@@ -23,7 +23,7 @@ interface GenericMenuProps {
 
 async function getImages(menu: any): Promise<any> {
 
-    const stringifiedMenu = JSON.stringify(menu);
+    const stringifiedMenu = encodeURIComponent(JSON.stringify(menu));
 
     const abortController = new AbortController();
 
@@ -41,7 +41,7 @@ async function getImages(menu: any): Promise<any> {
 }
 
 async function getTranslatedMenu(menu: any, translationEngine: string): Promise<any> {
-    const stringifiedMenu = JSON.stringify(menu);
+    const stringifiedMenu = encodeURIComponent(JSON.stringify(menu));
     return await fetch(`api/translate?object=${stringifiedMenu}&translationEngine=${translationEngine}`).then((response) => response.json());
 }
 
@@ -80,6 +80,7 @@ export default function GenericMenuCard({menu, className, featured, menuItems, l
                 // const translatedMenuItems = await Promise.all(filteredMenuItems.map(item => getTranslatedMenu(menu[item.menuKey])));
                 // setFilteredMenuItems(translatedMenuItems)
 
+                setTranslatedMenu(() => menu)
                 setTranslatedMenu(await getTranslatedMenu(menu, translationEngine))
             } else {
                 setTranslatedMenu(menu)
@@ -87,6 +88,8 @@ export default function GenericMenuCard({menu, className, featured, menuItems, l
         }
         fetchData().catch(console.error);
     }, [language, menu, translationEngine])
+
+    if (!menu || !menu.day) return <p>Loading...</p>;
 
     return (
         <Card className={`${className} ${featured ? 'border-black dark:border-white' : ''}`}>
@@ -96,17 +99,22 @@ export default function GenericMenuCard({menu, className, featured, menuItems, l
                 {!featured && <CardTitle>{menu.day}</CardTitle>}
             </CardHeader>
             <CardContent>
-                {filteredMenuItems.map((item, index) => (
+                {filteredMenuItems.filter(item => menu[item.menuKey]).filter(item => translatedMenu[item.menuKey]).map((item, index) => (
                     <HoverCard key={item.name}>
                         <HoverCardTrigger asChild>
-                            <p className={index !== 0 ? 'mt-4' : ''}><b>{item.name}:</b> {translatedMenu[item.menuKey]}
-                            </p>
+                            <div className={index !== 0 ? 'mt-4' : ''}>
+                                <p><b className={'underline'}>{item.name}</b></p>
+                                <p><b>{translatedMenu[item.menuKey].title}</b> {translatedMenu[item.menuKey].description}</p>
+                                {menu[item.menuKey].price.intern && <p>Intern: {menu[item.menuKey].price.intern}.- /
+                                    Extern: {menu[item.menuKey].price.extern}.-</p>}
+                                <p>{menu[item.menuKey].origin && <span> ({translatedMenu[item.menuKey].origin})</span>}</p>
+                            </div>
                         </HoverCardTrigger>
                         <HoverCardContent className="w-96">
                             <Image src={menuImages?.[item.imageKey]} width={500} height={500} alt={item.name} priority={true} />
                         </HoverCardContent>
                     </HoverCard>
-                ))}
+                    ))}
             </CardContent>
         </Card>
     )

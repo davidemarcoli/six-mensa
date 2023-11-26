@@ -15,8 +15,9 @@ export async function GET(req: NextRequest) {
     const object = JSON.parse(req.nextUrl.searchParams.get('object') || '{}');
 
     const data = await Promise.all(Object.keys(object).map(async (key) => {
-        const text = object[key];
-        return await fetchImageForObjectProperty(text);
+        if (key === 'day') return undefined;
+        const menu = object[key];
+        return await fetchImageForObjectProperty(menu.title);
     }));
 
     const imageObject: any = {};

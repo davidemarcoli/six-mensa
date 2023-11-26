@@ -7,7 +7,6 @@ import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import {useCallback, useEffect, useState} from "react";
 import {Settings} from "lucide-react";
 import {Button} from "@/components/ui/button";
-import {useLocalStorage} from "usehooks-ts";
 import Link from "next/link";
 
 export default function Nav() {
