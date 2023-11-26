@@ -92,11 +92,12 @@ export default function GenericMenuCard({menu, className, featured, menuItems, l
     if (!menu || !menu.day) return <p>Loading...</p>;
 
     return (
-        <Card className={`${className} ${featured ? 'border-black dark:border-white' : ''}`}>
+        <Card className={`${className} ${featured ? 'border-[#5d5dff] border-2' : ''}`}>
             <CardHeader>
-                {featured && <CardTitle><span className="underline">Heute</span> <span
-                    className="text-lg">({menu.day})</span></CardTitle>}
-                {!featured && <CardTitle>{menu.day}</CardTitle>}
+                {/*{featured && <CardTitle><span className="underline">Heute</span> <span*/}
+                {/*    className="text-lg">({menu.day})</span></CardTitle>}*/}
+                {/*{!featured && <CardTitle>{menu.day}</CardTitle>}*/}
+                <CardTitle>{menu.day}</CardTitle>
             </CardHeader>
             <CardContent>
                 {filteredMenuItems.filter(item => menu[item.menuKey]).filter(item => translatedMenu[item.menuKey]).map((item, index) => (

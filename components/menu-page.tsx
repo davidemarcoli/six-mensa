@@ -91,7 +91,7 @@ export default function MenuPage({pageType, language, translationEngine, display
                         <MenuCard key={i}
                                   className={`flex-grow w-full lg:w-1/6 ${i === menuData.length - 1 ? '' : 'lg:mr-4 mb-4 lg:mb-0'}`}
                                   menu={menu} menuItems={menuItems} language={language}
-                                  translationEngine={translationEngine}/>
+                                  translationEngine={translationEngine} featured={featuredMenu ? false : i === new Date().getDay() - 1}/>
                     ))}
                 </div>
             </main>
@@ -99,8 +99,7 @@ export default function MenuPage({pageType, language, translationEngine, display
     );
 
     function handleFeaturedMenu(data: any[]): any[] {
-        // const currentDay = new Date().getDay() - 1;
-        const currentDay = 3;
+        const currentDay = new Date().getDay() - 1;
 
         if (currentDay > 0 && currentDay < 5) {
             const featured = data[currentDay];
@@ -108,7 +107,12 @@ export default function MenuPage({pageType, language, translationEngine, display
             const updatedData = [...data];
             updatedData.splice(currentDay, 1);
             return updatedData;
-        }
+        } /*else {
+            setFeaturedMenu(data[0]);
+            const updatedData = [...data];
+            updatedData.splice(0, 1);
+            return updatedData;
+        }*/
 
         return data;
     }
