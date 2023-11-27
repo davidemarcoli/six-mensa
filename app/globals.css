@@ -74,3 +74,46 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+
+/* Spinner */
+.loader {
+  width: 100px;
+  height: 100px;
+  animation: rotate 2s linear infinite;
+}
+
+.circleLoader {
+  fill: none;
+  stroke: #3498db;
+  stroke-width: 8;
+  stroke-dasharray: 150;
+  stroke-dashoffset: 0;
+  animation: dash 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 150;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.loader{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
