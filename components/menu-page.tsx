@@ -57,7 +57,13 @@ export default function MenuPage({pageType, language, translationEngine, display
         fetchData().catch(console.error);
     }, [pageType, displayFeaturedMenu]);
 
-    if (menuData.length === 0) return <p>Loading...</p>;
+    if (menuData.length === 0) return (
+        <div className="loading">
+            <svg className="loader" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle className={"circleLoader"} cx="50" cy="50" r="40" strokeLinecap="round"/>
+            </svg>
+        </div>
+    );
 
     return (
         <>
