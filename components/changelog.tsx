@@ -28,12 +28,8 @@ export function Changelog() {
 
                     <h3 className="text-xl">Summary</h3>
                     <ul>
-                        <li><strong>[New]</strong> Add Command Menu on desktop with shortcut <kbd>Ctrl</kbd> + <kbd>K</kbd></li>
-                        <li><strong>[New]</strong> Add translation of menus</li>
-                        <li><strong>[New]</strong> Add settings page</li>
-                        <li><strong>[New]</strong> Add highlighted menu</li>
-                        <li><strong>[Update]</strong> Add more information to the menus</li>
-                        <li><strong>[Performance]</strong> Reduce number of network requests</li>
+                        <li><strong>[New]</strong> Add compare page</li>
+                        <li><strong>[New]</strong> Add mobile friendly navbar</li>
 
                         {/*<li><strong>[New]</strong> Added new feature</li>*/}
                         {/*<li><strong>[Fix]</strong> Fixed some bugs</li>*/}
