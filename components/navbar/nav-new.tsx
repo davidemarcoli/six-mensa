@@ -5,7 +5,7 @@ import {Label} from "../ui/label";
 import {Switch} from "../ui/switch";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import {useCallback, useEffect, useState} from "react";
-import {Menu, Settings} from "lucide-react";
+import {Menu, Settings, Utensils} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Link from "next/link";
@@ -144,13 +144,13 @@ export default function NewNav() {
                                             {route.label}
                                         </Link>
                                     ))}
-                                    <div>
+                                    <div className="balanceToggle">
                                         <Label htmlFor="mode-toggle">View Mode: <span
                                             className={`${!checkedMode ? 'font-extrabold' : ''}`}>PDF</span> | <span
                                             className={`${checkedMode ? 'font-extrabold' : ''}`}>Text</span></Label>
                                         <Switch id="mode-toggle" className={'ml-4'} checked={checkedMode} onCheckedChange={onModeToggle}/>
                                     </div>
-                                    <div>
+                                    <div className="balanceToggle">
                                         <Label htmlFor="mensa-toggle">Mensa: <span
                                             className={`${!checkedMensa ? 'font-extrabold' : ''}`}>HT201</span> | <span
                                             className={`${checkedMensa ? 'font-extrabold' : ''}`}>HTP</span></Label>
@@ -162,9 +162,9 @@ export default function NewNav() {
                     </div>
                     <div className="flex h-16 w-full items-center justify-between">
                         <Link href="/" className="font-display flex items-center text-2xl ml-4 lg:ml-0">
-                            <p>SIX Menus</p>
+                            <p className={"logo balanceToggle"}>SIX Menu <Utensils /></p>
                         </Link>
-                        <nav className="mx-6 flex hidden items-center space-x-4 lg:block">
+                        <nav className="mx-6 flex hidden items-center space-x-4 lg:block navFlex">
                             {routes.map((route, i) => (
                                 <Link href={route.href} key={i}>
                                     <Button variant={"ghost"}>{route.label}</Button>

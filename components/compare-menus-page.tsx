@@ -29,8 +29,7 @@ const menuItemsHTP = [
 export default function CompareMenusPage({language, translationEngine}: CompareMenusPageProps) {
     const [leftMenuData, setLeftMenuData] = useState<any[]>([]);
     const [rightMenuData, setRightMenuData] = useState<any[]>([]);
-    const [selectedLeftMenu, setSelectedLeftMenu] = useState<any | undefined>(undefined);
-    const [selectedRightMenu, setSelectedRightMenu] = useState<any | undefined>(undefined);
+    const [selectedMenu, setSelectedMenu] = useState<any | undefined>(undefined);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -52,10 +51,10 @@ export default function CompareMenusPage({language, translationEngine}: CompareM
     return (
         <>
             <div className={'flex flex-wrap sm:flex-nowrap grid-cols-2'}>
-                <div className={'w-full m-4 flex flex-row'}>
-                    <Select onValueChange={setSelectedLeftMenu}>
-                        <SelectTrigger className="w-[200px]">
-                            <SelectValue placeholder="Select the HT201 menu"/>
+                <div className={'w-full m-4 flex flex-row justify-center'}>
+                    <Select onValueChange={setSelectedMenu}>
+                        <SelectTrigger className="w-[250px]">
+                            <SelectValue placeholder="Select day to compare"/>
                         </SelectTrigger>
                         <SelectContent>
                             {leftMenuData.map((menu, i) => (
@@ -63,35 +62,21 @@ export default function CompareMenusPage({language, translationEngine}: CompareM
                             ))}
                         </SelectContent>
                     </Select>
-                    <h1 className={'ml-4 text-3xl'}>HT 201</h1>
-                </div>
-                <div className={'w-full m-4 flex flex-row'}>
-                    <Select onValueChange={setSelectedRightMenu}>
-                        <SelectTrigger className="w-[200px]">
-                            <SelectValue placeholder="Select the HTP menu"/>
-                        </SelectTrigger>
-                        <SelectContent>
-                            {rightMenuData.map((menu, i) => (
-                                <SelectItem key={i} value={menu}>{menu.day}</SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                    <h1 className={'ml-4 text-3xl'}>HTP</h1>
                 </div>
             </div>
 
             <main className="flex h-full grid-cols-2">
                 <div className="flex flex-col flex-wrap w-full m-4">
-                    {selectedLeftMenu && <MenuCard key={selectedLeftMenu.date}
+                    {selectedMenu && <MenuCard key={selectedMenu.date + "l"}
                                                    className={`flex-grow w-full `}
-                                                   menu={selectedLeftMenu} menuItems={menuItemsHT201}
+                                                   menu={selectedMenu} menuItems={menuItemsHT201}
                                                    language={language}
                                                    translationEngine={translationEngine}/>}
                 </div>
                 <div className="flex flex-col flex-wrap w-full m-4">
-                    {selectedRightMenu && <MenuCard key={selectedRightMenu.date}
+                    {selectedMenu && <MenuCard key={selectedMenu.date + "r"}
                                                     className={`flex-grow w-full `}
-                                                    menu={selectedRightMenu} menuItems={menuItemsHTP}
+                                                    menu={selectedMenu} menuItems={menuItemsHTP}
                                                     language={language}
                                                     translationEngine={translationEngine}/>}
                 </div>

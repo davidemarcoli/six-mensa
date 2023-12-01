@@ -92,10 +92,10 @@ export default function SettingsPage() {
             {/*<Link href="/" className="m-4">*/}
             {/*    <ArrowLeft />*/}
             {/*</Link>*/}
-            <Button variant={"link"} className={"m-4"} onClick={() => router.push('/')}>
+            <Button variant={"link"} className={"m-4 backButton"} onClick={() => router.push('/')}>
                 <ArrowLeft className="h-6 w-6"/>
             </Button>
-            <div className="flex flex-col items-center justify-center">
+            <div className="flex flex-col items-center justify-center pt-5">
                 <h1 className="text-2xl font-bold mb-4">Settings</h1>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

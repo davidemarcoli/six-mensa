@@ -111,11 +111,32 @@
     }
 }
 
-.loader {
-    position: absolute;
+.loading {
+    position: fixed;
     top: 50vh;
     left: 50vw;
     transform: translate(-50%, -50%);
+}
+
+@media all and (min-width: 450px){
+    .navFlex {
+        align-items: center;
+        justify-content: center;
+        display: flex!important;
+    }
+}
+
+.balanceToggle{
+    align-items: center;
+    display: flex!important;
+}
+
+.logo{
+    gap: 10px;
+}
+
+.backButton {
+        position: fixed;
 }
 
 /* color input */
