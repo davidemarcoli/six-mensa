@@ -1,22 +1,24 @@
 "use client";
 
 import {zodResolver} from "@hookform/resolvers/zod"
-import {useForm} from "react-hook-form"
+import {ControllerRenderProps, useForm} from "react-hook-form"
 import * as z from "zod"
 
 import {Button} from "@/components/ui/button"
 import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select"
 import {useToast} from "@/components/ui/use-toast";
-import {ArrowLeft} from "lucide-react";
+import {ArrowLeft, Undo2} from "lucide-react";
 import {useRouter} from "next/navigation";
 import {Switch} from "@/components/ui/switch";
 import useStore from "@/lib/store";
+import {HexColorInput, HexColorPicker} from "react-colorful";
 
 const formSchema = z.object({
     language: z.string(),
     translationEngine: z.string(),
-    displayFeaturedMenu: z.boolean()
+    displayFeaturedMenu: z.boolean(),
+    color: z.string()
 });
 export default function SettingsPage() {
 
@@ -30,7 +32,9 @@ export default function SettingsPage() {
         translationEngine,
         setTranslationEngine,
         displayFeaturedMenu,
-        setDisplayFeaturedMenu
+        setDisplayFeaturedMenu,
+        color,
+        setColor,
     } = useStore();
 
     // const [language, setLanguage] = useLocalStorage('language', 'de');
@@ -53,7 +57,8 @@ export default function SettingsPage() {
         defaultValues: {
             language: language,
             translationEngine: translationEngine,
-            displayFeaturedMenu: displayFeaturedMenu
+            displayFeaturedMenu: displayFeaturedMenu,
+            color: color
         },
     })
 
@@ -70,6 +75,7 @@ export default function SettingsPage() {
         setLanguage(data.language)
         setTranslationEngine(data.translationEngine)
         setDisplayFeaturedMenu(data.displayFeaturedMenu)
+        setColor(data.color)
         // localStorage.setItem('language', data.language)
         // localStorage.setItem('translationEngine', data.translationEngine)
         // localStorage.setItem('displayFeaturedMenu', data.displayFeaturedMenu)
@@ -90,7 +96,7 @@ export default function SettingsPage() {
                 <ArrowLeft className="h-6 w-6"/>
             </Button>
             <div className="flex flex-col items-center justify-center">
-                <h1 className="text-2xl font-bold mb-4 mt-8">Settings</h1>
+                <h1 className="text-2xl font-bold mb-4">Settings</h1>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                         <FormField
@@ -160,6 +166,30 @@ export default function SettingsPage() {
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
+                                    </FormControl>
+                                    <FormMessage/>
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="color"
+                            render={({field}) => (
+                                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                                    <div className="space-y-0.5">
+                                        <FormLabel className="text-base">Accent Color</FormLabel>
+                                        {/*<FormDescription>*/}
+                                        {/*    Select the accent color for the website.*/}
+                                        {/*</FormDescription>*/}
+                                    </div>
+                                    <FormControl>
+                                        <div>
+                                            <HexColorPicker color={field.value} onChange={field.onChange} />
+                                            <div className={'flex mx-[26px]'}>
+                                                <HexColorInput color={field.value} onChange={field.onChange} />
+                                                <Undo2 className={'mt-[28px] ml-8 cursor-pointer'} onClick={() => field.onChange('#5d5dff')}/>
+                                            </div>
+                                        </div>
                                     </FormControl>
                                     <FormMessage/>
                                 </FormItem>

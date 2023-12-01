@@ -117,3 +117,24 @@
     left: 50vw;
     transform: translate(-50%, -50%);
 }
+
+/* color input */
+input {
+    display: block;
+    box-sizing: border-box;
+    width: 90px;
+    margin: 20px 0 0;
+    padding: 6px;
+    border-color: hsl(var(--input));
+    border-width: 1px;
+    border-radius: 4px;
+    background: var(--background);
+    outline: none;
+    font: inherit;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+input:focus {
+    border-color: #4298ef;
+}

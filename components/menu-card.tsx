@@ -5,6 +5,7 @@ import {Image as ScrapedImage} from "@/app/api/scrape/cheerio/route";
 import {useEffect, useState} from "react";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "./ui/hover-card";
 import Image from "next/image";
+import useStore from "@/lib/store";
 
 interface MenuItem {
     name: string;
@@ -50,6 +51,8 @@ export default function GenericMenuCard({menu, className, featured, menuItems, l
     const [menuImages, setMenuImages] = useState<any>();
     const [filteredMenuItems, setFilteredMenuItems] = useState<MenuItem[]>([]);
 
+    const {color} = useStore();
+
     useEffect(() => {
         const filteredMenuItems = menuItems.filter(item => {
             return menu[item.menuKey] !== undefined
@@ -92,7 +95,7 @@ export default function GenericMenuCard({menu, className, featured, menuItems, l
     if (!menu || !menu.day) return <p>Loading...</p>;
 
     return (
-        <Card className={`${className} ${featured ? 'border-[#5d5dff] border-2' : ''}`}>
+        <Card style={{borderColor: featured ? color : undefined}} className={`${className} ${featured ? `border-2` : ''}`}>
             <CardHeader>
                 {/*{featured && <CardTitle><span className="underline">Heute</span> <span*/}
                 {/*    className="text-lg">({menu.day})</span></CardTitle>}*/}

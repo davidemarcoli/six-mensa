@@ -30,6 +30,7 @@ export function Changelog() {
                     <ul>
                         <li><strong>[New]</strong> Add compare page</li>
                         <li><strong>[New]</strong> Add mobile friendly navbar</li>
+                        <li><strong>[New]</strong> Add accent color</li>
 
                         {/*<li><strong>[New]</strong> Added new feature</li>*/}
                         {/*<li><strong>[Fix]</strong> Fixed some bugs</li>*/}
