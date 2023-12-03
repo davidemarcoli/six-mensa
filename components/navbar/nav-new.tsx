@@ -144,13 +144,13 @@ export default function NewNav() {
                                             {route.label}
                                         </Link>
                                     ))}
-                                    <div className="balanceToggle">
+                                    <div className="balanceToggle py-1 px-2">
                                         <Label htmlFor="mode-toggle">View Mode: <span
                                             className={`${!checkedMode ? 'font-extrabold' : ''}`}>PDF</span> | <span
                                             className={`${checkedMode ? 'font-extrabold' : ''}`}>Text</span></Label>
                                         <Switch id="mode-toggle" className={'ml-4'} checked={checkedMode} onCheckedChange={onModeToggle}/>
                                     </div>
-                                    <div className="balanceToggle">
+                                    <div className="balanceToggle py-1 px-2">
                                         <Label htmlFor="mensa-toggle">Mensa: <span
                                             className={`${!checkedMensa ? 'font-extrabold' : ''}`}>HT201</span> | <span
                                             className={`${checkedMensa ? 'font-extrabold' : ''}`}>HTP</span></Label>
@@ -164,20 +164,22 @@ export default function NewNav() {
                         <Link href="/" className="font-display flex items-center text-2xl ml-4 lg:ml-0">
                             <p className={"logo balanceToggle"}>SIX Menu <Utensils /></p>
                         </Link>
-                        <nav className="mx-6 flex hidden items-center space-x-4 lg:block navFlex">
+                        <nav className="mx-6 hidden sm:flex space-x-4">
                             {routes.map((route, i) => (
                                 <Link href={route.href} key={i}>
                                     <Button variant={"ghost"}>{route.label}</Button>
                                 </Link>
                             ))}
-                            <Label htmlFor="mode-toggle">View Mode: <span
-                                className={`${!checkedMode ? 'font-extrabold' : ''}`}>PDF</span> | <span
-                                className={`${checkedMode ? 'font-extrabold' : ''}`}>Text</span></Label>
-                            <Switch id="mode-toggle" checked={checkedMode} onCheckedChange={onModeToggle}/>
-                            <Label htmlFor="mensa-toggle">Mensa: <span
-                                className={`${!checkedMensa ? 'font-extrabold' : ''}`}>HT201</span> | <span
-                                className={`${checkedMensa ? 'font-extrabold' : ''}`}>HTP</span></Label>
-                            <Switch id="mensa-toggle" checked={checkedMensa} onCheckedChange={onMensaToggle}/>
+                            <div className={'hidden lg:flex items-center space-x-4'}>
+                                <Label htmlFor="mode-toggle">View Mode: <span
+                                    className={`${!checkedMode ? 'font-extrabold' : ''}`}>PDF</span> | <span
+                                    className={`${checkedMode ? 'font-extrabold' : ''}`}>Text</span></Label>
+                                <Switch id="mode-toggle" checked={checkedMode} onCheckedChange={onModeToggle}/>
+                                <Label htmlFor="mensa-toggle">Mensa: <span
+                                    className={`${!checkedMensa ? 'font-extrabold' : ''}`}>HT201</span> | <span
+                                    className={`${checkedMensa ? 'font-extrabold' : ''}`}>HTP</span></Label>
+                                <Switch id="mensa-toggle" checked={checkedMensa} onCheckedChange={onMensaToggle}/>
+                            </div>
                         </nav>
                         <div className={'ml-auto flex items-center space-x-4'}>
                         <Button variant="outline" size="icon" onClick={() => router.push('/settings')}>

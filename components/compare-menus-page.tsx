@@ -29,7 +29,7 @@ const menuItemsHTP = [
 export default function CompareMenusPage({language, translationEngine}: CompareMenusPageProps) {
     const [leftMenuData, setLeftMenuData] = useState<any[]>([]);
     const [rightMenuData, setRightMenuData] = useState<any[]>([]);
-    const [selectedMenu, setSelectedMenu] = useState<any | undefined>(undefined);
+    const [selectedDay, setSelectedDay] = useState<string | undefined>(undefined);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -48,17 +48,27 @@ export default function CompareMenusPage({language, translationEngine}: CompareM
         <LoadingSpinner/>
     );
 
+    const selectedMenu = (mensa: string) => {
+        console.log(selectedDay)
+        console.log(leftMenuData)
+        if (mensa === 'htp') {
+            return rightMenuData.find((menu) => menu.day === selectedDay)
+        } else {
+            return leftMenuData.find((menu) => menu.day === selectedDay)
+        }
+    }
+
     return (
         <>
             <div className={'flex flex-wrap sm:flex-nowrap grid-cols-2'}>
                 <div className={'w-full m-4 flex flex-row justify-center'}>
-                    <Select onValueChange={setSelectedMenu}>
+                    <Select onValueChange={setSelectedDay}>
                         <SelectTrigger className="w-[250px]">
                             <SelectValue placeholder="Select day to compare"/>
                         </SelectTrigger>
                         <SelectContent>
                             {leftMenuData.map((menu, i) => (
-                                <SelectItem key={i} value={menu}>{menu.day}</SelectItem>
+                                <SelectItem key={i} value={menu.day}>{menu.day}</SelectItem>
                             ))}
                         </SelectContent>
                     </Select>
@@ -67,18 +77,24 @@ export default function CompareMenusPage({language, translationEngine}: CompareM
 
             <main className="flex h-full grid-cols-2">
                 <div className="flex flex-col flex-wrap w-full m-4">
-                    {selectedMenu && <MenuCard key={selectedMenu.date + "l"}
-                                                   className={`flex-grow w-full `}
-                                                   menu={selectedMenu} menuItems={menuItemsHT201}
-                                                   language={language}
-                                                   translationEngine={translationEngine}/>}
+                    {selectedDay && <>
+                        <h1 className={'text-2xl font-bold text-center mb-4'}>HT 201</h1>
+                        <MenuCard key={selectedDay + "-ht201"}
+                                  className={`flex-grow w-full`}
+                                  menu={selectedMenu('ht201')} menuItems={menuItemsHT201}
+                                  language={language}
+                                  translationEngine={translationEngine}/>
+                    </>}
                 </div>
                 <div className="flex flex-col flex-wrap w-full m-4">
-                    {selectedMenu && <MenuCard key={selectedMenu.date + "r"}
-                                                    className={`flex-grow w-full `}
-                                                    menu={selectedMenu} menuItems={menuItemsHTP}
-                                                    language={language}
-                                                    translationEngine={translationEngine}/>}
+                    {selectedDay && <>
+                        <h1 className={'text-2xl font-bold text-center mb-4'}>HTP</h1>
+                        <MenuCard key={selectedDay + "-htp"}
+                                  className={`flex-grow w-full `}
+                                  menu={selectedMenu('ht201')} menuItems={menuItemsHT201}
+                                  language={language}
+                                  translationEngine={translationEngine}/>
+                    </>}
                 </div>
             </main>
         </>

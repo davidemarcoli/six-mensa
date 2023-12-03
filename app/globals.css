@@ -118,14 +118,6 @@
     transform: translate(-50%, -50%);
 }
 
-@media all and (min-width: 450px){
-    .navFlex {
-        align-items: center;
-        justify-content: center;
-        display: flex!important;
-    }
-}
-
 .balanceToggle{
     align-items: center;
     display: flex!important;
