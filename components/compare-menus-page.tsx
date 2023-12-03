@@ -48,7 +48,7 @@ export default function CompareMenusPage({language, translationEngine}: CompareM
         <LoadingSpinner/>
     );
 
-    const selectedMenu = (mensa: string) => {
+    const selectedMenu = (mensa: 'ht201' | 'htp') => {
         console.log(selectedDay)
         console.log(leftMenuData)
         if (mensa === 'htp') {
@@ -91,7 +91,7 @@ export default function CompareMenusPage({language, translationEngine}: CompareM
                         <h1 className={'text-2xl font-bold text-center mb-4'}>HTP</h1>
                         <MenuCard key={selectedDay + "-htp"}
                                   className={`flex-grow w-full `}
-                                  menu={selectedMenu('ht201')} menuItems={menuItemsHT201}
+                                  menu={selectedMenu('htp')} menuItems={menuItemsHT201}
                                   language={language}
                                   translationEngine={translationEngine}/>
                     </>}
