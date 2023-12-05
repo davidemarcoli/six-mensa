@@ -86,7 +86,6 @@
 
 .circleLoader {
     fill: none;
-    stroke: #3498db;
     stroke-width: 8;
     stroke-dasharray: 150;
     stroke-dashoffset: 0;

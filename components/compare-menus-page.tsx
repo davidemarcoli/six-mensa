@@ -90,8 +90,8 @@ export default function CompareMenusPage({language, translationEngine}: CompareM
                     {selectedDay && <>
                         <h1 className={'text-2xl font-bold text-center mb-4'}>HTP</h1>
                         <MenuCard key={selectedDay + "-htp"}
-                                  className={`flex-grow w-full `}
-                                  menu={selectedMenu('htp')} menuItems={menuItemsHT201}
+                                  className={`flex-grow w-full`}
+                                  menu={selectedMenu('htp')} menuItems={menuItemsHTP}
                                   language={language}
                                   translationEngine={translationEngine}/>
                     </>}
