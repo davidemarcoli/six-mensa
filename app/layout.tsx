@@ -7,6 +7,7 @@ import {CommandMenu} from "@/components/command-menu";
 import Script from 'next/script'
 import {Toaster} from "@/components/ui/toaster";
 import NewNav from "@/components/navbar/nav-new";
+import Head from "next/head";
 
 const inter = Inter({subsets: ['latin']})
 
@@ -24,9 +25,9 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en" suppressHydrationWarning={true}>
-        <head>
+        <Head>
             <Script src="https://plausible.davidemarcoli.dev/js/script.js" data-domain="six-mensa.davidemarcoli.dev"/>
-        </head>
+        </Head>
         <body className={`${inter.className}`}>
         <ThemeProvider
             attribute="class"
