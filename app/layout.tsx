@@ -25,9 +25,9 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en" suppressHydrationWarning={true}>
-        <Head>
+        <head>
             <Script src="https://plausible.davidemarcoli.dev/js/script.js" data-domain="six-mensa.davidemarcoli.dev"/>
-        </Head>
+        </head>
         <body className={`${inter.className}`}>
         <ThemeProvider
             attribute="class"
