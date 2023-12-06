@@ -19,8 +19,8 @@ interface AppState {
 const useStore = create<AppState>()((set) => ({
     language: typeof localStorage !== 'undefined' ? localStorage.getItem('language') || 'de' : 'de',
     translationEngine: typeof localStorage !== 'undefined' ? localStorage.getItem('translationEngine') || 'myMemory' : 'myMemory',
-    displayFeaturedMenu: typeof localStorage !== 'undefined' ? localStorage.getItem('displayFeaturedMenu') === 'true' : true,
-    color: typeof localStorage !== 'undefined' ? localStorage.getItem('color') || '#5d5dff' : '#5d5dff',
+    displayFeaturedMenu: typeof localStorage !== 'undefined' ? localStorage.getItem('displayFeaturedMenu') === 'true' : false,
+    color: typeof localStorage !== 'undefined' ? localStorage.getItem('color') || '#de3919' : '#de3919',
     selectedMensa: typeof localStorage !== 'undefined' ? localStorage.getItem('selectedMensa') || 'htp' : 'htp',
     selectedViewMode: typeof localStorage !== 'undefined' ? localStorage.getItem('selectedViewMode') || 'text' : 'text',
 

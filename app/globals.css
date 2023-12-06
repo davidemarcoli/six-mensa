@@ -117,7 +117,7 @@
     transform: translate(-50%, -50%);
 }
 
-.balanceToggle{
+.balanceItems{
     align-items: center;
     display: flex!important;
 }

@@ -6,15 +6,15 @@ import {Changelog} from '@/components/changelog';
 import {CommandMenu} from "@/components/command-menu";
 import Script from 'next/script'
 import {Toaster} from "@/components/ui/toaster";
-import NewNav from "@/components/navbar/nav-new";
+import Nav from "@/components/navbar/nav";
 
 const inter = Inter({subsets: ['latin']})
 
 export const metadata: Metadata = {
-    title: 'SIX Menus',
-    description: 'Get the latest menus from SIX',
+    title: 'SIX Mensa',
+    description: 'Get this week\'s menu for the SIX Restaurants',
     manifest: '/manifest.webmanifest',
-    keywords: ['SIX', 'Mensa', 'Menu', 'HTP', 'HT201']
+    keywords: ['SIX', 'Restaurant', 'Menu', 'HTP', 'HT201']
 }
 
 export default function RootLayout({
@@ -34,7 +34,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
         >
-            <NewNav/>
+            <Nav/>
             <div className={'mt-16'}>
                 {children}
             </div>
