@@ -95,7 +95,7 @@ export default function GenericMenuCard({menu, className, featured, menuItems, l
     if (!menu || !menu.day) return <p>Loading...</p>;
 
     return (
-        <Card style={{borderColor: featured ? color : undefined}} className={`${className} ${featured ? `border-2` : ''}`}>
+        <Card style={{borderColor: featured ? color : undefined}} className={`${className} ${featured ? `border-2` : ''}`} tabIndex={0}>
             <CardHeader>
                 {/*{featured && <CardTitle><span className="underline">Heute</span> <span*/}
                 {/*    className="text-lg">({menu.day})</span></CardTitle>}*/}

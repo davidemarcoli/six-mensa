@@ -137,7 +137,7 @@ export default function Nav() {
                         <nav className="mx-6 hidden sm:flex space-x-4">
                             {routes.map((route, i) => (
                                 <Link href={route.href} key={i}>
-                                    <Button variant={"ghost"}>{route.label}</Button>
+                                    <Button variant={"ghost"} tabIndex={-1}>{route.label}</Button>
                                 </Link>
                             ))}
                             <div className={'hidden lg:flex items-center space-x-4'}>
