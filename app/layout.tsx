@@ -1,7 +1,7 @@
 import {ThemeProvider} from '@/components/theme/theme-provider'
 import './globals.css'
 import type {Metadata} from 'next'
-import {Inter} from 'next/font/google'
+import {Inter, Noto_Sans} from 'next/font/google'
 import {Changelog} from '@/components/changelog';
 import {CommandMenu} from "@/components/command-menu";
 import Script from 'next/script'
@@ -17,6 +17,12 @@ export const metadata: Metadata = {
     keywords: ['SIX', 'Restaurant', 'Menu', 'HTP', 'HT201']
 }
 
+const fontNotoSans = Noto_Sans({
+    weight: '400',
+    subsets: ['latin'],
+    variable: '--font-sans'
+})
+
 export default function RootLayout({
                                        children,
                                    }: {
@@ -27,7 +33,7 @@ export default function RootLayout({
         <head>
             <Script src="https://plausible.davidemarcoli.dev/js/script.js" data-domain="six-mensa.davidemarcoli.dev"/>
         </head>
-        <body className={`${inter.className}`}>
+        <body className={`${fontNotoSans.className}`}>
         <ThemeProvider
             attribute="class"
             defaultTheme="system"
