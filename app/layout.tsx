@@ -2,11 +2,11 @@ import {ThemeProvider} from '@/components/theme/theme-provider'
 import './globals.css'
 import type {Metadata} from 'next'
 import {Inter} from 'next/font/google'
-import Nav from "@/components/navbar/nav";
 import {Changelog} from '@/components/changelog';
 import {CommandMenu} from "@/components/command-menu";
 import Script from 'next/script'
 import {Toaster} from "@/components/ui/toaster";
+import NewNav from "@/components/navbar/nav-new";
 
 const inter = Inter({subsets: ['latin']})
 
@@ -24,23 +24,25 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en" suppressHydrationWarning={true}>
-            <head>
-                <Script src="https://plausible.davidemarcoli.dev/js/script.js" data-domain="six-mensa.davidemarcoli.dev" />
-            </head>
-            <body className={`${inter.className}`}>
-                <ThemeProvider
-                    attribute="class"
-                    defaultTheme="system"
-                    enableSystem
-                    disableTransitionOnChange
-                >
-                    <Nav/>
-                    {children}
-                    <Changelog/>
-                    <CommandMenu/>
-                    <Toaster/>
-                </ThemeProvider>
-            </body>
+        <head>
+            <Script src="https://plausible.davidemarcoli.dev/js/script.js" data-domain="six-mensa.davidemarcoli.dev"/>
+        </head>
+        <body className={`${inter.className}`}>
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+        >
+            <NewNav/>
+            <div className={'mt-16'}>
+                {children}
+            </div>
+            <Changelog/>
+            <CommandMenu/>
+            <Toaster/>
+        </ThemeProvider>
+        </body>
         </html>
     )
 }
