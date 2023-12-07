@@ -23,7 +23,7 @@ export const metadata: Metadata = {
         description: 'Get this week\'s menu for the SIX Restaurants',
         images: [
             {
-                url: 'https://six-mensa.davidemarcoli.dev/og.png',
+                url: 'https://six-mensa.davidemarcoli.dev/og',
                 width: 1200,
                 height: 630,
                 alt: 'SIX Mensa',
