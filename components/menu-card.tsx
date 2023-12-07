@@ -78,7 +78,6 @@ export default function GenericMenuCard({menu, className, featured, menuItems, l
 
     useEffect(() => {
         const fetchData = async () => {
-            console.log(language)
             if (language === 'en') {
                 // const translatedMenuItems = await Promise.all(filteredMenuItems.map(item => getTranslatedMenu(menu[item.menuKey])));
                 // setFilteredMenuItems(translatedMenuItems)

@@ -14,7 +14,22 @@ export const metadata: Metadata = {
     title: 'SIX Mensa',
     description: 'Get this week\'s menu for the SIX Restaurants',
     manifest: '/manifest.webmanifest',
-    keywords: ['SIX', 'Restaurant', 'Menu', 'HTP', 'HT201']
+    keywords: ['SIX', 'Restaurant', 'Menu', 'HTP', 'HT201'],
+    openGraph: {
+        type: 'website',
+        locale: 'en_US',
+        url: 'https://six-mensa.davidemarcoli.dev',
+        title: 'SIX Mensa',
+        description: 'Get this week\'s menu for the SIX Restaurants',
+        images: [
+            {
+                url: 'https://six-mensa.davidemarcoli.dev/og.png',
+                width: 1200,
+                height: 630,
+                alt: 'SIX Mensa',
+            },
+        ],
+    },
 }
 
 const fontNotoSans = Noto_Sans({
