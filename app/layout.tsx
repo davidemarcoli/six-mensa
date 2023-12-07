@@ -19,12 +19,12 @@ export const metadata: Metadata = {
     openGraph: {
         type: 'website',
         locale: 'en_US',
-        url: 'https://six-mensa.davidemarcoli.dev',
+        url: '/',
         title: 'SIX Mensa',
         description: 'Get this week\'s menu for the SIX Restaurants',
         images: [
             {
-                url: 'https://six-mensa.davidemarcoli.dev/og',
+                url: '/og',
                 width: 1200,
                 height: 630,
                 alt: 'SIX Mensa',
