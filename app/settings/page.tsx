@@ -187,7 +187,7 @@ export default function SettingsPage() {
                                             <HexColorPicker color={field.value} onChange={field.onChange} />
                                             <div className={'flex mx-[26px]'}>
                                                 <HexColorInput color={field.value} onChange={field.onChange} />
-                                                <Undo2 className={'mt-[28px] ml-8 cursor-pointer'} onClick={() => field.onChange('#5d5dff')}/>
+                                                <Undo2 className={'mt-[28px] ml-8 cursor-pointer'} onClick={() => field.onChange('#de3919')}/>
                                             </div>
                                         </div>
                                     </FormControl>
