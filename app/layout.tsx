@@ -7,6 +7,7 @@ import {CommandMenu} from "@/components/command-menu";
 import Script from 'next/script'
 import {Toaster} from "@/components/ui/toaster";
 import Nav from "@/components/navbar/nav";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({subsets: ['latin']})
 
@@ -59,6 +60,7 @@ export default function RootLayout({
             <div className={'mt-16'}>
                 {children}
             </div>
+            <SpeedInsights/>
             <Changelog/>
             <CommandMenu/>
             <Toaster/>
