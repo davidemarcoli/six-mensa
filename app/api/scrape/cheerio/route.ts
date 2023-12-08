@@ -29,6 +29,7 @@ export async function GET(req: NextRequest) {
 }
 
 async function fetchImageForObjectProperty(searchTerm: string): Promise<Image | undefined> {
+    searchTerm = encodeURIComponent(searchTerm);
     const user_agent = selectRandom();
     const header = {
         "User-Agent": user_agent,

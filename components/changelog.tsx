@@ -23,16 +23,13 @@ export function Changelog() {
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Changelog</DialogTitle>
-                    <h1 className="text-2xl">December 6, 2023 - Release {version}</h1>
+                    <h1 className="text-2xl">December 8, 2023 - Release {version}</h1>
                     <hr/>
 
                     <h3 className="text-xl">Summary</h3>
                     <ul>
-                        <li><strong>[Style]</strong> Set default accent color to six red (#de3919)</li>
-                        <li><strong>[Style]</strong> Set font to Noto Sans</li>
-                        <li><strong>[New]</strong> Add six logo to navbar</li>
-                        <li><strong>[Accessibility]</strong> Add tabindex to nav links and menu cards</li>
-                        <li><strong>[Accessibility]</strong> Add aria-label to all buttons without text</li>
+                        <li><strong>[Fix]</strong> Fix bug where search term of image search was not url encoded</li>
+                        <li><strong>[Style]</strong> Feature menu is now highlighted using the accent color as background</li>
 
                         {/*<li><strong>[New]</strong> Added new feature</li>*/}
                         {/*<li><strong>[Fix]</strong> Fixed some bugs</li>*/}
