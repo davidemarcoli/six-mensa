@@ -1,21 +1,43 @@
 import {ThemeProvider} from '@/components/theme/theme-provider'
 import './globals.css'
 import type {Metadata} from 'next'
-import {Inter} from 'next/font/google'
+import {Inter/*, Noto_Sans*/} from 'next/font/google'
 import {Changelog} from '@/components/changelog';
 import {CommandMenu} from "@/components/command-menu";
 import Script from 'next/script'
 import {Toaster} from "@/components/ui/toaster";
-import NewNav from "@/components/navbar/nav-new";
+import Nav from "@/components/navbar/nav";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({subsets: ['latin']})
 
 export const metadata: Metadata = {
-    title: 'SIX Menus',
-    description: 'Get the latest menus from SIX',
+    title: 'SIX Mensa',
+    description: 'Get this week\'s menu for the SIX Restaurants',
     manifest: '/manifest.webmanifest',
-    keywords: ['SIX', 'Mensa', 'Menu', 'HTP', 'HT201']
+    keywords: ['SIX', 'Restaurant', 'Menu', 'HTP', 'HT201'],
+    openGraph: {
+        type: 'website',
+        locale: 'en_US',
+        url: '/',
+        title: 'SIX Mensa',
+        description: 'Get this week\'s menu for the SIX Restaurants',
+        images: [
+            {
+                url: '/og',
+                width: 1200,
+                height: 630,
+                alt: 'SIX Mensa',
+            },
+        ],
+    },
 }
+
+/*const fontNotoSans = Noto_Sans({
+    weight: '400',
+    subsets: ['latin'],
+    variable: '--font-sans'
+})*/
 
 export default function RootLayout({
                                        children,
@@ -34,10 +56,11 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
         >
-            <NewNav/>
+            <Nav/>
             <div className={'mt-16'}>
                 {children}
             </div>
+            <SpeedInsights/>
             <Changelog/>
             <CommandMenu/>
             <Toaster/>

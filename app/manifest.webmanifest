@@ -6,7 +6,7 @@
     "start_url": "/",
     "name": "SIX Mensa",
     "short_name": "SIX Mensa",
-    "description": "Get the current menus of the six mensas",
+    "description": "Get this week's menu for the SIX Restaurants",
     "icons": [
         {
             "src": "/icons/icon-192x192.png",
@@ -31,13 +31,13 @@
     ],
     "screenshots": [
         {
-          "src": "/images/screenshot1.png",
+          "src": "/screenshots/screenshot1.png",
           "type": "image/png",
           "sizes": "532x1143",
           "form_factor": "narrow"
         },
         {
-          "src": "/images/screenshot2.png",
+          "src": "/screenshots/screenshot2.png",
           "type": "image/jpg",
           "sizes": "2558x1384",
           "form_factor": "wide"

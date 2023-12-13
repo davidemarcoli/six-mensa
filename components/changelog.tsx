@@ -23,14 +23,13 @@ export function Changelog() {
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Changelog</DialogTitle>
-                    <h1 className="text-2xl">November 26, 2023 - Release {version}</h1>
+                    <h1 className="text-2xl">December 8, 2023 - Release {version}</h1>
                     <hr/>
 
                     <h3 className="text-xl">Summary</h3>
                     <ul>
-                        <li><strong>[New]</strong> Add compare page</li>
-                        <li><strong>[New]</strong> Add mobile friendly navbar</li>
-                        <li><strong>[New]</strong> Add accent color</li>
+                        <li><strong>[Fix]</strong> Fix bug where search term of image search was not url encoded</li>
+                        <li><strong>[Style]</strong> Feature menu is now highlighted using the accent color as background</li>
 
                         {/*<li><strong>[New]</strong> Added new feature</li>*/}
                         {/*<li><strong>[Fix]</strong> Fixed some bugs</li>*/}
