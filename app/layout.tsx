@@ -1,13 +1,13 @@
 import {ThemeProvider} from '@/components/theme/theme-provider'
 import './globals.css'
 import type {Metadata} from 'next'
-import {Inter/*, Noto_Sans*/} from 'next/font/google'
+import {Inter} from 'next/font/google'
 import {Changelog} from '@/components/changelog';
 import {CommandMenu} from "@/components/command-menu";
 import Script from 'next/script'
 import {Toaster} from "@/components/ui/toaster";
 import Nav from "@/components/navbar/nav";
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import {SpeedInsights} from "@vercel/speed-insights/next"
 
 const inter = Inter({subsets: ['latin']})
 
@@ -16,6 +16,15 @@ export const metadata: Metadata = {
     description: 'Get this week\'s menu for the SIX Restaurants',
     manifest: '/manifest.webmanifest',
     keywords: ['SIX', 'Restaurant', 'Menu', 'HTP', 'HT201'],
+    metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL ?? 'https://six-mensa.davidemarcoli.dev'),
+    robots: {
+        index: true,
+        follow: true,
+        noimageindex: false,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+    },
     openGraph: {
         type: 'website',
         locale: 'en_US',
