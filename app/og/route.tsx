@@ -1,5 +1,4 @@
 import { ImageResponse } from 'next/og';
-import {Utensils} from "lucide-react";
 // App router includes @vercel/og.
 // No need to install it.
 
@@ -30,10 +29,6 @@ export async function GET() {
                     marginLeft: '50px',
                     color: 'white',
                 }}>Mensa</p>
-                {/*<Utensils style={{*/}
-                {/*    height: '100px',*/}
-                {/*    width: '100px',*/}
-                {/*}} color={'blue'}/>*/}
             </div>
         ),
         {
