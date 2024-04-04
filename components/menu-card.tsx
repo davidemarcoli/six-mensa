@@ -108,7 +108,7 @@ export default function GenericMenuCard({menu, className, featured, menuItems, l
                             <div className={index !== 0 ? 'mt-4' : ''}>
                                 <p><b className={'underline'}>{item.name}</b></p>
                                 <p><b>{translatedMenu[item.menuKey].title}</b> {translatedMenu[item.menuKey].description}</p>
-                                {menu[item.menuKey].price.intern && <p>Intern: {menu[item.menuKey].price.intern}.- /
+                                {menu[item.menuKey].price?.intern && <p>Intern: {menu[item.menuKey].price.intern}.- /
                                     Extern: {menu[item.menuKey].price.extern}.-</p>}
                                 <p>{menu[item.menuKey].origin && <span> ({translatedMenu[item.menuKey].origin})</span>}</p>
                             </div>
