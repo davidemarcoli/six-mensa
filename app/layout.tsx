@@ -57,6 +57,7 @@ export default function RootLayout({
         <html lang="en" suppressHydrationWarning={true}>
         <head>
             <Script src="https://plausible.davidemarcoli.dev/js/script.js" data-domain="six-mensa.davidemarcoli.dev"/>
+            <Script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "c715d5e9d98045b7ad7d76ee89a3fab5"}'/>
         </head>
         <body className={`${inter.className}`}>
         <ThemeProvider
