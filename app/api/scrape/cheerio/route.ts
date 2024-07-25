@@ -1,14 +1,11 @@
+import { writeFileSync } from 'fs';
 import {NextRequest, NextResponse} from 'next/server';
 
 const unirest = require("unirest");
 const cheerio = require("cheerio");
 
 export interface Image {
-    title: string;
-    source: string;
     link: string;
-    original: string;
-    thumbnail: string;
 }
 
 export async function GET(req: NextRequest) {
@@ -35,21 +32,18 @@ async function fetchImageForObjectProperty(searchTerm: string): Promise<Image | 
         "User-Agent": user_agent,
     };
 
-    const url = `https://www.google.com/search?q=${searchTerm}&oq=${searchTerm}&hl=en&tbm=isch&asearch=ichunk&async=_id:rg_s,_pms:s,_fmt:pc&sourceid=chrome&ie=UTF-8`;
+    const url = `https://www.bing.com/images/search?q=${searchTerm}`;
 
     try {
         const response = await unirest.get(url).headers(header);
         const $ = cheerio.load(response.body);
         const images_results: Image[] = [];
 
-        $("div.rg_bx").each((i: number, el: Element) => {
-            const json_string = $(el).find(".rg_meta").text();
+        $(".mimg").each((i: number, el: Element) => {
+            const source = $(el).attr("src");
+            if (!source) return;
             images_results.push({
-                title: $(el).find(".iKjWAf .mVDMnf").text(),
-                source: $(el).find(".iKjWAf .FnqxG").text(),
-                link: JSON.parse(json_string).ru,
-                original: JSON.parse(json_string).ou,
-                thumbnail: $(el).find(".rg_l img").attr("src") || $(el).find(".rg_l img").attr("data-src"),
+                link: $(el).attr("src").split("?")[0],
             });
         });
 
@@ -61,11 +55,8 @@ async function fetchImageForObjectProperty(searchTerm: string): Promise<Image | 
     }
 }
 
-const isValidImage = (url: string) => {
-    return /^https:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
-}
 const getHttpsImage = (images: Image[]) => {
-    return images.filter((image) => isValidImage(image.original))[0];
+    return images.filter((image) => image.link)[0];
 }
 
 function selectRandom(): string {

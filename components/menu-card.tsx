@@ -64,7 +64,7 @@ export default function GenericMenuCard({menu, className, featured, menuItems, l
             const images = await getImages(menuCopy);
             const newMenuImages = filteredMenuItems.reduce((acc, item) => ({
                 ...acc,
-                [item.imageKey]: images[item.imageKey]?.original || ''
+                [item.imageKey]: images[item.imageKey]?.link || ''
             }), {});
 
             setMenuImages({
