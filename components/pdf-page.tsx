@@ -40,7 +40,7 @@ export function PDFPage() {
 async function getPdfUrls() {
     const pdfData = [
         {
-            url: "https://www.betriebsrestaurants-migros.ch/media/x4vjg4pd/menueplan_six-ht201.pdf",
+            url: "https://www.betriebsrestaurants-migros.ch/media/sxeelt4n/menueplan_six-ht201.pdf",
             title: "Menu Plan HT201"
         },
         {
