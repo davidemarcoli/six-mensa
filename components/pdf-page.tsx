@@ -44,7 +44,7 @@ async function getPdfUrls() {
             title: "Menu Plan HT201"
         },
         {
-            url: "https://www.betriebsrestaurants-migros.ch/media/k5dnh0sd/landingpage_menueplan_htp.pdf",
+            url: "https://www.betriebsrestaurants-migros.ch/media/ptvpzskx/landingpage_menueplan_htp.pdf",
             title: "Menu Plan HTP"
         }
     ];
