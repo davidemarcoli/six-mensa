@@ -38,24 +38,27 @@ export function PDFPage() {
 
 
 async function getPdfUrls() {
-    const pdfData = [
-        {
-            url: "https://www.betriebsrestaurants-migros.ch/media/z3sbigk4/menueplan_six-ht201.pdf",
-            title: "Menu Plan HT201"
-        },
-        {
-            url: "https://www.betriebsrestaurants-migros.ch/media/ptvpzskx/landingpage_menueplan_htp.pdf",
-            title: "Menu Plan HTP"
-        }
-    ];
+    const fetchedLinks: {[key: string]: string} = await fetch("api/pdf-links").then((response) => response.json())
+    console.log(fetchedLinks)
 
-    return await Promise.all(pdfData.map(async (data) => {
-        const response = await fetch(data.url, {next: {revalidate: 60 * 60 * 4}});
+    // const pdfData = [
+    //     {
+    //         url: "https://www.betriebsrestaurants-migros.ch/media/z3sbigk4/menueplan_six-ht201.pdf",
+    //         title: "Menu Plan HT201"
+    //     },
+    //     {
+    //         url: "https://www.betriebsrestaurants-migros.ch/media/ptvpzskx/landingpage_menueplan_htp.pdf",
+    //         title: "Menu Plan HTP"
+    //     }
+    // ];
+
+    return await Promise.all(Object.entries(fetchedLinks).map(async ([key, value]) => {
+        const response = await fetch(value, {next: {revalidate: 60 * 60 * 4}});
         const blob = await response.blob();
         const buffer = await blob.arrayBuffer();
         const base64 = Buffer.from(buffer).toString('base64');
         return {
-            title: data.title,
+            title: "Menu Plan " + key,
             dataUrl: `data:application/pdf;base64,${base64}#zoom=100&view=FitW&toolbar=0`
         };
     }));

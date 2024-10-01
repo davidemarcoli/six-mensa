@@ -1,6 +1,6 @@
 "use client";
 
-import MenuCard from "@/components/menu-card";
+import MenuCard, { MenuItem } from "@/components/menu-card";
 import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
 import {Info} from "lucide-react";
 import {useEffect, useState} from "react";
@@ -34,7 +34,7 @@ export default function MenuPage({pageType, language, translationEngine, display
     const [featuredMenu, setFeaturedMenu] = useState<any | undefined>(undefined);
     const [hasShownAlert, setHasShownAlert] = useState<boolean>(true);
     const apiPath = pageType === 'HT201' ? 'api/ht201' : 'api/htp';
-    const menuItems = pageType === 'HT201' ? menuItemsHT201 : menuItemsHTP;
+    const [menuItems, setMenuitems] = useState<MenuItem[]>([]);
 
     useEffect(() => {
         const alertShown = localStorage.getItem('hoverAlertShown') === 'true';
@@ -46,6 +46,7 @@ export default function MenuPage({pageType, language, translationEngine, display
 
         const fetchData = async () => {
             const fetchedMenuData = await fetch(apiPath).then((response) => response.json());
+            setMenuitems(pageType === 'HT201' ? menuItemsHT201 : menuItemsHTP);
             if (displayFeaturedMenu) {
                 const updatedMenuData = handleFeaturedMenu(fetchedMenuData);
                 setMenuData(updatedMenuData);

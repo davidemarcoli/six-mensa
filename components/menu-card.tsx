@@ -1,13 +1,13 @@
 "use client";
 
-import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
-import {Image as ScrapedImage} from "@/app/api/scrape/cheerio/route";
-import {useEffect, useState} from "react";
-import {HoverCard, HoverCardContent, HoverCardTrigger} from "./ui/hover-card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Image as ScrapedImage } from "@/app/api/scrape/cheerio/route";
+import { useEffect, useState } from "react";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import Image from "next/image";
 import useStore from "@/lib/store";
 
-interface MenuItem {
+export interface MenuItem {
     name: string;
     imageKey: string;
     menuKey: string;
@@ -46,12 +46,12 @@ async function getTranslatedMenu(menu: any, translationEngine: string): Promise<
     return await fetch(`api/translate?object=${stringifiedMenu}&translationEngine=${translationEngine}`).then((response) => response.json());
 }
 
-export default function GenericMenuCard({menu, className, featured, menuItems, language, translationEngine}: GenericMenuProps) {
+export default function GenericMenuCard({ menu, className, featured, menuItems, language, translationEngine }: GenericMenuProps) {
     const [translatedMenu, setTranslatedMenu] = useState<any>(menu);
     const [menuImages, setMenuImages] = useState<any>();
     const [filteredMenuItems, setFilteredMenuItems] = useState<MenuItem[]>([]);
 
-    const {color} = useStore();
+    const { color } = useStore();
 
     useEffect(() => {
         const filteredMenuItems = menuItems.filter(item => {
@@ -59,7 +59,7 @@ export default function GenericMenuCard({menu, className, featured, menuItems, l
         })
         setFilteredMenuItems(filteredMenuItems)
         const fetchData = async () => {
-            const menuCopy = {...menu};
+            const menuCopy = { ...menu };
             delete menuCopy.day;
             const images = await getImages(menuCopy);
             const newMenuImages = filteredMenuItems.reduce((acc, item) => ({
@@ -94,12 +94,12 @@ export default function GenericMenuCard({menu, className, featured, menuItems, l
     if (!menu || !menu.day) return <p>Loading...</p>;
 
     return (
-        <Card style={{borderColor: featured ? color : undefined}} className={`${className} ${featured ? `border-2` : ''}`} tabIndex={0}>
+        <Card style={{ borderColor: featured ? color : undefined }} className={`${className} ${featured ? `border-2` : ''}`} tabIndex={0}>
             <CardHeader>
                 {/*{featured && <CardTitle><span className="underline">Heute</span> <span*/}
                 {/*    className="text-lg">({menu.day})</span></CardTitle>}*/}
                 {/*{!featured && <CardTitle>{menu.day}</CardTitle>}*/}
-                <CardTitle>{menu.day}</CardTitle>
+                <CardTitle>{menu.day} <span className="text-sm">({menu.date})</span></CardTitle>
             </CardHeader>
             <CardContent>
                 {filteredMenuItems.filter(item => menu[item.menuKey]).filter(item => translatedMenu[item.menuKey]).map((item, index) => (
@@ -117,7 +117,7 @@ export default function GenericMenuCard({menu, className, featured, menuItems, l
                             <Image src={menuImages?.[item.imageKey]} width={500} height={500} alt={item.name} priority={true} />
                         </HoverCardContent>
                     </HoverCard>
-                    ))}
+                ))}
             </CardContent>
         </Card>
     )
