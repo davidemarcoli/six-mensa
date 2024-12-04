@@ -1,9 +1,7 @@
 "use client";
 
-import {useSearchParams} from "next/navigation";
 import PDFPageSkeleton from "@/components/pdf-page";
 import MenuPage from "@/components/menu-page";
-import {useEffect} from "react";
 import useStore from "@/lib/store";
 
 export default function Home() {
