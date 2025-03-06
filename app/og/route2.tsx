@@ -5,7 +5,7 @@ import { ImageResponse } from 'next/og';
 export const runtime = 'edge';
 
 export async function GET() {
-    const image = await fetch(new URL('../../public/images/six-logo.png', import.meta.url)).then(
+    const image = await fetch(new URL('../../public/icons/icon-512x512.png', import.meta.url)).then(
         (res) => res.arrayBuffer(),
     );
 

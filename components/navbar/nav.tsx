@@ -136,8 +136,7 @@ export default function Nav() {
                     <div className="flex h-16 w-full items-center justify-between">
                         <Link href="/" className="font-display flex items-center text-2xl ml-4 lg:ml-0">
                             <p className={"logo balanceItems"}>
-                                <Image src={"/images/six-logo.svg"} alt={"SIX Logo"} width={84} height={32}/>
-                                Mensa
+                                SIX Mensa
                                 <Utensils/>
                             </p>
                         </Link>
