@@ -15,8 +15,8 @@ export const metadata: Metadata = {
     title: 'SIX Mensa',
     description: 'Get this week\'s menu for the SIX Restaurants',
     manifest: '/manifest.webmanifest',
-    keywords: ['SIX', 'Restaurant', 'Menu', 'HTP', 'HT201'],
-    metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL ?? 'https://six-mensa.davidemarcoli.dev'),
+    keywords: ['SIX', 'kantine', 'Menu', 'HTP', 'HT201'],
+    metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL ?? 'https://mensa.davidemarcoli.dev'),
     robots: {
         index: true,
         follow: true,
@@ -56,7 +56,7 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning={true}>
         <head>
-            {/*<Script src="https://plausible.homelab.davidemarcoli.dev/js/script.js" data-domain="six-mensa.davidemarcoli.dev"/>*/}
+            {/*<Script src="https://plausible.homelab.davidemarcoli.dev/js/script.js" data-domain="mensa.davidemarcoli.dev"/>*/}
             <Script src="https://umami.homelab.davidemarcoli.dev/script.js" data-website-id="55644167-5020-496c-b658-60ec2a172ba8"/>
             {/*<Script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "c715d5e9d98045b7ad7d76ee89a3fab5"}'/>*/}
         </head>
