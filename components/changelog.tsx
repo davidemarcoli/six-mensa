@@ -23,13 +23,15 @@ export function Changelog() {
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Changelog</DialogTitle>
-                    <h1 className="text-2xl">October 1, 2024 - Release {version}</h1>
+                    <h1 className="text-2xl">April 17, 2025 - Release {version}</h1>
                     <hr/>
 
                     <h3 className="text-xl">Summary</h3>
                     <ul>
-                        <li><strong>[New]</strong> Date is shown for each menu</li>
-                        <li><strong>[New]</strong> PDF Links are automatically fetched, no old menus anymore!</li>
+                        <li><strong>[New]</strong> AI based menu parsing</li>
+                        <li><strong>[New]</strong> Improved english translations by using AI</li>
+                        <li><strong>[New]</strong> Indicator showing if the menu is vegan</li>
+                        <li><strong>[New]</strong> Allergies shown under the menu</li>
 
                         {/*<li><strong>[New]</strong> Added new feature</li>*/}
                         {/*<li><strong>[Fix]</strong> Fixed some bugs</li>*/}
