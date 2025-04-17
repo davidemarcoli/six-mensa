@@ -6,29 +6,41 @@ import { useEffect, useState } from "react";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import Image from "next/image";
 import useStore from "@/lib/store";
+import { Vegan } from "lucide-react";
 
-export interface MenuItem {
-    name: string;
-    imageKey: string;
-    menuKey: string;
+interface MenuItem {
+    title: string;
+    description: string;
+    type: string;
+    dietaryType: string;
+    price?: {
+        intern: number;
+        extern: number;
+    };
+    origin?: string;
+    allergens?: string[];
+}
+
+interface Menu {
+    day: string;
+    date: string;
+    menues: MenuItem[];
+    [key: string]: any; // Allow for dynamic keys
 }
 
 interface GenericMenuProps {
-    menu: any;  // You might want to replace `any` with a more specific type if possible
+    menu: Menu;
     featured?: boolean;
     className?: string;
-    menuItems: MenuItem[];
-    language: 'en' | 'de';
-    translationEngine: 'libreTranslate' | 'myMemory';
 }
 
-async function getImages(menu: any): Promise<any> {
+async function getImages(menu: Menu): Promise<any> {
 
-    const stringifiedMenu = encodeURIComponent(JSON.stringify(menu));
+    const stringifiedMenues = encodeURIComponent(JSON.stringify(menu.menues));
 
     const abortController = new AbortController();
 
-    return await fetch(`api/scrape/cheerio?singleResult=true&object=${stringifiedMenu}`, {
+    return await fetch(`api/scrape/cheerio?singleResult=true&menues=${stringifiedMenues}`, {
         next: {
             revalidate: 60 * 60 * 24
         },
@@ -41,57 +53,29 @@ async function getImages(menu: any): Promise<any> {
     });
 }
 
-async function getTranslatedMenu(menu: any, translationEngine: string): Promise<any> {
-    const stringifiedMenu = encodeURIComponent(JSON.stringify(menu));
-    return await fetch(`api/translate?object=${stringifiedMenu}&translationEngine=${translationEngine}`).then((response) => response.json());
-}
-
-export default function GenericMenuCard({ menu, className, featured, menuItems, language, translationEngine }: GenericMenuProps) {
-    const [translatedMenu, setTranslatedMenu] = useState<any>(menu);
-    const [menuImages, setMenuImages] = useState<any>();
-    const [filteredMenuItems, setFilteredMenuItems] = useState<MenuItem[]>([]);
+export default function GenericMenuCard({ menu, className, featured }: GenericMenuProps) {
+    console.log(menu)
+    const [menuImages, setMenuImages] = useState<{link: string}[]>([]);
 
     const { color } = useStore();
 
     useEffect(() => {
-        const filteredMenuItems = menuItems.filter(item => {
-            return menu[item.menuKey] !== undefined
-        })
-        setFilteredMenuItems(filteredMenuItems)
         const fetchData = async () => {
-            const menuCopy = { ...menu };
-            delete menuCopy.day;
-            const images = await getImages(menuCopy);
-            const newMenuImages = filteredMenuItems.reduce((acc, item) => ({
-                ...acc,
-                [item.imageKey]: images[item.imageKey]?.link || ''
-            }), {});
+            const images = await getImages(menu);
+            console.log('Fetched images:', images);
 
-            setMenuImages({
-                day: menu.day,
-                ...newMenuImages
-            });
+            setMenuImages(images);
         };
 
         fetchData().catch(console.error);
-    }, [menu, menuItems]);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            if (language === 'en') {
-                // const translatedMenuItems = await Promise.all(filteredMenuItems.map(item => getTranslatedMenu(menu[item.menuKey])));
-                // setFilteredMenuItems(translatedMenuItems)
-
-                setTranslatedMenu(() => menu)
-                setTranslatedMenu(await getTranslatedMenu(menu, translationEngine))
-            } else {
-                setTranslatedMenu(menu)
-            }
-        }
-        fetchData().catch(console.error);
-    }, [language, menu, translationEngine])
+    }, [menu]);
 
     if (!menu || !menu.day) return <p>Loading...</p>;
+
+    const formatPrice = (price: number) => {
+        if (price === undefined || price === null) return '';
+        return price.toFixed(2);
+    }
 
     return (
         <Card style={{ borderColor: featured ? color : undefined }} className={`${className} ${featured ? `border-2` : ''}`} tabIndex={0}>
@@ -102,14 +86,18 @@ export default function GenericMenuCard({ menu, className, featured, menuItems, 
                 <CardTitle>{menu.day} <span className="text-sm">({menu.date})</span></CardTitle>
             </CardHeader>
             <CardContent>
-                {filteredMenuItems.filter(item => menu[item.menuKey]).filter(item => translatedMenu[item.menuKey]).map((item, index) => (
-                    <MenuWrapper key={item.name} item={item} menuImage={menuImages?.[item.imageKey]}>
+                {menu.menues.map((item, index) => (
+                    <MenuWrapper key={item.title} item={item} menuImage={menuImages[index]?.link}>
                         <div className={index !== 0 ? 'mt-4' : ''}>
-                            <p><b className={'underline'}>{item.name}</b></p>
-                            <p><b>{translatedMenu[item.menuKey].title}</b> {translatedMenu[item.menuKey].description}</p>
-                            {menu[item.menuKey].price?.intern && <p>Intern: {menu[item.menuKey].price.intern}.- /
-                                Extern: {menu[item.menuKey].price.extern}.-</p>}
-                            <p>{menu[item.menuKey].origin && <span> ({translatedMenu[item.menuKey].origin})</span>}</p>
+                            <p className="flex items-center gap-4">
+                                <b className={'underline'}>{item.type}</b>
+                                {item.dietaryType == "vegan" && <Vegan className={'text-green-500'} size={20} />}
+                            </p>
+                            <p><b>{item.title}</b> {item.description}</p>
+                            {item.price && <p>Intern: {formatPrice(item.price.intern)}.- /
+                                Extern: {formatPrice(item.price.extern)}.-</p>}
+                            <p>{item.origin && <span> ({item.origin})</span>}</p>
+                            {item.allergens && item.allergens.length > 0 && <span className={'text-gray-500 text-sm'}> (Allergen: {item.allergens.join(', ')})</span>}
                         </div>
                     </MenuWrapper>
                 ))}
@@ -127,7 +115,7 @@ function MenuWrapper({ item, menuImage, children }: { item: MenuItem, menuImage:
                         {children}
                     </HoverCardTrigger>
                     <HoverCardContent className="w-96">
-                        <Image src={menuImage} width={500} height={500} alt={item.name} className="rounded-md" />
+                        <Image src={menuImage} width={500} height={500} alt={item.title} priority={true} />
                     </HoverCardContent>
                 </HoverCard>
             ) : (

@@ -2,14 +2,12 @@ import {create} from 'zustand';
 
 interface AppState {
     language: string;
-    translationEngine: string;
     displayFeaturedMenu: boolean;
     color: string;
     selectedMensa: string;
     selectedViewMode: string;
 
     setLanguage: (language: string) => void;
-    setTranslationEngine: (translationEngine: string) => void;
     setDisplayFeaturedMenu: (displayFeaturedMenu: boolean) => void;
     setColor: (color: string) => void;
     setSelectedMensa: (selectedMensa: string) => void;
@@ -18,7 +16,6 @@ interface AppState {
 
 const useStore = create<AppState>()((set) => ({
     language: typeof localStorage !== 'undefined' ? localStorage.getItem('language') || 'de' : 'de',
-    translationEngine: typeof localStorage !== 'undefined' ? localStorage.getItem('translationEngine') || 'myMemory' : 'myMemory',
     displayFeaturedMenu: typeof localStorage !== 'undefined' ? localStorage.getItem('displayFeaturedMenu') === 'true' : false,
     color: typeof localStorage !== 'undefined' ? localStorage.getItem('color') || '#de3919' : '#de3919',
     selectedMensa: typeof localStorage !== 'undefined' ? localStorage.getItem('selectedMensa') || 'htp' : 'htp',
@@ -28,11 +25,6 @@ const useStore = create<AppState>()((set) => ({
     setLanguage: (language: string) => {
         localStorage.setItem('language', language);
         set({ language });
-    },
-
-    setTranslationEngine: (translationEngine: string) => {
-        localStorage.setItem('translationEngine', translationEngine);
-        set({ translationEngine });
     },
 
     setDisplayFeaturedMenu: (displayFeaturedMenu: boolean) => {

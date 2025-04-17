@@ -5,11 +5,10 @@ import CompareMenusPage from "@/components/compare-menus-page";
 
 export default function Page() {
 
-    const {language, translationEngine} = useStore();
+    const {language} = useStore();
     return (
         <>
-            <CompareMenusPage language={language == 'en' ? 'en' : 'de'}
-                                 translationEngine={translationEngine == 'myMemory' ? 'myMemory' : 'libreTranslate'} />
+            <CompareMenusPage language={language == 'en' ? 'en' : 'de'} />
         </>
     )
 }

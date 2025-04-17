@@ -9,25 +9,9 @@ import LoadingSpinner from "@/components/loading-spinner";
 // Define the prop type for the combined page
 interface CompareMenusPageProps {
     language: 'en' | 'de';
-    translationEngine: 'libreTranslate' | 'myMemory';
 }
 
-// Define the menu item structures for HT201 and HTP
-const menuItemsHT201 = [
-    {name: 'Local', imageKey: 'Local', menuKey: 'Local'},
-    {name: 'Global', imageKey: 'Global', menuKey: 'Global'},
-    {name: 'Vegi', imageKey: 'Vegi', menuKey: 'Vegi'},
-    {name: 'Pizza & Pasta', imageKey: 'PizzaPasta', menuKey: 'Pizza & Pasta'},
-];
-
-const menuItemsHTP = [
-    {name: 'Local', imageKey: 'Local', menuKey: 'Local'},
-    {name: 'Vegi', imageKey: 'Vegi', menuKey: 'Vegi'},
-    {name: 'Globetrotter', imageKey: 'Globetrotter', menuKey: 'Globetrotter'},
-    {name: 'Buffet', imageKey: 'Buffet', menuKey: 'Buffet'},
-];
-
-export default function CompareAllMenusPage({language, translationEngine}: CompareMenusPageProps) {
+export default function CompareAllMenusPage({language}: CompareMenusPageProps) {
     const [leftMenuData, setLeftMenuData] = useState<any[]>([]);
     const [rightMenuData, setRightMenuData] = useState<any[]>([]);
 
@@ -53,16 +37,14 @@ export default function CompareAllMenusPage({language, translationEngine}: Compa
                     {leftMenuData.map((menu, i) => (
                         <MenuCard key={i}
                                   className={`flex-grow w-full m-4`}
-                                  menu={menu} menuItems={menuItemsHT201} language={language}
-                                  translationEngine={translationEngine} />
+                                  menu={menu} />
                     ))}
                 </div>
                 <div className="flex flex-col flex-wrap w-full m-4">
                     {rightMenuData.map((menu, i) => (
                         <MenuCard key={i}
                                   className={`flex-grow w-full m-4`}
-                                  menu={menu} menuItems={menuItemsHTP} language={language}
-                                  translationEngine={translationEngine} />
+                                  menu={menu} />
                     ))}
                 </div>
             </main>

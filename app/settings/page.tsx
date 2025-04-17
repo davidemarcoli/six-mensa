@@ -16,7 +16,6 @@ import {HexColorInput, HexColorPicker} from "react-colorful";
 
 const formSchema = z.object({
     language: z.string(),
-    translationEngine: z.string(),
     displayFeaturedMenu: z.boolean(),
     color: z.string()
 });
@@ -29,56 +28,26 @@ export default function SettingsPage() {
     const {
         language,
         setLanguage,
-        translationEngine,
-        setTranslationEngine,
         displayFeaturedMenu,
         setDisplayFeaturedMenu,
         color,
         setColor,
     } = useStore();
 
-    // const [language, setLanguage] = useLocalStorage('language', 'de');
-    // const [translationEngine, setTranslationEngine] = useLocalStorage('translationEngine', 'myMemory');
-    // const [displayFeaturedMenu, setDisplayFeaturedMenu] = useLocalStorage('displayFeaturedMenu', true);
-
-    // const [language, setLanguage] = useState('de')
-    // const [translationEngine, setTranslationEngine] = useState('myMemory')
-    // const [displayFeaturedMenu, setDisplayFeaturedMenu] = useState(true)
-    //
-    // useEffect(() => {
-    //     console.log(localStorage.getItem('language'))
-    //     setLanguage(localStorage.getItem('language') || 'de')
-    //     setTranslationEngine(localStorage.getItem('translationEngine') || 'myMemory')
-    //     setDisplayFeaturedMenu(localStorage.getItem('displayFeaturedMenu') === 'true')
-    // }, []);
-
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             language: language,
-            translationEngine: translationEngine,
             displayFeaturedMenu: displayFeaturedMenu,
             color: color
         },
     })
 
-    // const onLanguageChange = (selectedLanguage: any) => {
-    //     localStorage.setItem('language', selectedLanguage)
-    // }
-    //
-    // const onTranslationEngineChange = (selectedTranslationEngine: any) => {
-    //     localStorage.setItem('translationEngine', selectedTranslationEngine)
-    // }
-
     const onSubmit = (data: any) => {
         console.log(data);
         setLanguage(data.language)
-        setTranslationEngine(data.translationEngine)
         setDisplayFeaturedMenu(data.displayFeaturedMenu)
         setColor(data.color)
-        // localStorage.setItem('language', data.language)
-        // localStorage.setItem('translationEngine', data.translationEngine)
-        // localStorage.setItem('displayFeaturedMenu', data.displayFeaturedMenu)
         toast({
             title: "Settings saved.",
             description: "Your settings have been saved.",
@@ -118,32 +87,6 @@ export default function SettingsPage() {
                                     </Select>
                                     <FormDescription>
                                         This is the language of the menu
-                                    </FormDescription>
-                                    <FormMessage/>
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="translationEngine"
-                            render={({field}) => (
-                                <FormItem>
-                                    <FormLabel>Translation Engine <span
-                                        className={'text-sm text-red-500'}>(Experimental)</span></FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                        <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="Select translation engine"/>
-                                            </SelectTrigger>
-                                        </FormControl>
-                                        <SelectContent>
-                                            <SelectItem value="libreTranslate">Libre Translate</SelectItem>
-                                            <SelectItem value="myMemory">My Memory</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                    <FormDescription>
-                                        This is the translation engine used for translating the menu
-                                        {/*Attention: The My Memory translation engine produces better results, but is limited to 1000 requests per day.*/}
                                     </FormDescription>
                                     <FormMessage/>
                                 </FormItem>

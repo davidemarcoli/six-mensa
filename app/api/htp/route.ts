@@ -1,7 +1,8 @@
 import {NextRequest, NextResponse} from "next/server";
 
 export async function GET(req: NextRequest) {
-    return NextResponse.json(await fetch(process.env.API_URL + "htp/-1", {
+    const language = req.nextUrl.searchParams.get('language') || 'de';
+    return NextResponse.json(await fetch(process.env.API_URL + "htp/-1?language=" + language, {
         next: { revalidate: 60 * 60 },
     }).then((response) => response.json()));
 }

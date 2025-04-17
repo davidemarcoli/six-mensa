@@ -15,17 +15,12 @@ import {
 } from "lucide-react";
 import React from "react";
 import {useRouter} from "next/navigation";
-import useLocalStorage from "@/lib/utils";
 import useStore from "@/lib/store";
 
 export function CommandMenu() {
     const [open, setOpen] = React.useState(false)
 
-    const  {language, setLanguage, displayFeaturedMenu, setDisplayFeaturedMenu} = useStore();
-
-    // const [language, setLanguage] = useLocalStorage('language', 'de');
-    // const [displayFeaturedMenu, setDisplayFeaturedMenu] = useLocalStorage('displayFeaturedMenu', true);
-    //const [translationEngine, setTranslationEngine] = useLocalStorage('translationEngine', 'libreTranslate');
+    const  {setLanguage, setDisplayFeaturedMenu} = useStore();
 
     const router = useRouter();
 
@@ -54,11 +49,6 @@ export function CommandMenu() {
         setDisplayFeaturedMenu(displayFeaturedMenu);
         setOpen(false);
     }
-
-    /*const setTranslationEngineStorage = (translationEngine: string) => {
-        setTranslationEngine(translationEngine);
-        setOpen(false);
-    }*/
 
     return (
         <CommandDialog open={open} onOpenChange={setOpen}>
@@ -93,15 +83,6 @@ export function CommandMenu() {
                         <span>Off</span>
                     </CommandItem>
                 </CommandGroup>
-                {/*<CommandSeparator/>
-                <CommandGroup heading="Translation Engine">
-                    <CommandItem onSelect={() => setTranslationEngineStorage('libreTranslate')}>
-                        <span>Libre Translate</span>
-                    </CommandItem>
-                    <CommandItem onSelect={() => setTranslationEngineStorage('myMemory')}>
-                        <span>My Memory</span>
-                    </CommandItem>
-                </CommandGroup>*/}
             </CommandList>
         </CommandDialog>
     )
