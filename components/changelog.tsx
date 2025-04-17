@@ -32,6 +32,10 @@ export function Changelog() {
 
                     <h3 className="text-xl">Summary</h3>
                     <ul>
+                        <li><strong>[New]</strong> AI based menu parsing</li>
+                        <li><strong>[New]</strong> Improved english translations by using AI</li>
+                        <li><strong>[New]</strong> Indicator showing if the menu is vegan (no guarantee for correctness)</li>
+                        <li><strong>[New]</strong> Allergies shown under the menu (no guarantee for correctness)</li>
                         <li><strong>[Fix]</strong> Current date comparison if the mensa isn&apos;t open the whole week</li>
 
                         {/*<li><strong>[New]</strong> Added new feature</li>*/}
