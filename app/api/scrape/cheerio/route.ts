@@ -9,20 +9,13 @@ export interface Image {
 }
 
 export async function GET(req: NextRequest) {
-    const object = JSON.parse(req.nextUrl.searchParams.get('object') || '{}');
+    const menues = JSON.parse(req.nextUrl.searchParams.get('menues') || '{}');
 
-    const data = await Promise.all(Object.keys(object).map(async (key) => {
-        if (key === 'day') return undefined;
-        const menu = object[key];
-        return await fetchImageForObjectProperty(menu.title + " " + menu.description);
-    }));
+    const data = await Promise.all(menues.map((menu: any) =>
+        fetchImageForObjectProperty(menu.title + " " + menu.description)
+    ));
 
-    const imageObject: any = {};
-    Object.keys(object).forEach((key, index) => {
-        imageObject[key] = data[index];
-    });
-
-    return NextResponse.json(imageObject);
+    return NextResponse.json(data);
 }
 
 async function fetchImageForObjectProperty(searchTerm: string): Promise<Image | undefined> {
@@ -36,6 +29,9 @@ async function fetchImageForObjectProperty(searchTerm: string): Promise<Image | 
 
     try {
         const response = await unirest.get(url).headers(header);
+        if (!response.body) {
+            return undefined;
+        }
         const $ = cheerio.load(response.body);
         const images_results: Image[] = [];
 

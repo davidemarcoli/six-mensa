@@ -9,34 +9,18 @@ import {ChevronLeft, ChevronRight} from "lucide-react";
 
 // Define the prop type for the combined page
 interface CompareMenusPageProps {
-    language: 'en' | 'de';
-    translationEngine: 'libreTranslate' | 'myMemory';
+    language: 'en' | 'de'
 }
 
-// Define the menu item structures for HT201 and HTP
-const menuItemsHT201 = [
-    {name: 'Local', imageKey: 'Local', menuKey: 'Local'},
-    {name: 'Global', imageKey: 'Global', menuKey: 'Global'},
-    {name: 'Vegi', imageKey: 'Vegi', menuKey: 'Vegi'},
-    {name: 'Pizza & Pasta', imageKey: 'PizzaPasta', menuKey: 'Pizza & Pasta'},
-];
-
-const menuItemsHTP = [
-    {name: 'Local', imageKey: 'Local', menuKey: 'Local'},
-    {name: 'Vegi', imageKey: 'Vegi', menuKey: 'Vegi'},
-    {name: 'Globetrotter', imageKey: 'Globetrotter', menuKey: 'Globetrotter'},
-    {name: 'Buffet', imageKey: 'Buffet', menuKey: 'Buffet'},
-];
-
-export default function CompareMenusPage({language, translationEngine}: CompareMenusPageProps) {
+export default function CompareMenusPage({language}: CompareMenusPageProps) {
     const [leftMenuData, setLeftMenuData] = useState<any[]>([]);
     const [rightMenuData, setRightMenuData] = useState<any[]>([]);
     const [selectedDay, setSelectedDay] = useState<string | undefined>(undefined);
 
     useEffect(() => {
         const fetchData = async () => {
-            const leftMenuData = await fetch('api/ht201').then((response) => response.json());
-            const rightMenuData = await fetch('api/htp').then((response) => response.json());
+            const leftMenuData = await fetch(`api/ht201?language=${language}`).then((response) => response.json());
+            const rightMenuData = await fetch('api/htp?language=${language}').then((response) => response.json());
             setLeftMenuData(leftMenuData);
             setRightMenuData(rightMenuData);
 
@@ -110,9 +94,7 @@ export default function CompareMenusPage({language, translationEngine}: CompareM
                         <h1 className={'text-2xl font-bold text-center mb-4'}>HT 201</h1>
                         <MenuCard key={selectedDay + "-ht201"}
                                   className={`flex-grow w-full`}
-                                  menu={selectedMenu('ht201')} menuItems={menuItemsHT201}
-                                  language={language}
-                                  translationEngine={translationEngine}/>
+                                  menu={selectedMenu('ht201')} />
                     </>}
                 </div>
                 <div className="flex flex-col sm:w-full m-4">
@@ -120,9 +102,7 @@ export default function CompareMenusPage({language, translationEngine}: CompareM
                         <h1 className={'text-2xl font-bold text-center mb-4'}>HTP</h1>
                         <MenuCard key={selectedDay + "-htp"}
                                   className={`flex-grow w-full`}
-                                  menu={selectedMenu('htp')} menuItems={menuItemsHTP}
-                                  language={language}
-                                  translationEngine={translationEngine}/>
+                                  menu={selectedMenu('htp')} />
                     </>}
                 </div>
             </main>

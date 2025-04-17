@@ -15,9 +15,6 @@ import Image from "next/image";
 
 export default function Nav() {
 
-    // const [language] = useLocalStorage('language', 'de');
-    // const [translationEngine] = useLocalStorage('translationEngine', 'myMemory');
-
     const [checkedMode, setCheckedMode] = useState(false);
     const [checkedMensa, setCheckedMensa] = useState(false);
 
