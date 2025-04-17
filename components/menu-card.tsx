@@ -19,6 +19,7 @@ interface MenuItem {
     };
     origin?: string;
     allergens?: string[];
+    imagePath?: string;
 }
 
 interface Menu {
@@ -34,37 +35,27 @@ interface GenericMenuProps {
     className?: string;
 }
 
-async function getImages(menu: Menu): Promise<any> {
+async function getAPIBaseUrl(menu: Menu): Promise<any> {
 
-    const stringifiedMenues = encodeURIComponent(JSON.stringify(menu.menues));
-
-    const abortController = new AbortController();
-
-    return await fetch(`api/scrape/cheerio?singleResult=true&menues=${stringifiedMenues}`, {
+    return await fetch(`api/api-base-url`, {
         next: {
             revalidate: 60 * 60 * 24
         },
-        signal: abortController.signal
     }).then((response) => response.json()).catch((error) => {
-        if (!abortController.signal.aborted) {
-            console.error('Error:', error.message);
-        }
         return [];
     });
 }
 
 export default function GenericMenuCard({ menu, className, featured }: GenericMenuProps) {
     console.log(menu)
-    const [menuImages, setMenuImages] = useState<{link: string}[]>([]);
+    const [apiBaseUrl, setApiBaseUrl] = useState<string | undefined>(undefined);
 
     const { color } = useStore();
 
     useEffect(() => {
         const fetchData = async () => {
-            const images = await getImages(menu);
-            console.log('Fetched images:', images);
-
-            setMenuImages(images);
+            const apiBaseUrl = await getAPIBaseUrl(menu);
+            setApiBaseUrl(apiBaseUrl.url);
         };
 
         fetchData().catch(console.error);
@@ -103,7 +94,7 @@ export default function GenericMenuCard({ menu, className, featured }: GenericMe
                             </div>
                         </HoverCardTrigger>
                         <HoverCardContent className="w-96">
-                            <Image src={menuImages[index]?.link} width={500} height={500} alt={item.title} priority={true} />
+                            {item.imagePath && <Image src={apiBaseUrl + item.imagePath} width={500} height={500} alt={item.title} priority={true} />}
                         </HoverCardContent>
                     </HoverCard>
                 ))}
