@@ -35,22 +35,41 @@ export default function CompareMenusPage({language, translationEngine}: CompareM
 
     useEffect(() => {
         const fetchData = async () => {
-            const leftMenuData = await fetch('api/ht201').then((response) => response.json());
-            const rightMenuData = await fetch('api/htp').then((response) => response.json());
-            setLeftMenuData(leftMenuData);
-            setRightMenuData(rightMenuData);
-
-            const today = new Date();
-            const day = today.getDay()
-            const dayInWord = leftMenuData[day - 1]?.day;
-            if (dayInWord) {
-                setSelectedDay(dayInWord);
+            try {
+                const leftResponse = await fetch('/api/ht201');
+                const rightResponse = await fetch('/api/htp');
+                
+                if (!leftResponse.ok || !rightResponse.ok) {
+                  console.error('API response not OK');
+                  return;
+                }
+                
+                const leftData = await leftResponse.json();
+                const rightData = await rightResponse.json();
+                
+                setLeftMenuData(leftData);
+                setRightMenuData(rightData);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                return;
             }
         };
 
 
         fetchData().catch(console.error);
     }, []);
+
+    useEffect(() => {
+        if (leftMenuData.length === 0 || rightMenuData.length === 0) {
+            console.error('No data found');
+            return;
+        }
+
+        const today = new Date();
+        const day = today.getDay();
+        const dayInWord = leftMenuData[day - 1]?.day;
+        setSelectedDay(dayInWord || leftMenuData[0]?.day);
+    }, [leftMenuData, rightMenuData]);
 
     if (leftMenuData.length === 0 || rightMenuData.length === 0) return (
         <LoadingSpinner/>
