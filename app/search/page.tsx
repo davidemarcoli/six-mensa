@@ -10,8 +10,6 @@ async function getImages(searchTerm: string) {
     }).then((response) => response.json());
 }
 
-export const revalidate = 10;
-
 export default function Home() {
 
     const [images, setImages] = useState<Image[]>([]);
