@@ -103,22 +103,38 @@ export default function GenericMenuCard({ menu, className, featured, menuItems, 
             </CardHeader>
             <CardContent>
                 {filteredMenuItems.filter(item => menu[item.menuKey]).filter(item => translatedMenu[item.menuKey]).map((item, index) => (
-                    <HoverCard key={item.name}>
-                        <HoverCardTrigger asChild>
-                            <div className={index !== 0 ? 'mt-4' : ''}>
-                                <p><b className={'underline'}>{item.name}</b></p>
-                                <p><b>{translatedMenu[item.menuKey].title}</b> {translatedMenu[item.menuKey].description}</p>
-                                {menu[item.menuKey].price?.intern && <p>Intern: {menu[item.menuKey].price.intern}.- /
-                                    Extern: {menu[item.menuKey].price.extern}.-</p>}
-                                <p>{menu[item.menuKey].origin && <span> ({translatedMenu[item.menuKey].origin})</span>}</p>
-                            </div>
-                        </HoverCardTrigger>
-                        <HoverCardContent className="w-96">
-                            <Image src={menuImages?.[item.imageKey]} width={500} height={500} alt={item.name} priority={true} />
-                        </HoverCardContent>
-                    </HoverCard>
+                    <MenuWrapper key={item.name} item={item} menuImage={menuImages?.[item.imageKey]}>
+                        <div className={index !== 0 ? 'mt-4' : ''}>
+                            <p><b className={'underline'}>{item.name}</b></p>
+                            <p><b>{translatedMenu[item.menuKey].title}</b> {translatedMenu[item.menuKey].description}</p>
+                            {menu[item.menuKey].price?.intern && <p>Intern: {menu[item.menuKey].price.intern}.- /
+                                Extern: {menu[item.menuKey].price.extern}.-</p>}
+                            <p>{menu[item.menuKey].origin && <span> ({translatedMenu[item.menuKey].origin})</span>}</p>
+                        </div>
+                    </MenuWrapper>
                 ))}
             </CardContent>
         </Card>
     )
+}
+
+function MenuWrapper({ item, menuImage, children }: { item: MenuItem, menuImage: string, children: React.ReactNode }) {
+    return (
+        <>
+            {menuImage ? (
+                <HoverCard>
+                    <HoverCardTrigger asChild>
+                        {children}
+                    </HoverCardTrigger>
+                    <HoverCardContent className="w-96">
+                        <Image src={menuImage} width={500} height={500} alt={item.name} className="rounded-md" />
+                    </HoverCardContent>
+                </HoverCard>
+            ) : (
+                <>
+                    {children}
+                </>
+            )}
+        </>
+    );
 }

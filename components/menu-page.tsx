@@ -95,28 +95,42 @@ export default function MenuPage({pageType, language, translationEngine, display
                         <MenuCard key={i}
                                   className={`flex-grow w-full lg:w-1/6 ${i === menuData.length - 1 ? '' : 'lg:mr-4 mb-4 lg:mb-0'}`}
                                   menu={menu} menuItems={menuItems} language={language}
-                                  translationEngine={translationEngine} featured={featuredMenu ? false : i === new Date().getDay() - 1}/>
+                                  translationEngine={translationEngine} featured={featuredMenu ? false : isCurrentDay(menu.day)}/>
                     ))}
                 </div>
             </main>
         </>
     );
 
-    function handleFeaturedMenu(data: any[]): any[] {
-        const currentDay = new Date().getDay() - 1;
+    // Helper function to get current day name in both languages
+    function getCurrentDayName() {
+        const today = new Date();
+        const germanDay = today.toLocaleDateString('de-DE', { weekday: 'long' });
+        const englishDay = today.toLocaleDateString('en-US', { weekday: 'long' });
+        return { german: germanDay, english: englishDay };
+    }
 
-        if (currentDay > 0 && currentDay < 5) {
-            const featured = data[currentDay];
+    function isCurrentDay(menuDay: string) {
+        const currentDayNames = getCurrentDayName();
+        return menuDay.toLowerCase() === currentDayNames.german.toLowerCase() || 
+               menuDay.toLowerCase() === currentDayNames.english.toLowerCase();
+    }
+
+    function handleFeaturedMenu(data: any[]): any[] {
+        const currentDayNames = getCurrentDayName();
+        
+        const featuredIndex = data.findIndex(menu => 
+            menu.day.toLowerCase() === currentDayNames.german.toLowerCase() || 
+            menu.day.toLowerCase() === currentDayNames.english.toLowerCase()
+        );
+
+        if (featuredIndex !== -1) {
+            const featured = data[featuredIndex];
             setFeaturedMenu(featured);
             const updatedData = [...data];
-            updatedData.splice(currentDay, 1);
+            updatedData.splice(featuredIndex, 1);
             return updatedData;
-        } /*else {
-            setFeaturedMenu(data[0]);
-            const updatedData = [...data];
-            updatedData.splice(0, 1);
-            return updatedData;
-        }*/
+        }
 
         return data;
     }

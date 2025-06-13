@@ -8,6 +8,7 @@ import Script from 'next/script'
 import {Toaster} from "@/components/ui/toaster";
 import Nav from "@/components/navbar/nav";
 import {SpeedInsights} from "@vercel/speed-insights/next"
+import {Suspense} from "react"
 
 const inter = Inter({subsets: ['latin']})
 
@@ -67,7 +68,9 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
         >
-            <Nav/>
+            <Suspense fallback={<div className="h-16" />}>
+                <Nav/>
+            </Suspense>
             <div className={'mt-16'}>
                 {children}
             </div>

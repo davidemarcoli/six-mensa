@@ -12,8 +12,12 @@ export function Changelog() {
     const [showDialog, setShowDialog] = React.useState(false)
 
     React.useEffect(() => {
-        if (version !== localStorage.getItem('version')) {
-            setShowDialog(true);
+        const localStorageVersion = localStorage.getItem('version');
+        if (version !== localStorageVersion) {
+            // Show the dialog only if the version has changed
+            if (localStorageVersion) {
+                setShowDialog(true);
+            }
             localStorage.setItem('version', version);
         }
     }, []);
@@ -23,13 +27,12 @@ export function Changelog() {
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Changelog</DialogTitle>
-                    <h1 className="text-2xl">October 1, 2024 - Release {version}</h1>
+                    <h1 className="text-2xl">June 13, 2025 - Release {version}</h1>
                     <hr/>
 
                     <h3 className="text-xl">Summary</h3>
                     <ul>
-                        <li><strong>[New]</strong> Date is shown for each menu</li>
-                        <li><strong>[New]</strong> PDF Links are automatically fetched, no old menus anymore!</li>
+                        <li><strong>[Fix]</strong> Current date comparison if the mensa isn&apos;t open the whole week</li>
 
                         {/*<li><strong>[New]</strong> Added new feature</li>*/}
                         {/*<li><strong>[Fix]</strong> Fixed some bugs</li>*/}
