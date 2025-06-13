@@ -80,13 +80,13 @@ export default function GenericMenuCard({ menu, className, featured }: GenericMe
                 {menu.menues.map((item, index) => (
                     <MenuWrapper key={item.title} item={item} apiBaseUrl={apiBaseUrl || ''}>
                         <div className={index !== 0 ? 'mt-4' : ''}>
-                            <p className="flex items-center gap-4">
+                            <div className="flex items-center gap-4">
                                 <b className={'underline'}>{item.type}</b>
                                 <span className="text-xs">
                                     {item.price && <p>{formatPrice(item.price.intern)}.- / {formatPrice(item.price.extern)}.-</p>}
                                 </span>
                                 {item.dietaryType == "vegan" && <Vegan className={'text-green-500'} size={20} />}
-                            </p>
+                            </div>
                             <p><b>{item.title}</b> {item.description}</p>
                             <p>{item.origin && <span> ({item.origin})</span>}</p>
                             {item.allergens && item.allergens.length > 0 && <span className={'text-gray-500 text-sm'}> (Allergen: {item.allergens.join(', ')})</span>}
@@ -99,22 +99,24 @@ export default function GenericMenuCard({ menu, className, featured }: GenericMe
 }
 
 function MenuWrapper({ item, children, apiBaseUrl }: { item: MenuItem, children: React.ReactNode, apiBaseUrl: string }) {
-    return (
-        <>
-            {item.imagePath ? (
-                <HoverCard>
-                    <HoverCardTrigger asChild>
-                        {children}
-                    </HoverCardTrigger>
-                    <HoverCardContent className="w-96">
-                        <Image src={apiBaseUrl + item.imagePath} width={500} height={500} alt={item.title} priority={true} />
-                    </HoverCardContent>
-                </HoverCard>
-            ) : (
-                <>
-                    {children}
-                </>
-            )}
-        </>
-    );
+    // TODO: Disabled images for now, because they are not available
+    // return (
+    //     <>
+    //         {item.imagePath ? (
+    //             <HoverCard>
+    //                 <HoverCardTrigger asChild>
+    //                     {children}
+    //                 </HoverCardTrigger>
+    //                 <HoverCardContent className="w-96">
+    //                     <Image src={apiBaseUrl + item.imagePath} width={500} height={500} alt={item.title} priority={true} />
+    //                 </HoverCardContent>
+    //             </HoverCard>
+    //         ) : (
+    //             <>
+    //                 {children}
+    //             </>
+    //         )}
+    //     </>
+    // );
+    return children;
 }
