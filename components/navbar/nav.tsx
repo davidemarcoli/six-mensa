@@ -15,15 +15,23 @@ import Image from "next/image";
 
 export default function Nav() {
 
-    const [checkedMode, setCheckedMode] = useState(false);
-    const [checkedMensa, setCheckedMensa] = useState(false);
-
-    const {selectedViewMode, selectedMensa, setSelectedViewMode, setSelectedMensa} = useStore();
+    const {setSelectedViewMode, setSelectedMensa} = useStore();
 
     const router = useRouter()
     const pathname = usePathname()
     const searchParams = useSearchParams()!
     const scrolled = useScroll(50);
+
+    const currentMensa = searchParams.get('mensa') || 'htp';
+    const currentViewMode = searchParams.get('viewMode') || 'text';
+
+    const checkedMensa = currentMensa === 'htp';
+    const checkedMode = currentViewMode === 'text';
+
+    useEffect(() => {
+        setSelectedMensa(currentMensa);
+        setSelectedViewMode(currentViewMode);
+    }, [currentMensa, currentViewMode, setSelectedMensa, setSelectedViewMode]);
 
     const routes = [
         {
@@ -48,37 +56,12 @@ export default function Nav() {
         [searchParams]
     )
 
-    useEffect(() => {
-        if (!searchParams.get('viewMode') || searchParams.get('viewMode') === 'text') {
-            onModeToggle(true)
-        } else {
-            onModeToggle(false)
-        }
-        if (!searchParams.get('mensa') || searchParams.get('mensa') === 'htp') {
-            onMensaToggle(true)
-        } else {
-            onMensaToggle(false)
-        }
-    }, []);
-
     function onModeToggle(checked: boolean) {
-        setCheckedMode(checked)
-        setSelectedViewMode(checked ? 'text' : 'pdf');
-        if (checked) {
-            router.push(pathname + '?' + createQueryString('viewMode', 'text'))
-        } else {
-            router.push(pathname + '?' + createQueryString('viewMode', 'pdf'))
-        }
+        router.push(pathname + '?' + createQueryString('viewMode', checked ? 'text' : 'pdf'))
     }
 
     function onMensaToggle(checked: boolean) {
-        setCheckedMensa(checked)
-        setSelectedMensa(checked ? 'htp' : 'ht201');
-        if (checked) {
-            router.push(pathname + '?' + createQueryString('mensa', 'htp'))
-        } else {
-            router.push(pathname + '?' + createQueryString('mensa', 'ht201'))
-        }
+        router.push(pathname + '?' + createQueryString('mensa', checked ? 'htp' : 'ht201'))
     }
 
     return (
