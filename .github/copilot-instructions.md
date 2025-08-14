@@ -149,3 +149,6 @@ const handleMensaChange = (newMensa: string) => {
 - PWA manifest configured in `app/manifest.webmanifest`
 - Environment variables managed through Vercel dashboard
 - Speed Insights and analytics integration included
+
+## Final Notes
+Please don't commit the package-lock.json files as I'm using bun locally on my machine.
