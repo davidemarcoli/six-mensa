@@ -92,7 +92,7 @@ export default function SettingsPage() {
             {/*<Link href="/" className="m-4">*/}
             {/*    <ArrowLeft />*/}
             {/*</Link>*/}
-            <Button variant={"link"} className={"m-4 backButton"} onClick={() => router.push('/')}>
+            <Button variant={"link"} className={"m-4 backButton"} onClick={() => router.back()}>
                 <ArrowLeft className="h-6 w-6"/>
             </Button>
             <div className="flex flex-col items-center justify-center pt-5">
