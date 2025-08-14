@@ -92,7 +92,13 @@ export default function SettingsPage() {
             {/*<Link href="/" className="m-4">*/}
             {/*    <ArrowLeft />*/}
             {/*</Link>*/}
-            <Button variant={"link"} className={"m-4 backButton"} onClick={() => router.back()}>
+            <Button variant={"link"} className={"m-4 backButton"} onClick={() => {
+                if (window.history.length > 1) {
+                    router.back();
+                } else {
+                    router.push('/');
+                }
+            }}>
                 <ArrowLeft className="h-6 w-6"/>
             </Button>
             <div className="flex flex-col items-center justify-center pt-5">
