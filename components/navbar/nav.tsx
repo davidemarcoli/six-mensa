@@ -5,7 +5,7 @@ import {Label} from "../ui/label";
 import {Switch} from "../ui/switch";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import {useCallback, useEffect, useState} from "react";
-import {Menu, Settings, Utensils} from "lucide-react";
+import {Coffee, Menu, Settings, Utensils} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {Sheet, SheetContent, SheetTrigger} from "@/components/ui/sheet";
 import Link from "next/link";
@@ -160,6 +160,10 @@ export default function Nav() {
                             </div>)}
                         </nav>
                         <div className={'ml-auto flex items-center space-x-4'}>
+                            <Button aria-label={'settings'} variant="outline" size="icon"
+                                    onClick={() => window.open('https://github.com/sponsors/davidemarcoli', '_blank')}>
+                                <Coffee className="h-6 w-6"/>
+                            </Button>
                             <Button aria-label={'settings'} variant="outline" size="icon"
                                     onClick={() => router.push('/settings')}>
                                 <Settings className="h-6 w-6"/>
