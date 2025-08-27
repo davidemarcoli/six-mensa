@@ -160,7 +160,7 @@ export default function Nav() {
                             </div>)}
                         </nav>
                         <div className={'ml-auto flex items-center space-x-4'}>
-                            <Button aria-label={'settings'} variant="outline" size="icon"
+                            <Button aria-label={'donate'} variant="outline" size="icon" data-umami-event="sponsor"
                                     onClick={() => window.open('https://github.com/sponsors/davidemarcoli', '_blank')}>
                                 <Coffee className="h-6 w-6"/>
                             </Button>
