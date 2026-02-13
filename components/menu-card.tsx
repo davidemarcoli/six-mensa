@@ -1,11 +1,11 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Image as ScrapedImage } from "@/app/api/scrape/cheerio/route";
 import { useEffect, useState } from "react";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import Image from "next/image";
 import useStore from "@/lib/store";
+import WindowOptionsProps from "./ui/window-options";
 
 export interface MenuItem {
     name: string;
@@ -105,6 +105,15 @@ export default function GenericMenuCard({ menu, className, featured, menuItems, 
                 {filteredMenuItems.filter(item => menu[item.menuKey]).filter(item => translatedMenu[item.menuKey]).map((item, index) => (
                     <MenuWrapper key={item.name} item={item} menuImage={menuImages?.[item.imageKey]}>
                         <div className={index !== 0 ? 'mt-4' : ''}>
+                            <WindowOptionsProps isMobile={true} isTablet={true}>
+                                {menuImages?.[item.imageKey] &&
+                                    <Image
+                                        src={menuImages?.[item.imageKey]}
+                                        alt={translatedMenu[item.menuKey].title}
+                                        width={250}
+                                        height={100}
+                                    />}
+                            </WindowOptionsProps>
                             <p><b className={'underline'}>{item.name}</b></p>
                             <p><b>{translatedMenu[item.menuKey].title}</b> {translatedMenu[item.menuKey].description}</p>
                             {menu[item.menuKey].price?.intern && <p>Intern: {menu[item.menuKey].price.intern}.- /
