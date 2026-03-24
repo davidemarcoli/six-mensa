@@ -5,11 +5,10 @@ import useStore from "@/lib/store";
 
 export default function Page() {
 
-    const {language, translationEngine} = useStore();
+    const {language} = useStore();
     return (
         <>
-            <CompareAllMenusPage language={language == 'en' ? 'en' : 'de'}
-                                 translationEngine={translationEngine == 'myMemory' ? 'myMemory' : 'libreTranslate'} />
+            <CompareAllMenusPage language={language == 'en' ? 'en' : 'de'} />
         </>
     )
 }

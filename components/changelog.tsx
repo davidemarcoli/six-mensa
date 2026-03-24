@@ -27,24 +27,17 @@ export function Changelog() {
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Changelog</DialogTitle>
-                    <h1 className="text-2xl">08.01.2025 - Release {version}</h1>
+                    <h1 className="text-2xl">24.03.2026 - Release {version}</h1>
                     <hr/>
 
                     <h3 className="text-xl">Summary</h3>
                     <ul>
-                        <li><strong>[Upgrade]</strong> Use newest React version to mitigate React2Shell vulnerability</li>
-
-                        {/*<li><strong>[New]</strong> Added new feature</li>*/}
-                        {/*<li><strong>[Fix]</strong> Fixed some bugs</li>*/}
-                        {/*<li><strong>[Update]</strong> Updated some stuff</li>*/}
-                        {/*<li><strong>[Remove]</strong> Removed some stuff</li>*/}
-                        {/*<li><strong>[Security]</strong> Fixed some security issues</li>*/}
-                        {/*<li><strong>[Docs]</strong> Updated documentation</li>*/}
-                        {/*<li><strong>[Refactor]</strong> Refactored some stuff</li>*/}
-                        {/*<li><strong>[Performance]</strong> Improved performance</li>*/}
-                        {/*<li><strong>[Tests]</strong> Added some tests</li>*/}
-                        {/*<li><strong>[Style]</strong> Updated some styles</li>*/}
-                        {/*<li><strong>[Upgrade]</strong> Upgraded some stuff</li>*/}
+                        <li><strong>[New]</strong> Stats dashboard with search, filters, price trends, dietary distribution, dish frequency, and allergen stats</li>
+                        <li><strong>[New]</strong> AI-powered menu extraction via Gemini (with regex fallback)</li>
+                        <li><strong>[New]</strong> Server-side translations, no more client-side translation engine</li>
+                        <li><strong>[New]</strong> Allergen and dietary type information displayed on menu cards</li>
+                        <li><strong>[Refactor]</strong> Simplified menu card and page components</li>
+                        <li><strong>[Remove]</strong> Removed translation engine setting (handled by backend now)</li>
                     </ul>
                     <hr/>
                 </DialogHeader>

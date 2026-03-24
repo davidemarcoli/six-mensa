@@ -37,6 +37,10 @@ export default function Nav() {
             href: "/compare",
             label: "Compare"
         },
+        {
+            href: "/stats",
+            label: "Stats"
+        },
     ];
 
     // Get a new searchParams string by merging the current
