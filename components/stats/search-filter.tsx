@@ -39,9 +39,9 @@ export default function SearchFilter({ filters, onFiltersChange, menuTypes }: Se
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div>
-                    <Label>Restaurant</Label>
+                    <Label htmlFor="restaurant">Restaurant</Label>
                     <Select value={filters.restaurant} onValueChange={(v) => update("restaurant", v)}>
-                        <SelectTrigger className="mt-1">
+                        <SelectTrigger id="restaurant" className="mt-1">
                             <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -53,9 +53,9 @@ export default function SearchFilter({ filters, onFiltersChange, menuTypes }: Se
                 </div>
 
                 <div>
-                    <Label>Menu Type</Label>
+                    <Label htmlFor="menuType">Menu Type</Label>
                     <Select value={filters.menuType} onValueChange={(v) => update("menuType", v)}>
-                        <SelectTrigger className="mt-1">
+                        <SelectTrigger id="menuType" className="mt-1">
                             <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -68,9 +68,9 @@ export default function SearchFilter({ filters, onFiltersChange, menuTypes }: Se
                 </div>
 
                 <div>
-                    <Label>Dietary Type</Label>
+                    <Label htmlFor="dietaryType">Dietary Type</Label>
                     <Select value={filters.dietaryType} onValueChange={(v) => update("dietaryType", v)}>
-                        <SelectTrigger className="mt-1">
+                        <SelectTrigger id="dietaryType" className="mt-1">
                             <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -84,18 +84,20 @@ export default function SearchFilter({ filters, onFiltersChange, menuTypes }: Se
 
                 <div className="grid grid-cols-2 gap-2">
                     <div>
-                        <Label>From</Label>
+                        <Label htmlFor="fromMonth">From</Label>
                         <input
                             type="month"
+                            id="fromMonth"
                             className="w-full mt-1 px-2 py-2 border rounded-md bg-background text-sm"
                             value={filters.fromMonth}
                             onChange={(e) => update("fromMonth", e.target.value)}
                         />
                     </div>
                     <div>
-                        <Label>To</Label>
+                        <Label htmlFor="toMonth">To</Label>
                         <input
                             type="month"
+                            id="toMonth"
                             className="w-full mt-1 px-2 py-2 border rounded-md bg-background text-sm"
                             value={filters.toMonth}
                             onChange={(e) => update("toMonth", e.target.value)}

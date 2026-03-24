@@ -54,7 +54,12 @@ export default function GenericMenuCard({ menu, className, featured }: GenericMe
                             <span className="text-xs">
                                 {item.price && <p>{formatPrice(item.price.intern)}.- / {formatPrice(item.price.extern)}.-</p>}
                             </span>
-                            {item.dietaryType === "vegan" && <Vegan className={'text-green-500'} size={20} />}
+                            {item.dietaryType === "vegan" && (
+                                <span className="flex items-center gap-1 text-green-500 text-xs">
+                                    <Vegan aria-hidden="true" size={20} />
+                                    <span className="sr-only">Vegan</span>
+                                </span>
+                            )}
                         </div>
                         <p><b>{item.title}</b> {item.description}</p>
                         <p>{item.origin && <span> ({item.origin})</span>}</p>

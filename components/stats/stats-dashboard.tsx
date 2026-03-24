@@ -196,7 +196,7 @@ export default function StatsDashboard() {
                                     </div>
                                     <p className="font-medium">{item.title}</p>
                                     <p className="text-sm text-muted-foreground">{item.description}</p>
-                                    {item.price && (
+                                    {item.price?.intern != null && item.price?.extern != null  && (
                                         <p className="text-sm">{item.price.intern.toFixed(2)}.- / {item.price.extern.toFixed(2)}.-</p>
                                     )}
                                 </div>
