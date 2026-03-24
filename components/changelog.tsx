@@ -34,7 +34,7 @@ export function Changelog() {
                     <ul>
                         <li><strong>[New]</strong> Stats dashboard with search, filters, price trends, dietary distribution, dish frequency, and allergen stats</li>
                         <li><strong>[New]</strong> AI-powered menu extraction via Gemini (with regex fallback)</li>
-                        <li><strong>[New]</strong> Server-side translations — no more client-side translation engine</li>
+                        <li><strong>[New]</strong> Server-side translations, no more client-side translation engine</li>
                         <li><strong>[New]</strong> Allergen and dietary type information displayed on menu cards</li>
                         <li><strong>[Refactor]</strong> Simplified menu card and page components</li>
                         <li><strong>[Remove]</strong> Removed translation engine setting (handled by backend now)</li>
