@@ -62,7 +62,7 @@ export default function GenericMenuCard({ menu, className, featured }: GenericMe
                             )}
                         </div>
                         <p><b>{item.title}</b> {item.description}</p>
-                        <p>{item.origin && <span> ({item.origin})</span>}</p>
+                        {item.origin && <p>({item.origin})</p>}
                         {item.allergens && item.allergens.length > 0 && <span className={'text-gray-500 text-sm'}> (Allergen: {item.allergens.join(', ')})</span>}
                     </div>
                 ))}
