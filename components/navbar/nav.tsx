@@ -164,9 +164,10 @@ export default function Nav() {
                             </div>)}
                         </nav>
                         <div className={'ml-auto flex items-center space-x-4'}>
-                            <Button aria-label={'donate'} variant="outline" size="icon" data-umami-event="sponsor"
+                            <Button aria-label={'donate'} variant="outline"data-umami-event="sponsor"
                                     onClick={() => window.open('https://github.com/sponsors/davidemarcoli', '_blank')}>
-                                <Coffee className="h-6 w-6"/>
+                                Donate
+                                <Coffee data-icon="inline-end" className="ml-2"/>
                             </Button>
                             <Button aria-label={'settings'} variant="outline" size="icon"
                                     onClick={() => router.push('/settings')}>
