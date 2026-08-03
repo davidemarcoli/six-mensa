@@ -7,6 +7,7 @@ import {CommandMenu} from "@/components/command-menu";
 import Script from 'next/script'
 import {Toaster} from "@/components/ui/toaster";
 import Nav from "@/components/navbar/nav";
+import {AppBanner} from "@/components/app-banner";
 import {SpeedInsights} from "@vercel/speed-insights/next"
 import {Suspense} from "react"
 
@@ -72,6 +73,7 @@ export default function RootLayout({
                 <Nav/>
             </Suspense>
             <div className={'mt-16'}>
+                <AppBanner/>
                 {children}
             </div>
             <SpeedInsights/>
