@@ -1,6 +1,6 @@
 export const metadata = {
     title: "Privacy Policy",
-    description: "How the Zmittag Android app and the mensa.davidemarcoli.dev website handle your data.",
+    description: "How the Zmittag Android/iOS app and the mensa.davidemarcoli.dev website handle your data.",
 };
 
 export default function PrivacyPage() {
@@ -13,10 +13,10 @@ export default function PrivacyPage() {
                 <div className="space-y-10">
                     <section>
                         <p className="text-neutral-300">
-                            This policy covers two separate things: the <strong className="text-neutral-100">Zmittag</strong> Android
+                            This policy covers two separate things: the <strong className="text-neutral-100">Zmittag</strong> Android/iOS
                             app, and this website at <strong className="text-neutral-100">mensa.davidemarcoli.dev</strong>. They do not
                             handle data the same way, so they are described separately below. If you are here from the Google Play
-                            listing, the section that applies to you is <a href="#app" className="text-blue-400 hover:text-blue-300 transition-colors">The Zmittag Android app</a>.
+                            listing, the section that applies to you is <a href="#app" className="text-blue-400 hover:text-blue-300 transition-colors">The Zmittag Android/iOS app</a>.
                         </p>
                         <p className="text-neutral-300 mt-4">
                             Both are operated privately by Davide Marcoli. This is an independent, unofficial project. It is not
@@ -25,7 +25,7 @@ export default function PrivacyPage() {
                     </section>
 
                     <section id="app" className="scroll-mt-8">
-                        <h2 className="text-2xl font-semibold mb-4 text-neutral-100">The Zmittag Android app</h2>
+                        <h2 className="text-2xl font-semibold mb-4 text-neutral-100">The Zmittag Android/iOS app</h2>
 
                         <p className="text-neutral-300 mb-6">
                             The app has no accounts and no sign-up. It contains{" "}
@@ -42,7 +42,7 @@ export default function PrivacyPage() {
                             </p>
                             <p>
                                 When you turn it on, the app checks your device&apos;s location at the moment the daily menu
-                                notification is due &mdash; including when the app is closed or not in use. That is why Android
+                                notification is due &mdash; including when the app is closed or not in use. That is why Android/iOS
                                 asks for background location access. The check exists for one purpose: to skip the notification
                                 when you are not at the office.
                             </p>
@@ -101,7 +101,7 @@ export default function PrivacyPage() {
                             <p>
                                 Unlike the app, this website <strong className="text-neutral-100">does use analytics</strong>. This
                                 section applies only when you visit mensa.davidemarcoli.dev in a browser. None of it is present in
-                                the Android app.
+                                the Android/iOS app.
                             </p>
                             <p>
                                 <strong className="text-neutral-100">Umami</strong> (self-hosted on our own infrastructure) records
