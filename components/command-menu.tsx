@@ -10,8 +10,10 @@ import {
     CommandSeparator
 } from "@/components/ui/command";
 import {
+    HelpCircle,
     LayoutList,
-    PlusSquare
+    PlusSquare,
+    Shield
 } from "lucide-react";
 import React from "react";
 import {useRouter} from "next/navigation";
@@ -73,6 +75,14 @@ export function CommandMenu() {
                     <CommandItem onSelect={() => navigate('/settings')}>
                         <LayoutList className="mr-2 h-4 w-4"/>
                         <span>Settings</span>
+                    </CommandItem>
+                    <CommandItem onSelect={() => navigate('/support')}>
+                        <HelpCircle className="mr-2 h-4 w-4"/>
+                        <span>Support</span>
+                    </CommandItem>
+                    <CommandItem onSelect={() => navigate('/privacy')}>
+                        <Shield className="mr-2 h-4 w-4"/>
+                        <span>Privacy Policy</span>
                     </CommandItem>
                 </CommandGroup>
                 <CommandSeparator/>

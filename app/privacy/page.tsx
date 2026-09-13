@@ -154,10 +154,16 @@ export default function PrivacyPage() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-semibold mb-4 text-neutral-100">Contact</h2>
+                        <h2 className="text-2xl font-semibold mb-4 text-neutral-100">Contact & Support</h2>
                         <p className="text-neutral-300">
                             For questions about privacy, or to exercise any of the rights above, contact:{" "}
                             <a href="mailto:contact@davidemarcoli.dev" className="text-blue-400 hover:text-blue-300 transition-colors">contact@davidemarcoli.dev</a>
+                        </p>
+                        <p className="text-neutral-300 mt-3">
+                            For general support, bug reports, and app feedback, visit our{" "}
+                            <a href="/support" className="text-blue-400 hover:text-blue-300 transition-colors">Support page</a>{" "}
+                            or reach out directly at{" "}
+                            <a href="mailto:support@davidemarcoli.dev" className="text-blue-400 hover:text-blue-300 transition-colors">support@davidemarcoli.dev</a>.
                         </p>
                     </section>
                 </div>

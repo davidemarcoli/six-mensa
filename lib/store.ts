@@ -15,35 +15,35 @@ interface AppState {
 }
 
 const useStore = create<AppState>()((set) => ({
-    language: typeof localStorage !== 'undefined' ? localStorage.getItem('language') || 'de' : 'de',
-    displayFeaturedMenu: typeof localStorage !== 'undefined' ? localStorage.getItem('displayFeaturedMenu') === 'true' : false,
-    color: typeof localStorage !== 'undefined' ? localStorage.getItem('color') || '#de3919' : '#de3919',
-    selectedMensa: typeof localStorage !== 'undefined' ? localStorage.getItem('selectedMensa') || 'htp' : 'htp',
-    selectedViewMode: typeof localStorage !== 'undefined' ? localStorage.getItem('selectedViewMode') || 'text' : 'text',
+    language: typeof window !== 'undefined' ? localStorage.getItem('language') || 'de' : 'de',
+    displayFeaturedMenu: typeof window !== 'undefined' ? localStorage.getItem('displayFeaturedMenu') === 'true' : false,
+    color: typeof window !== 'undefined' ? localStorage.getItem('color') || '#de3919' : '#de3919',
+    selectedMensa: typeof window !== 'undefined' ? localStorage.getItem('selectedMensa') || 'htp' : 'htp',
+    selectedViewMode: typeof window !== 'undefined' ? localStorage.getItem('selectedViewMode') || 'text' : 'text',
 
 
     setLanguage: (language: string) => {
-        localStorage.setItem('language', language);
+        if (typeof window !== 'undefined') localStorage.setItem('language', language);
         set({ language });
     },
 
     setDisplayFeaturedMenu: (displayFeaturedMenu: boolean) => {
-        localStorage.setItem('displayFeaturedMenu', displayFeaturedMenu.toString());
+        if (typeof window !== 'undefined') localStorage.setItem('displayFeaturedMenu', displayFeaturedMenu.toString());
         set({ displayFeaturedMenu });
     },
 
     setColor: (color: string) => {
-        localStorage.setItem('color', color);
+        if (typeof window !== 'undefined') localStorage.setItem('color', color);
         set({ color });
     },
 
     setSelectedMensa: (selectedMensa: string) => {
-        localStorage.setItem('selectedMensa', selectedMensa);
+        if (typeof window !== 'undefined') localStorage.setItem('selectedMensa', selectedMensa);
         set({ selectedMensa });
     },
 
     setSelectedViewMode: (selectedViewMode: string) => {
-        localStorage.setItem('selectedViewMode', selectedViewMode);
+        if (typeof window !== 'undefined') localStorage.setItem('selectedViewMode', selectedViewMode);
         set({ selectedViewMode });
     },
 }));

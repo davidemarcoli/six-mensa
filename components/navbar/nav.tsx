@@ -112,6 +112,12 @@ export default function Nav() {
                                             {route.label}
                                         </Link>
                                     ))}
+                                    <Link
+                                        href="/support"
+                                        className="block px-2 py-1 text-lg"
+                                    >
+                                        Support
+                                    </Link>
                                     {pathname === '/' && (
                                         <>
                                             <div className="balanceItems py-1 px-2">
