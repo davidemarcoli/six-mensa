@@ -4,10 +4,12 @@ import React from "react";
 import { Smartphone, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AppDownloadPopup } from "@/components/app-download-popup";
+import useStore from "@/lib/store";
 
 const POPUP_SEEN_KEY = "app-download-popup-seen-v1";
 
 export function AppBanner() {
+    const { color } = useStore();
     const [visible, setVisible] = React.useState(true);
     const [popupOpen, setPopupOpen] = React.useState(false);
 
@@ -44,7 +46,9 @@ export function AppBanner() {
                         <Smartphone className="hidden h-4 w-4 shrink-0 text-muted-foreground sm:block" aria-hidden="true" />
 
                         <p className="min-w-0 flex-1 text-sm text-muted-foreground">
-                            <span className="font-medium text-foreground">The SIX Mensa app is out now.</span>{" "}
+                            <span className="font-medium text-foreground">
+                                The <span style={{ color }}>SIX Mensa</span> app is out now.
+                            </span>{" "}
                             <span className="hidden sm:inline">
                                 Today&apos;s menu on your home screen, both restaurants side by side, and an optional
                                 notification in the morning. Android is coming soon.{" "}
