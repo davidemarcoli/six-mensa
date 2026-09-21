@@ -35,12 +35,18 @@ export const metadata: Metadata = {
         description: 'Get this week\'s menu for the SIX Restaurants',
         images: [
             {
-                url: '/og',
+                url: '/app-store/link-card-1200x628.png',
                 width: 1200,
-                height: 630,
-                alt: 'SIX Mensa',
+                height: 628,
+                alt: 'SIX Mensa app now on the App Store',
             },
         ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'SIX Mensa',
+        description: 'Get this week\'s menu for the SIX Restaurants',
+        images: ['/app-store/link-card-1200x628.png'],
     },
 }
 
